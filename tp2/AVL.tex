@@ -4,7 +4,7 @@
   
   \textbf{se explica con}: \tadNombre{Diccionario(clave,significado)}.
 
-  \textbf{g\'eneros}: \TipoVariable{dicc$_{AA}$(clave, significado}.
+  \textbf{g\'eneros}: \TipoVariable{dicc$_{AA}$(clave, significado)}.
 
   \Titulos{Operaciones}
 
@@ -36,17 +36,14 @@
 
 \begin{Representacion}
 
-\begin{Estructura}{dicc$_{AA}$}[estr\_AA]
-
-\textbf{donde:} \newline 
-\TipoVariable{estr\_AA} es \TipoVariable{dicc$_{AA}$(id, it)} \newline
+\begin{Estructura}{dicc$_{AA}$}[estr$\_{AA}$]
    
-\begin{Tupla}[datos]
+\begin{Tupla}[estr$_{AA}$]
 \tupItem{id}{\TipoVariable{nat}} \newline \nomoreitems{}
 \tupItem{izquierdo}{\TipoVariable{puntero(nodo(id,it))}} \newline \nomoreitems{}	 
 \tupItem{derecho}{\TipoVariable{puntero(nodo(id,it))}} \newline \nomoreitems{}
 \tupItem{valor}{\TipoVariable{itConj($\alpha$)}} \newline \nomoreitems{}
-\tupItem{altura}{\TipoVariable{nat}}
+%\tupItem{altura}{\TipoVariable{nat}}
 \end{Tupla}
 
    
@@ -65,7 +62,7 @@
 \begin{algorithm}
 \caption{Implementaci\'on de Definido?}
 \begin{algorithmic}[0]
-\Function{iDefinido?}{in d: estr\_AA , in c: clave}{$\rightarrow$ res: bool}
+\Function{iDefinido?}{in d: estr$\_{AA}$ , in c: clave}{$\rightarrow$ res: bool}
 	\State nodoActual $\gets$ d
 	\State res $\gets$ FALSE
 	\While{$\neg$(nodoActual == NULO) $\&\&$ $\neg$res}
@@ -86,7 +83,7 @@
 \begin{algorithm}
 \caption{Implementaci\'on de Significado}
 \begin{algorithmic}[0]
-\Function{iSignificado}{in d: estr\_AA , in c: clave}{$\rightarrow$ res: $\alpha$}
+\Function{iSignificado}{in d: estr$\_{AA}$ , in c: clave}{$\rightarrow$ res: $\alpha$}
 	\State nodoActual $\gets$ d
 	\State res $\gets$ FALSE
 	\While{$\neg$(nodoActual == NULO) $\&\&$ $\neg$res}
@@ -107,7 +104,7 @@
 \begin{algorithm}
 \caption{Implementaci\'on de Vacio}
 \begin{algorithmic}[0]
-\Function{iVacio}{}{$\rightarrow$ res: estr\_AA}
+\Function{iVacio}{}{$\rightarrow$ res: estr$\_{AA}$}
 	\State res $\gets$ tupla(0, NULO, NULO, NULO, 0)
 \EndFunction
 \end{algorithmic}
@@ -116,13 +113,13 @@
 \begin{algorithm}
 \caption{Implementaci\'on de Definir}
 \begin{algorithmic}[0]
-\Function{iDefinir}{in d: estr\_AA , in c: nat, in s: $\alpha$}{}
+\Function{iDefinir}{in d: estr$\_{AA}$ , in c: nat, in s: $\alpha$}{}
 	\State nodoActual $\gets$ d
 	\State yaDefini $\gets$ FALSE
 	\While{$\neg$yaDefini}
 		\If{c < nodoActual.id}
 			\If{nodoActual.izquierdo == NULO}
-				\State nuevoNodo $\gets$ Vacio() \Comment{Dicc$\_AA$}
+				\State nuevoNodo $\gets$ Vacio() \Comment{Dicc$\_{AA}$}
 				\State nuevoNodo.valor $\gets$ Copiar(s)
 				\State nuevoNodo.id $\gets$ c
 				\State nodoActual.izquierdo $\gets$ nuevoNodo
@@ -132,11 +129,11 @@
 			\EndIf
 		\Else
 			\If{nodoActual.derecho == NULO}
-				\State nuevoNodo $\gets$ Vacio() \Comment{Dicc$\_AA$}
+				\State nuevoNodo $\gets$ Vacio() \Comment{Dicc$\_{AA}$}
 				\State nuevoNodo.valor $\gets$ Copiar(s)
 				\State nuevoNodo.id $\gets$ c
 				\State nodoActual.derecho $\gets$ nuevoNodo
-				\State yaDefini $gets$ TRUE
+				\State yaDefini $\gets$ TRUE
 			\Else
 				\State nodoActual $\gets$ nodoActual.derecho
 			\EndIf
@@ -144,6 +141,69 @@
 	\EndWhile
 	\State nodoActual $\gets$ Torsion(nodoActual)
 	\State nodoACtual $\gets$ Division(nodoActual)
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}
+\caption{Implementaci\'on de Torsion}
+\begin{algorithmic}[0]
+\Function{iTorsion}{in d: estr$\_{AA}$}{$\rightarrow$ res: estr$\_{AA}$}
+	\If{d == NULO $\|$ d.izquierdo == NULO}
+		\State res $\gets$ d
+	\Else
+		\If{Altura(d.izquierdo) $\geq$ Altura(d)}
+			\State nodoAux $\gets$ d.izquierdo
+			\State d.izquierdo $\gets$ nodoAux.derecho
+			\State nodo.derecho $\gets$ d
+			\State res $\gets$ nodoAux
+		\Else
+			\State res $\gets$ d
+		\EndIf
+	\EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de Division}
+\begin{algorithmic}[0]
+\Function{iDivision}{in d: estr$\_{AA}$}{$\rightarrow$ res: estr$\_{AA}$}
+	\If{d == NULO $\|$ d.derecho == NULO $\|$ d.derecho.derecho == NULO}
+		\State res $\gets$ d
+	\Else
+		\If{Altura(d.derecho.derecho) $\geq$ Altura(d)}
+			\State nodoAux $\gets$ d.derecho
+			\State d.derecho $\gets$ nodoAux.izquierdo
+			\State nodoAux.izquierdo $\gets$ d
+			\State nodoAux.altura $\gets$ nodoAux.altura + 1
+			\State res $\gets$ nodoAux
+		\Else
+			\State res $\gets$ d
+		\EndIf
+	\EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de Altura}
+\begin{algorithmic}[0]
+\Function{iAltura}{in d: estr$\_{AA}$}{$\rightarrow$ res: nat$\_0$}
+	\If{d.derecho == NULO $\&\&$ d.izquierdo == NULO}
+		\State res $\gets$ 1
+	\Else
+		\If{d.derecho == NULO}
+			\State res $\gets$ Altura(d.izquierdo) + 1
+		\Else
+			\If{d.izquierdo == NULO}
+				\State res $\gets$ Altura(d.derecho) + 1
+			\Else
+				\State Minimo(Altura(d.izquierdo), Altura(d.derecho)) \Comment{el m\'inimo de dos nat}
+			\EndIf
+		\EndIf
+	\EndIf
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
