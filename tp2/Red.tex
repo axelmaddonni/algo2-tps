@@ -1,0 +1,361 @@
+\begin{Interfaz}
+
+  \textbf{usa}: \tadNombre{conj($\alpha$), itConj($\alpha$), lista($\alpha$), itLista($\alpha$)}.
+  
+  \textbf{se explica con}: \tadNombre{Red}.
+
+  \textbf{g\'eneros}: \TipoVariable{red}.
+
+  \Titulos{Operaciones de Red}
+
+  \InterfazFuncion{Computadoras}{\In{r}{red}}{conj(hostname)}
+  {$res$ $=_{obs}$ dameHostnames(computadoras($r$))}%
+  []
+  [devuelve el conjunto de las computadoras.]
+  [res se devuelve por copia.]
+
+  \InterfazFuncion{Conectadas?}{\In{r}{red}, \In{c1}{hostname}, \In{c2}{hostname}}{bool}
+  [$c1,\ c2$ $\in$ dameHostnames(computadoras($r$))]
+  {$res$ $=_{obs}$ conectadas?($r$, dameCompu($c1$), dameCompu($c2$))}
+  []
+  [indica si las computadoras estan conectadas por alguna de sus interfaces.]
+  []
+
+  \InterfazFuncion{InterfazUsada}{\In{r}{red}, \In{c1}{hostname}, \In{c2}{hostname}}{interfaz}
+  [conectadas?($r$, dameCompu($c1$), dameCompu($c2$))]
+  {$res$ $=_{obs}$ interfazUsada($r$, dameCompu($c1$), dameCompu($c2$))}
+  []
+  [devuelve la interfaz por la cual estan conectadas c1 y c2.]
+  []
+
+  \InterfazFuncion{IniciarRed}{}{red}
+  [true]
+  {$res$ $=_{obs}$ iniciarRed()}
+  []
+  [crear una nueva Red.]
+  []
+  
+  \InterfazFuncion{AgregarCompu}{\Inout{r}{red}, \In{c1}{compu}}{}
+  [$r$ = $r_0$ $\wedge$
+  (\paratodo{compu}{c}) $c$ $\in$ computadoras($r_0$) $\Rightarrow$ ip($c$) $\neq$ $c1$]
+  {$r$ $=_{obs}$ agregarComputadora($r_0$, $c1$)}
+  []
+  [agregar una computadora a la Red.]
+  []
+
+  \InterfazFuncion{Conectar}{\In{r}{red}, \In{c_1}{hostname}, \In{i_1}{interfaz} \In{c_2}{hostname}, \In{i_2}{interfaz}}{}
+  [$r$ = $r_0$ $\wedge$ $c_1, c_2$ $\in$ dameHostnames(computadoras($r$)) $\wedge$ $c_1$ $\neq$ $c_2$	$\wedge$ \newline $\neg$conectadas?($r$, dameCompu($c_1$), dameCompu($c_2$)) $\wedge$ $\neg$usaInterfaz?($r$, dameCompu($c_1$), $i_1$) $\wedge$ $\neg$usaInterfaz?($r$, dameCompu($c_2$), $i_2$)]
+  {$r$ $=_{obs}$ (conectar($r_0$, dameCompu($c_1$), $i_1$, dameCompu($c_2$), $i_2$)}
+  []
+  [conectar dos computadoras de la red.]
+  []
+   
+  \InterfazFuncion{Vecinos}{\In{r}{red}, \In{c}{hostname}}{conj(hostname)}
+  [$c$ $\in$ dameHostnames(computadoras($r$))]
+  {$res$ $=_{obs}$ dameHostnames(vecinos($r$, dameCompu($c$)))}
+  []
+  [da el conjunto de computadoras vecinas.]
+  [el conjunto se devuelve por copia.]
+
+  \InterfazFuncion{UsaInterfaz?}{\In{r}{red}, \In{c}{hostname}, \In{i}{interfaz}}{bool}
+  [$c$ $\in$ dameHostnames(computadoras($r$))]
+  {$res$ $=_{obs}$ usaInterfaz?($r$, dameCompu($c$), $i$)}
+  []
+  [indica si la interfaz est\'a siendo utilizada.]
+  []
+
+  \InterfazFuncion{CaminosMinimos}{\In{r}{red}, \In{c_1}{hostname}, \In{c_2}{hostname}}{conj(lista(hostname))}
+  [$c1,\ c2$ $\in$ dameHostnames(computadoras($r$))]
+  {$res$ $=_{obs}$ dameCaminosdeHostnames(caminosMinimos($r$, dameCompu($c_1$), dameCompu($c_2$)))}
+  []
+  [devuelve los conjuntos de caminos minimos entre las computadoras ingresadas.]
+  [res se devuelve por copia.]
+  
+  \InterfazFuncion{HayCamino?}{\In{r}{red}, \In{c_1}{hostname}, \In{c_2}{hostname}}{bool}
+  [$c1,\ c2$ $\in$ dameHostnames(computadoras($r$))]
+  {$res$ $=_{obs}$ hayCamino?($r$, dameCompu($c_1$), dameCompu($c_2$))}
+  []
+  [indica si las computadoras son alcanzables mediante alg\'un camino.]
+  []
+  
+  \InterfazFuncion{$\bullet == \bullet$}{\In{r_1}{red}, \In{r_2}{red}}{bool}
+  [true]
+  {$res$ =$_{obs}$ ($r_1$ =$_{obs}$ $r_2$}%
+  []
+  [indica si dos redes son iguales.]
+  [] 
+  
+   \textbf{donde:} \newline 
+   \TipoVariable{hostname} es \TipoVariable{string}, \newline
+   \TipoVariable{interfaz} es \TipoVariable{nat}, \newline
+   \TipoVariable{compu} es \TipoVariable{tupla}< ip: \TipoVariable{hostname}, interfaces: \TipoVariable{conj}(\TipoVariable{interfaz})>.
+   
+\end{Interfaz}
+
+\textbf{} %dejo un espacio
+
+\textbf{Especificaci\'on de las operaciones auxiliares utilizadas en la interfaz}
+
+\begin{tad}{\tadNombre{Red extendida}}
+
+\tadExtiende{\tadNombre{Red}}
+
+\tadOtrasOperaciones (no exportadas)
+
+\tadOperacion{damehostnames}{conj(compu)}{conj(hostname)}{}
+\tadOperacion{dameCompu}{red /r, hostname /s}{compu}{$s$ $\in$ hostnames($r$)}
+\tadOperacion{auxDameCompu}{red /r, hostname /s, conj(compu) /cc}{compu}{$s$ $\in$ hostnames($r$) $\wedge$ $cc$ $\subset$ computadoras($r$)}
+\tadOperacion{dameCaminosDeHostnames}{conj(secu(compu))}{conj(secu(hostname))}{}
+\tadOperacion{dameSecuDeHostnames}{secu(compu)}{secu(hostname)}{}
+
+\tadAxiomas[\paratodo{red}{r}, \paratodo{conj(compu)}{cc}, \paratodo{hostname}{s}, \paratodo{conj(secu(compu))}{cs}, \paratodo{secu(compu)}{secu}]
+
+\tadAxioma{dameHostnames($cc$)}
+{ \IF {vacio?($cc$)} 
+THEN {$\emptyset$}
+ELSE {Ag( ip(dameUno($cc$)), dameHostnames(sinUno($cc$)) )}
+FI}
+
+\tadAxioma{dameCompu($r$, $s$)}{auxDameCompu($r$, $s$, computadoras($r$))}
+
+\tadAxioma{auxDameCompu($r$, $s$, $cc$)}
+{ \IF {ip(dameUno($cc$)) = $s$} 
+THEN {dameUno($cc$)}
+ELSE {auxDameCompu($r$, $s$, sinUno($cc$))}
+FI}
+
+\tadAxioma{dameCaminosDeHostnames($cs$)}
+{ \IF {vacio?($cs$)} 
+THEN {$\emptyset$}
+ELSE {Ag( dameSecuDeHostnames(dameUno($cs$)), dameCaminosDeHostnames(sinUno($cs$)) )}
+FI}
+
+\tadAxioma{dameSecuDeHostnames($secu$)}
+{ \IF {vacia?($secu$)} 
+THEN {$<>$}
+ELSE {ip(prim($secu$)) $\bullet$ dameSecuDeHostnames(fin($secu$)) }
+FI}
+
+\end{tad}
+
+\begin{Representacion}
+
+\begin{Estructura}{red}[estr\_red]
+
+\textbf{donde:} \newline 
+\TipoVariable{estr\_red} es \TipoVariable{dicc(hostname, datos)} \newline
+   
+\begin{Tupla}[datos]
+\tupItem{interfaces}{\TipoVariable{conj(interfaz)}} \newline \nomoreitems{}	 
+\tupItem{conexiones}{\TipoVariable{dicc(interfaz, hostname)}} \newline \nomoreitems{}
+\tupItem{alcanzables}{\TipoVariable{dicc(dest: hostname, caminos: lista(lista(hostname)))}}
+\end{Tupla}
+
+   
+\end{Estructura}
+
+\Rep[estr]{....}
+
+\AbsFc[estr]{red}[r]{...}
+
+\end{Representacion}
+
+\newpage
+
+\begin{Algoritmos}
+\begin{algorithm}
+\caption{Implementaci\'on de Computadoras}
+\begin{algorithmic}[0]
+\Function{iComputadoras}{in r: estr\_red}{$\rightarrow$ res: conj(hostname)}
+	\State it $\gets$ crearIt(r) \Comment{O(1)}
+	\State res $\gets$ Vacio() \Comment{conjunto} \Comment{O(1)}
+	\While{HaySiguiente(it)} \Comment{Guarda: O(1)} \Comment{El ciclo se ejecuta n veces} \Comment{O(n)}
+		\State Agregar(res, SiguienteClave(it)) \Comment{O(1)}
+		\State Avanzar(it) \Comment{O(1)}
+	\EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de Conectadas?}
+\begin{algorithmic}[0]
+\Function{iConectadas?}{in r: estr\_red, in c1: hostname, in c2: hostname}{$\rightarrow$ res: bool}
+	\State it $\gets$ CrearIt(Significado(r,c1).conexiones) \Comment{O(n)}
+	\State res $\gets$ FALSE \Comment{O(1)}
+	\While{HaySiguiente(it) $\&\&$ $\neg$res} \Comment{Guarda: O(1)} \Comment{El ciclo se ejecuta a lo sumo n-1 veces} \Comment{O(n)}
+		\If{SiguienteClave(it)==c2} \Comment{O(L)}
+			\State res $\gets$ TRUE
+		\EndIf
+		\State Avanzar(it) \Comment{O(1)}
+	\EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de InterfazUsada}
+\begin{algorithmic}[0]
+\Function{iInterfazUsada}{in r: estr\_red, in c1: hostname, in c2: hostname}{$\rightarrow$ res: interfaz}
+	\State it $\gets$ CrearIt(significado(r,c1).conexiones) \Comment{O(n)}
+	\While{HaySiguiente(it)} \Comment{Guarda: O(1)} \Comment{El ciclo se ejecuta a lo sumo n-1 veces} \Comment{O(n)}
+		\If{SiguienteSignificado(it)==c2} \Comment{O(L)}
+			\State res $\gets$ SiguienteClave(it) \Comment{nat por copia} \Comment{O(copiar(nat))}
+		\EndIf
+		\State Avanzar(it) \Comment{O(1)}
+	\EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de IniciarRed}
+\begin{algorithmic}[0]
+\Function{iIniciarRed()}{}{$\rightarrow$ res: estr\_red}
+	\State res $\gets$ Vacio() \Comment{Diccionario} \Comment{O(1)}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de AgregarCompu}
+\begin{algorithmic}[0]
+\Function{iAgregarCompu}{inout r: estr\_red, in c1: compu}{}
+	\State nuevoDiccVacio $\gets$ Vacio() \Comment{Diccionario} \Comment{O(1)}
+	\State DefinirRapido(r, c1.ip, tupla(c1.interfaces, nuevoDiccVacio, nuevoDiccVacio)) \Comment{O(Copiar(L))}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de Conectar}
+\begin{algorithmic}[0]
+\Function{iConectar}{inout r: estr\_red, in c1: hostname}{}
+
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de Vecinos}
+\begin{algorithmic}[0]
+\Function{iVecinos}{inout r: estr\_red, in c1: hostname}{$\rightarrow$ res: conj(hostname)}
+	\State it $\gets$ CrearIt(Significado(r,c1).conexiones) \Comment{O(1) + O(n)}
+	\State res $\gets$ Vacio() \Comment{Conjunto} \Comment{O(1)}
+	\While{HaySiguiente(it)} \Comment{Guarda: O(1)} \Comment{El ciclo se ejecuta a lo sumo n-1 veces} \Comment{O(n)}
+		\State AgregarRapido(res, SiguienteSignificado(it)) \Comment{O(L)}
+		\State Avanzar(it) \Comment{O(1)}
+	\EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de UsaInterfaz}
+\begin{algorithmic}[0]
+\Function{iUsaInterfaz}{in r: estr\_red, in c: hostname, in i: interfaz}{$\rightarrow$ res: bool}
+	\State res $\gets$ Definido?(Significado(r,c).conexiones,i) \Comment{O(comparar(nat)*n)}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de CaminosMinimos}
+\begin{algorithmic}[0]
+\Function{iCaminosMinimos}{in r: estr\_red, in c1: hostname, in c2: hostname}{$\rightarrow$ res: conj(lista(hostname))}
+	\State itCaminos $\gets$ crearIt(Significado(Significado(r,c1).alcanzables, c2)) \Comment{O(1) + O(L*n)}
+	\State res $\gets$ Vacio() \Comment{Conjunto} \Comment{O(1)}
+	\While{HaySiguiente(itCaminos)}
+		\State AgregarRapido(res, Siguiente(itCaminos)) \Comment{O(1)}
+		\State Avanzar(itCaminos) \Comment{O(1)}	
+	\EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de HayCamino?}
+\begin{algorithmic}[0]
+\Function{iHayCamino?}{in r: estr\_red, in c1: hostname, in c2: hostname}{$\rightarrow$ res: bool}
+	\State res $\gets$ Definido?(Significado(r,c1).alcanzables, c2)
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de ==}
+\begin{algorithmic}[0]
+\Function{iIgualdad}{in r1: estr\_red, in r2: estr\_red}{$\rightarrow$ res: bool}
+	\State res $\gets$ TRUE	\Comment{O(1)}
+	\If{$\neg$($\#$Claves(r1)==$\#$Claves(r2))} \Comment{O(comparar(nat))}
+		\State res $\gets$ FALSE \Comment{O(1)}
+	\Else
+		\State itRed1 $\gets$ CrearIt(r1) \Comment{O(1)}
+		\While{HaySiguiente(itRed1) $\&\&$ res} \Comment{O(1)}
+			\If{$\neg$(Definido?(r2, SiguienteClave(itRed1))} \Comment{O(L*n)}
+				\State res $\gets$ FALSE \Comment{O(1)}
+			\Else
+				\State Compu2 $\gets$ Significado(r2,SiguienteClave(itRed1)) \Comment{O(L*n)}
+				\State Compu1 $\gets$ SiguienteSignificado(itRed1) \Comment{O(1)}
+				
+				\If{$\neg$(Comp1.interfaces == Comp2.interfaces)} \Comment{O(m*m) con m=cantidad de interfaces}
+					\State res $\gets$ FALSE \Comment{O(1)}
+				\EndIf
+				
+				\If{$\neg$(Comp1.conexiones == Comp2.conexiones)}
+					\State res $\gets$ FALSE \Comment{O(1)}
+				\EndIf
+				
+				\If{$\neg$($\#$Claves(Compu1.alcanzables)==$\#$Claves(Compu2.alcanzables))}
+					\State res $\gets$ FALSE \Comment{O(1)}
+				\Else
+					\State itAlc1 $\gets$ CrearIt(Compu1.alcanzables) \Comment{O(1)}
+					\While{HaySiguiente(itAlc1) $\&\&$ res} \Comment{se ejecuta a lo sumo n$-$1 veces} \Comment{O(n)}
+						\If{$\neg$(Definido?(Comp2.alcanzables, SiguienteClave(itAlc1)))} \Comment{O(m)}
+							\State res $\gets$ FALSE
+						\Else
+							\State Caminos1 $\gets$ SiguienteSignificado(itAlc1) \Comment{O(1)}
+							\State Caminos2 $\gets$ Significado(Comp2.alcanzables, itAlc1) \Comment{O(n)}
+							\If{$\neg$(Longitud(Caminos1) == Longitud(Caminos2))} \Comment{O(comparar(nat))}
+								\State res $\gets$ FALSE
+							\Else
+								\State itCaminos1 $\gets$ CrearIt(Caminos1) \Comment{O(1)}
+								\While{HaySiguiente(itCaminos1) $\&\&$ res}
+									\State itCaminos2 $\gets$ CrearIt(Caminos2) \Comment{O(1)}
+									\State noEncontro $\gets$ TRUE \Comment{O(1)}
+									\While{HaySiguiente(itCaminos2) $\&\&$ noEncontro}
+										\If{Siguiente(itCaminos2) == Siguiente(ItCaminos1)}
+											\State noEncontro $\gets$ FALSE
+										\EndIf
+										\State Avanzar(itCaminos2) \Comment{O(1)}
+									\EndWhile
+									\If{noEncontro} \Comment{O(1)}
+										\State res $\gets$ FALSE \Comment{O(1)}
+									\EndIf
+									\State Avanzar(itCaminos1) \Comment{O(1)}
+								\EndWhile
+							\EndIf
+							
+							
+						\EndIf
+						\State Avanzar(itAlc1) \Comment{O(1)}
+					\EndWhile
+					
+				\EndIf
+				
+			\EndIf
+			\State Avanzar(itRed1) \Comment{O(1)}
+		\EndWhile
+	\EndIf
+	
+	
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\end{Algoritmos}
+
+\newpage
+
+

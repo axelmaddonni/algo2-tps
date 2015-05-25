@@ -1,0 +1,344 @@
+\begin{Interfaz}
+
+  \textbf{usa}: \tadNombre{red, conj($\alpha$), itConj($\alpha$), lista($\alpha$), itLista($\alpha$), dicc$_{TRIE}$($\kappa$, $\sigma$), dicc$_{AVL}$($\kappa$, $\sigma$), conj$_{HEAP}$($\alpha$),  itConj$_{HEAP}$($\alpha$)}.
+  
+  \textbf{se explica con}: \tadNombre{DCNet}.
+
+  \textbf{g\'eneros}: \TipoVariable{dcnet}.
+
+  \Titulos{Operaciones de DCNet}
+
+  \InterfazFuncion{Red}{\In{d}{dcnet}}{red}
+  {alias($res$ =$_{obs}$ red($d$))}%
+  []
+  [devuelve la red asociada.]
+  [res no es modificable.]
+
+  \InterfazFuncion{CaminoRecorrido}{\In{d}{dcnet}, \In{p}{IDpaquete}}{lista(hostname)}
+  [IDpaqueteEnTransito?($d$, $p$)]
+  {$res$ =$_{obs}$ dameSecuDeHostnames(caminoRecorrido($d$, damePaquete($p$)))}%
+  []
+  [devuelve el camino recorrido desde el origen hasta el actual.]
+  [res se devuelve por copia.]
+  
+  \InterfazFuncion{CantidadEnviados}{\In{d}{dcnet}, \In{c}{hostname}}{nat}
+  [$c$ $\in$ dameHostnames(computadoras(red($d$)))]
+  {$res$ =$_{obs}$ cantidadEnviados($d$, dameCompu($c$))}%
+  []
+  [devuelve la cantidad de paquetes enviados por la computadora.]
+  []
+
+  \InterfazFuncion{EnEspera}{\In{d}{dcnet}, \In{c}{hostname}}{conj(paquete)}
+  [$c$ $\in$ dameHostnames(computadoras(red($d$)))]
+  {alias($res$ =$_{obs}$ enEspera($d$, dameCompu($c$)))}%
+  []
+  [devuelve los paquetes en la cola de la computadora.]
+  [res no es modificable.]
+  
+  \InterfazFuncion{IniciarDCNet}{\In{r}{red}}{dcnet}
+  [true]
+  {$res$ =$_{obs}$ iniciarDCNet($r$)}%
+  []
+  [crea una nueva Dcnet.]
+  [la red se agrega por copia.]
+    
+  \InterfazFuncion{CrearPaquete}{\Inout{d}{dcnet}, \In{p}{paquete}}{}
+  [$d$ = $d_0$ $\wedge$ $\neg$( ($\exists$ $p\sp{\prime}$: paquete) (paqueteEnTransito?($d$, $p\sp{\prime}$) $\wedge$ id($p\sp{\prime}$) = id($p$) ) $\wedge$ \newline
+  origen($p$) $\in$ computadoras(red($d$)) $\wedge_L$ destino($p$) $\in$ computadoras(red($d$)) $\wedge_L$ hayCamino?(red($d$), origen($p$), destino($p$))]
+  {$d$ $=_{obs}$ crearPaquete($d_0$, $p$)}%
+  []
+  [agrega un paquete a la red.]
+  [el paquete se agrega por copia.]
+
+  \InterfazFuncion{AvanzarSegundo}{\Inout{d}{dcnet}}{}
+  [$d$ = $d_0$]
+  {$d$ =$_{obs}$ avanzarSegundo($d_0$)}%
+  []
+  [realiza los movimientos de paquetes correspondientes, aplicando los cambios necesarios a la dcnet.]
+  []
+  
+  \InterfazFuncion{PaqueteEnTransito?}{\In{d}{dcnet}, \In{p}{IDpaquete}}{bool}
+  [true]
+  {$res$ =$_{obs}$ IDpaqueteEnTransito?($d$, $p$)}%
+  []
+  [indica si el paquete esta en alguna de las colas dado el ID.]
+  []
+  
+  \InterfazFuncion{LaQueMasEnvio}{\In{d}{dcnet}}{hostname}
+  [true]
+  {$res$ =$_{obs}$ laQueMasEnvio($d$).ip}%
+  []
+  [devuelve la computadora que m\'as paquetes envi\'o.]
+  [res se devuelve por copia.]  
+  
+  \InterfazFuncion{$\bullet = \bullet$}{\In{d_1}{dcnet}, \In{d_2}{dcnet}}{bool}
+  [true]
+  {$res$ =$_{obs}$ ($d_1$ =$_{obs}$ $d_2$}%
+  []
+  [indica si dos dcnet son iguales.]
+  []  
+  
+  \textbf{donde:} \newline  
+   \TipoVariable{hostname} es \TipoVariable{string}, \newline
+   \TipoVariable{interfaz} es \TipoVariable{nat}, \newline
+   \TipoVariable{IDpaquete} es \TipoVariable{nat}, \newline
+   \TipoVariable{compu} es \TipoVariable{tupla}< ip: \TipoVariable{hostname}, interfaces: \TipoVariable{conj}(\TipoVariable{interfaz})>, \newline
+   \TipoVariable{paquete} es \TipoVariable{tupla}< id: \TipoVariable{IDpaquete}, prioridad: \TipoVariable{nat}, origen: \TipoVariable{hostname}, destino: \TipoVariable{hostname} >.
+   
+\end{Interfaz}
+
+\textbf{} %dejo un espacio
+
+\textbf{Especificaci\'on de las operaciones auxiliares utilizadas en la interfaz}
+
+\begin{tad}{\tadNombre{DCNet extendida}}
+
+\tadExtiende{\tadNombre{DCNet}}
+
+\tadOtrasOperaciones (no exportadas)
+
+\tadOperacion{damehostnames}{conj(compu)}{conj(hostname)}{}
+\tadOperacion{dameCompu}{dcnet /d, hostname /s}{compu}{$s$ $\in$ dameHostnames(computadoras(red($d$)))}
+\tadOperacion{auxDameCompu}{hostname /s, conj(compu) /cc}{compu}{}
+\tadOperacion{dameSecuDeHostnames}{secu(compu)}{secu(hostname)}{}
+\tadOperacion{IDpaqueteEnTransito?}{dcnet /d, IDpaquete /p}{bool}{}
+\tadOperacion{damePaquete}{dcnet /d, IDpaquete /p}{paquete}{IDpaqueteEnTransito?($d$,$p$)}
+\tadOperacion{dameIDpaquetes}{conj(paquete)}{conj(IDpaquete)}{}
+
+\tadAxiomas[\paratodo{dcnet}{d}, \paratodo{hostname}{s}, \paratodo{IDpaquete}{p}, \paratodo{conj(compu)}{cc}, , \paratodo{secu(compu)}{secu}, \paratodo{conj(paquete)}{cp}, ]
+
+\tadAxioma{dameHostnames($cc$)}
+{ \IF {vacio?($cc$)} 
+THEN {$\emptyset$}
+ELSE {Ag( ip(dameUno($cc$)), dameHostnames(sinUno($cc$)) )}
+FI}
+
+\tadAxioma{dameCompu($d$, $s$)}{auxDameCompu($s$, computadoras(red(($d$)))}
+
+\tadAxioma{auxDameCompu($s$, $cc$)}
+{ \IF {ip(dameUno($cc$)) = $s$} 
+THEN {dameUno($cc$)}
+ELSE {auxDameCompu($s$, sinUno($cc$))}
+FI}
+
+\tadAxioma{dameSecuDeHostnames($secu$)}
+{ \IF {vacia?($secu$)} 
+THEN {$<>$}
+ELSE {ip(prim($secu$)) $\bullet$ dameSecuDeHostnames(fin($secu$)) }
+FI}
+
+\tadAxioma{IDpaqueteEnTransito?($d$, $p$)}{auxIDpaqueteEnTransito($d$, computadoras(red($d$)), $p$)}
+
+\tadAxioma{auxIDpaqueteEnTransito($d$, $cc$, $p$)}
+{ \IF {vacio?($cc$)} 
+THEN {false}
+ELSE { \IF {$p$ $\in$ dameIDpaquetes(enEspera(dameUno($cc$)))}
+		THEN {true}
+		ELSE { auxIDpaqueteEnTransito($d$, sinUno($cc$), $p$)}
+		FI}
+FI}
+
+\tadAxioma{dameIDpaquetes($cp$)}
+{ \IF {vacio?($cp$)} 
+THEN {$\emptyset$}
+ELSE {Ag( id(dameUno($cp$)), dameIDpaquetes(sinUno($cp$)) )}
+FI}
+
+\end{tad}
+
+\begin{Representacion}
+
+\begin{Estructura}{dcnet}[estr\_dcnet]
+
+\begin{Tupla}[estr\_dcnet]
+	\tupItem{red}{red} \newline \nomoreitems
+	\tupItem{todos}{conj(X)} \newline \nomoreitems
+	\tupItem{porHostname}{dicc$_{TRIE}$ (hostname, itConj(X))} \newline \nomoreitems
+	\tupItem{conMasEnvios}{itConj(X)} \newline \nomoreitems
+	\tupItem{proxDest}{arreglo\_dimensionable de arreglo\_dimens. de lista(compu)} \nomoreitems
+\end{Tupla}
+
+\begin{Tupla}[X]
+	\tupItem{compu}{hostname} \newline \nomoreitems
+	\tupItem{indice}{nat} \newline \nomoreitems
+	\tupItem{paquetes}{conj(paquete)} \newline \nomoreitems
+	\tupItem{cola}{conj$_{HEAP}$(itConj(paquete))} \newline \nomoreitems
+	\tupItem{paqPorID}{dicc$_{AVL}$ (IDpaquete, itConj(paquete))} \newline \nomoreitems
+	\tupItem{cantEnvios}{nat} \nomoreitems
+\end{Tupla} 
+
+\end{Estructura}
+
+\Rep[estr\_dcnet]{....}
+
+\AbsFc[estr\_dcnet]{dcnet}[d]{...}
+
+\end{Representacion}
+
+\newpage
+
+\begin{Algoritmos}
+
+\begin{algorithm}
+\caption{Implementaci\'on de PaqueteEnTransito?}
+\begin{algorithmic}[0]
+\Function{iPaqueteEnTransito?}{in d: estr\_dcnet, in p:IDpaquete}{$\rightarrow$ res: bool}
+	\State res $\gets$ false \Comment{O(1)}
+	\State itCompu $\gets$ crearIt(d.computadoras) \Comment{O(1)}
+	\While { HaySiguiente(itCompu) $\&\&$ $\neg$res}  
+		\newline  \Comment{a lo sumo n veces, la guarda es O(1)}
+		\State itPaq $\gets$ crearIt(siguienteSignificado(itCompu).paquetes) \Comment{O(1)}
+		\While {(HaySiguiente(itPaq) $\&\&$ Siguiente(itPaq).id $\neq$ p)} 
+		\Comment{a lo sumo k veces, la guarda es O(1)}
+			\State Avanzar(itPaq)  \Comment{O(1)}
+		\EndWhile
+		\If {Siguiente(itPaq) == p)} \Comment{O(1)}
+			\State res $\gets$ True \Comment{O(1)}
+		\EndIf
+		\State Avanzar(itCompu) \Comment{O(1)}
+	\EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de LaQueMasEnvi\'o}
+\begin{algorithmic}[0]
+\Function{iLaQueMasEnvi\'o}{in d: estr\_dcnet}{$\rightarrow$ res: hostname}
+	\State res $\gets$ SiguienteClave(d.conMasEnvios)	
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de AvanzarSegundo}
+\begin{algorithmic}[0]
+
+\Function{iAvanzarSegundo}{inout d: estr\_dcnet}{}
+
+	\State arreglo $\gets$ crearArreglo[$\#$Claves(d.computadoras)] de tupla(usado: bool, paquete: paquete, destino: string), donde paquete es tupla(IDpaquete: nat, prioridadL nat, origen: string, destino: string)
+	\State \Comment {O(n) para calcular cantidad de claves, O(1) para crearlo}
+	
+	\For {(int i=0,  $<$ $\#$Claves(d.computadoras), i++)} \Comment {el ciclo se har\'a n veces}
+	\State arreglo[i].usado = false \Comment {O(1)}
+	\EndFor
+	
+%	\comentario {Inicializo Variables}
+%	\State nat origen
+%	\State nat destino
+%	\State string proxDest
+%	\State paquete paqueteDesencolado
+%	\State nat IDpaq
+	
+	\comentario {Inicializo Iterador}
+	\State itCompu $\gets$ crearIt(d.computadoras) \Comment {O(1)}
+	\State i $\gets$ 0
+	
+	\State \Comment {Ciclo 1: Desencolo y guardo en arreglo auxiliar.}
+	\While { (HaySiguiente(itCompu))} \Comment {el ciclo se har\'a a lo sumo n veces}
+		\If {($\neg$(Vacia?(SiguienteSignificado(itCompu).cola)))} \Comment {O(1)}
+			\comentario{Borro el de mayor priorirdad del heap:}
+			\State itPaquete $\gets$ Desencolar(SiguienteSignificado(itCompu).cola)
+			 \Comment {O(log k)}
+			\comentario{Lo elimino del dicc AVL}
+			\State Borrar(SiguienteSignificado(itCompu).paquetesPorID, Siguiente(itPaquete).IDpaquete)
+			\State	\Comment {O(log k)}
+			\comentario{Guardo el paquete en una variable}
+			\State paqueteDesencolado $\gets$ Siguiente(itPaquete) \Comment {O(1)}
+			\comentario{Lo elimino del conjunto lineal de paquetes}
+			\State EliminarSiguiente(itPaquete) \Comment {O(1)}
+			\comentario{Calculo proximo destino fijandome en la matriz}
+			\comentario{El origen lo tengo en O(1) en el significado del iterador de compus.}
+			\State origen $\gets$ (SiguienteSignificado(itCompu)).indice \Comment {O(1)}
+			\comentario{El destino lo obtengo en O(L) buscando por hostname el destino del paquete, y luego guardo el indice.}
+			\State itdestino $\gets$ Significado(d.porHostname, paqueteDesencolado.destino) 
+				\Comment {O(L)}
+			\State destino $\gets$ (SiguienteSignificado(itdestino)).indice 	\Comment {O(1)}
+			\State proxDest $\gets$ d.caminos[origen][destino][1]	\Comment {O(1)}
+			\comentario{Lo inserto en el arreglo junto con el destino s\'olo si el destino no era el final.}
+			\If {(proxDest $\neq$ paqueteDesencolado.destino)}
+				\State arreglo[i] $\gets$ $<$true, paqueteDesencolado, proxDest$>$ \Comment {O(1)}
+			\EndIf
+			\comentario{Aumento cantidad de env\'ios}
+			\State SiguienteSignificado(itCompu).cantEnvios ++ \Comment {O(1)}
+			\comentario{Actualizo conMasEnvios}
+			\State envios $\gets$ SiguienteSignificado(itCompu).cantEnvios \Comment {O(1)}
+			\If {(envios $>$ SiguienteSIgnificado(d.conMasEnvios).cantEnvios)} \Comment {O(1)}
+				\State d.conMasEnvios $\gets$ itCompu
+			\EndIf
+		\EndIf
+		\comentario{Avanzo de computadora}
+		\State Avanzar(itCompu)	\Comment {O(1)}
+		\State i++
+	\EndWhile
+	
+	\algstore {ciclo2}
+	
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\begin{algorithmic}[0]
+
+	\algrestore {ciclo2}
+	
+	\State \Comment {Ciclo 2: Encolo los paquetes del vector a sus destinos correspondientes.}
+	\State i $\gets$ 0
+	\While { HaySiguiente(itCompu)} 	\Comment {el ciclo se har\'a a lo sumo n veces}
+		\If {arreglo[i].usado}
+			\comentario{Busco el proxDestino guardado en el arreglo por hostname.}
+			\State itdestino $\gets$ Significado(d.porHostname, arreglo[i].destino) \Comment {O(L)}
+			\comentario{Agrego el paquete al conjunto de paquetes del prox destino.}
+			\State itpaquete $\gets$ AgregarRapido(SiguienteSignificado(itdestino).paquetes, arreglo[i].paquete) 
+			\State \Comment {O(1)}
+			\comentario{Encolo el heap del destino}
+			\State prioridad $\gets$ (arreglo[i].paquete).prioridad
+			\State Encolar(SiguienteSignificado(itdestino).cola, prioridad, itpaquete) \Comment {O(log k)}
+			\comentario{Lo agrego en el dicc AVL.}
+			\State IDpaq $\gets$ (arreglo[i].paquete).IDpaquete 		\Comment {O(1)}
+			\State Definir(SiguienteSignificado(itdestino).paquetesPorID, IDpaq, itpaquete) \Comment {O(log k)}
+		\EndIf
+	\State i++
+	\State Avanzar(itCompu)
+	\EndWhile
+	
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de ==}
+\begin{algorithmic}[0]
+\Function{iIgualdad}{in d1: estr\_dcnet, in d2: estr\_dcnet}{$\rightarrow$ res: bool}
+	\comentario {Comparo redes usando == de red}
+	\State res $\gets$ (d1.red == d2.red)						\Comment {O(???)}
+	\If {(res)} 													\Comment {O(1)}
+		\State itCompu $\gets$ crearIt(d1.computadoras)  		\Comment {O(1)}
+		\State string host 										\Comment {O(1)}
+		\comentario {Recorro las computadoras}
+		\While { (HaySiguiente(itCompu) $\&\&$ res) }	\Comment {itero O(n) veces, la guarda es O(1)}
+			\State host $\gets$ SiguienteClave(itCompu)			 \Comment {O(1)}
+			\comentario{Comparo enEspera usando == de conjunto lineal, y cant. enviados}
+			\State res $\gets$ (enEspera(d1, host) == enEspera(d2, host) $\&\&$ \newline  cantidadEnviados(d1,host) == cantidadEnviados(d2,host))  \Comment {O(???)}
+			\State itpaq $\gets$ crearIt(SiguienteSignificado(itCompu).paquetes) \Comment {O(1)}
+			\State int j $\gets$ 0												\Comment {O(1)}
+			\State nat id														\Comment {O(1)}
+			\comentario{Recorro paquetes de cada computadora}
+			\While { (HaySiguiente(itpaq) $\&\&$ res )}	\Comment {itero O(k) veces, la guarda es O(1)}
+				\State id $\gets$ Siguiente(itpaq).IDpaquete 					\Comment {O(1)}
+				\comentario {Comparo caminosRecorridos usando == de listas enlazadas}
+				\State res $\gets$ (caminoRecorrido(d1, id) == caminoRecorrido(d2, id)) \Comment {O(???)}
+				\State avanzar(itpaq)											\Comment {O(1)}
+			\EndWhile
+		\State avanzar (itCompu)													\Comment {O(1)}
+		\EndWhile
+	\EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\end{Algoritmos}
+
+\clearpage
+
+

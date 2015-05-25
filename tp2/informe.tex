@@ -1,0 +1,237 @@
+\documentclass[10pt, a4paper]{article}
+\usepackage[paper=a4paper, left=1.5cm, right=1.5cm, bottom=1.5cm, top=3.5cm]{geometry}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{indentfirst}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{lastpage}
+\usepackage{xspace}
+\usepackage{xargs}
+\usepackage{ifthen}
+\usepackage{Paquetes-Latex/texmf/tex/latex/aed2-tad/aed2-tad,Paquetes-Latex/texmf/tex/latex/aed2-symb/aed2-symb,Paquetes-Latex/texmf/tex/latex/aed2-itef/aed2-itef,Paquetes-Latex/texmf/tex/latex/aed2-tokenizer/aed2-tokenizer,Paquetes-Latex/texmf/tex/latex/caratula/caratula}
+\usepackage[colorlinks=true, linkcolor=blue]{hyperref}
+\usepackage{calc}
+\usepackage{vmargin}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{placeins}
+
+\setpapersize{A4}
+\setmargins{2.5cm}       % margen izquierdo
+{1.5cm}                        % margen superior
+{16.5cm}                      % anchura del texto
+{23.42cm}                    % altura del texto
+{10pt}                           % altura de los encabezados
+{1cm}                           % espacio entre el texto y los encabezados
+{0pt}                             % altura del pie de página
+{2cm}  
+
+\newcommand{\f}[1]{\text{#1}}
+\renewcommand{\paratodo}[2]{$\forall~#2$: #1}
+
+
+% CODIGO PARA ESTILO DE MODULOS BASICOS -----------------------------------------
+\newcommand{\moduloNombre}[1]{\textbf{#1}}
+
+\let\NombreFuncion=\textsc
+\let\TipoVariable=\texttt
+\let\ModificadorArgumento=\textbf
+\newcommand{\res}{$res$\xspace}
+\newcommand{\tab}{\hspace*{7mm}}
+
+\newcommandx{\TipoFuncion}[3]{%
+  \NombreFuncion{#1}(#2) \ifx#3\empty\else $\to$ \res\,: \TipoVariable{#3}\fi%
+}
+\newcommand{\In}[2]{\ModificadorArgumento{in} \ensuremath{#1}\,: \TipoVariable{#2}\xspace}
+\newcommand{\Out}[2]{\ModificadorArgumento{out} \ensuremath{#1}\,: \TipoVariable{#2}\xspace}
+\newcommand{\Inout}[2]{\ModificadorArgumento{in/out} \ensuremath{#1}\,: \TipoVariable{#2}\xspace}
+\newcommand{\Aplicar}[2]{\NombreFuncion{#1}(#2)}
+
+\newlength{\IntFuncionLengthA}
+\newlength{\IntFuncionLengthB}
+\newlength{\IntFuncionLengthC}
+%InterfazFuncion(nombre, argumentos, valor retorno, precondicion, postcondicion, complejidad, descripcion, aliasing)
+\newcommandx{\InterfazFuncion}[9][4=true,6,7,8,9]{%
+  \hangindent=\parindent
+  \TipoFuncion{#1}{#2}{#3}\\%
+  \textbf{Pre} $\equiv$ \{#4\}\\%
+  \textbf{Post} $\equiv$ \{#5\}%
+  \ifx#6\empty\else\\\textbf{Complejidad:} #6\fi%
+  \ifx#7\empty\else\\\textbf{Descripción:} #7\fi%
+  \ifx#8\empty\else\\\textbf{Aliasing:} #8\fi%
+  \ifx#9\empty\else\\\textbf{Requiere:} #9\fi%
+}
+
+\newenvironment{Interfaz}{%
+  \parskip=2ex%
+  \noindent\textbf{\Large Interfaz}%
+  \par%
+}{}
+
+\newenvironment{Representacion}{%
+  \vspace*{2ex}%
+  \noindent\textbf{\Large Representación}%
+  \vspace*{2ex}%
+}{}
+
+\newenvironment{Algoritmos}{%
+  \vspace*{2ex}%
+  \noindent\textbf{\Large Algoritmos}%
+  \vspace*{2ex}%
+}{}
+
+
+\newcommand{\Titulos}[1]{
+  \vspace*{1ex}\par\noindent\textbf{\large #1}\par
+}
+
+\newenvironmentx{Estructura}[2][2={estr}]{%
+  \par\vspace*{2ex}%
+  \TipoVariable{#1} \textbf{se representa con} \TipoVariable{#2}%
+  \par\vspace*{1ex}%
+}{%
+  \par\vspace*{2ex}%
+}%
+
+\newboolean{EstructuraHayItems}
+\newlength{\lenTupla}
+\newenvironmentx{Tupla}[1][1={estr}]{%
+    \settowidth{\lenTupla}{\hspace*{3mm}donde \TipoVariable{#1} es \TipoVariable{tupla}$($}%
+    \addtolength{\lenTupla}{\parindent}%
+    \hspace*{3mm}donde \TipoVariable{#1} es \TipoVariable{tupla}$($%
+    \begin{minipage}[t]{\linewidth-\lenTupla}%
+    \setboolean{EstructuraHayItems}{false}%
+}{%
+    $)$%
+    \end{minipage}
+}
+
+\newcommandx{\tupItem}[3][1={\ }]{%
+    %\hspace*{3mm}%
+    \ifthenelse{\boolean{EstructuraHayItems}}{%
+        ,#1%
+    }{}%
+    \emph{#2}: \TipoVariable{#3}%
+    \setboolean{EstructuraHayItems}{true}%
+}
+
+\newcommandx{\nomoreitems}{
+    \setboolean{EstructuraHayItems}{false}%
+}
+
+\newcommandx{\RepFc}[3][1={estr},2={e}]{%
+  \tadOperacion{Rep}{#1}{bool}{}%
+  \tadAxioma{Rep($#2$)}{#3}%
+}%
+
+\newcommandx{\Rep}[3][1={estr},2={e}]{%
+  \tadOperacion{Rep}{#1}{bool}{}%
+  \tadAxioma{Rep($#2$)}{true \ssi #3}%
+}%
+
+\newcommandx{\Abs}[5][1={estr},3={e}]{%
+  \tadOperacion{Abs}{#1/#3}{#2}{Rep($#3$)}%
+  \settominwidth{\hangindent}{Abs($#3$) \igobs #4: #2 $\mid$ }%
+  \addtolength{\hangindent}{\parindent}%
+  Abs($#3$) \igobs #4: #2 $\mid$ #5%
+}%
+
+\newcommandx{\AbsFc}[4][1={estr},3={e}]{%
+  \tadOperacion{Abs}{#1/#3}{#2}{Rep($#3$)}%
+  \tadAxioma{Abs($#3$)}{#4}%
+}%
+
+
+\newcommand{\DRef}{\ensuremath{\rightarrow}}
+
+\newcommand\LONGCOMMENT[1]{%
+  \hfill\#\ \begin{minipage}[t]{\eqboxwidth{COMMENT}}#1\strut\end{minipage}%
+}
+
+\newcommand{\comentario}[1]{\textcolor{cyan}{\textit{\newline $\setminus \setminus $ #1}}}
+
+% fin CODIGO PARA ESTILO DE MODULOS BASICOS -----------------------------------------
+
+\sloppy
+
+\hypersetup{%
+ % Para que el PDF se abra a página completa.
+ %pdfstartview= {FitH \hypercalcbp{\paperheight-\topmargin-1in-\headheight}},
+ pdfauthor={Cátedra de Algoritmos y Estructuras de Datos II - DC - UBA},
+ pdfkeywords={TADs básicos},
+ pdfsubject={Diseño}
+}
+
+\parskip=5pt % 10pt es el tamaño de fuente
+
+% Pongo en 0 la distancia extra entre ítemes.
+\let\olditemize\itemize
+\def\itemize{\olditemize\itemsep=0pt}
+
+% Acomodo fancyhdr.
+\pagestyle{fancy}
+\thispagestyle{fancy}
+\addtolength{\headheight}{1pt}
+\cfoot{\thepage /\pageref{LastPage}}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\author{}
+\date{}
+\title{}
+
+% Encabezado
+\lhead{Algoritmos y Estructuras de Datos II}
+\rhead{Grupo 21}
+% Pie de pagina
+\renewcommand{\footrulewidth}{0.4pt}
+\lfoot{Facultad de Ciencias Exactas y Naturales}
+\rfoot{Universidad de Buenos Aires}
+
+\begin{document}
+
+\materia{Algoritmos y Estructuras de Datos II}
+\titulo{Trabajo Pr\'actico N\'umero 2}
+\subtitulo{DCNet}
+\grupo{Grupo: 21}
+
+\integrante{Alvarez, Lautaro Leonel}{268/14}{lautarolalvarez@gmail.com}
+\integrante{Maddonni, Axel Ezequiel}{200/14}{axel.maddonni@gmail.com}
+\integrante{Thibeault, Gabriel Eric}{114/13}{grojo94@hotmail.com}
+\integrante{Vigali, Leandro Ezequiel}{951/12}{leandrovigali@yahoo.com.ar}
+
+\maketitle
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+%MODULOS
+
+\section{Módulo Red}
+\input{Red}
+
+\newpage
+
+\section{Módulo DCNet}
+\input{DCNet}
+
+\newpage
+
+\section{Módulo Cola de Prioridad $_{HEAP}$ ($\alpha$) }
+\input{Heap}
+
+\newpage
+
+\section{Módulo Diccionario $_{TRIE}$ ($\alpha$) }
+\input{Trie}
+
+\newpage
+
+\section{Módulo Diccionario $_{AVL}$ ($\kappa$, $\sigma$) }
+\input{AVL}
+
+\end{document}

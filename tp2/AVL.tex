@@ -1,0 +1,153 @@
+\begin{Interfaz}
+  
+  \textbf{usa}: \tadNombre{}.
+  
+  \textbf{se explica con}: \tadNombre{Diccionario(clave,significado)}.
+
+  \textbf{g\'eneros}: \TipoVariable{dicc$_{AA}$(clave, significado}.
+
+  \Titulos{Operaciones}
+
+  \InterfazFuncion{Definido?}{\In{d}{dicc$_{AA}$(clave, significado)}, \In{c}{clave}}{Bool}
+  []
+  {res $\igobs$ def?(c,d)}
+  [O(log(n))]
+
+  \InterfazFuncion{Significado}{\In{d}{dicc$_{AA}$(clave,significado)}, \In{c}{clave}}{significado}
+  [def?(c,d)]
+  {res $\igobs$ obtener(c,d)}
+  [O(log(n))]
+  
+  \InterfazFuncion{Vacio}{}{dicc$_{AA}$(clave,significado)}
+  {res $\igobs$ vacio()}
+  [O(1)]
+  
+  \InterfazFuncion{Definir}{\Inout{d}{dicc$_{AA}$(clave,significado)}, \In{c}{clave}, \In{s}{significado}}{}
+  [$\neg$def?(c,d) $\wedge$ d=d$_0$]
+  {d=definir(c,d$_0$)}
+  [O()]
+  
+  \InterfazFuncion{Borrar}{\Inout{d}{dicc$_{AA}$(clave,significado)}, \In{c}{clave}}{}
+  [def?(c,d) $\wedge$ d=d$_0$]
+  {d=borrar(c,d$_0$)}
+  [O()]
+
+\end{Interfaz}
+
+\begin{Representacion}
+
+\begin{Estructura}{dicc$_{AA}$}[estr\_AA]
+
+\textbf{donde:} \newline 
+\TipoVariable{estr\_AA} es \TipoVariable{dicc$_{AA}$(id, it)} \newline
+   
+\begin{Tupla}[datos]
+\tupItem{id}{\TipoVariable{nat}} \newline \nomoreitems{}
+\tupItem{izquierdo}{\TipoVariable{puntero(nodo(id,it))}} \newline \nomoreitems{}	 
+\tupItem{derecho}{\TipoVariable{puntero(nodo(id,it))}} \newline \nomoreitems{}
+\tupItem{valor}{\TipoVariable{itConj($\alpha$)}} \newline \nomoreitems{}
+\tupItem{altura}{\TipoVariable{nat}}
+\end{Tupla}
+
+   
+\end{Estructura}
+
+\Rep[estr]{....}
+
+\AbsFc[estr]{dicc$_{AA}$(id, it)}[r]{...}
+
+\end{Representacion}
+
+\newpage
+
+\begin{Algoritmos}
+
+\begin{algorithm}
+\caption{Implementaci\'on de Definido?}
+\begin{algorithmic}[0]
+\Function{iDefinido?}{in d: estr\_AA , in c: clave}{$\rightarrow$ res: bool}
+	\State nodoActual $\gets$ d
+	\State res $\gets$ FALSE
+	\While{$\neg$(nodoActual == NULO) $\&\&$ $\neg$res}
+		\If{nodoActual.id == c}
+			res $\gets$ TRUE
+		\Else
+			\If{c < nodoActual.id}
+				nodoActual $\gets$ nodoActual.izquierdo
+			\Else
+				nodoActual $\gets$ nodoActual.derecho
+			\EndIf
+		\EndIf
+	\EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de Significado}
+\begin{algorithmic}[0]
+\Function{iSignificado}{in d: estr\_AA , in c: clave}{$\rightarrow$ res: $\alpha$}
+	\State nodoActual $\gets$ d
+	\State res $\gets$ FALSE
+	\While{$\neg$(nodoActual == NULO) $\&\&$ $\neg$res}
+		\If{nodoActual.id == c}
+			res $\gets$ nodoActual.valor
+		\Else
+			\If{c < nodoActual.id}
+				nodoActual $\gets$ nodoActual.izquierdo
+			\Else
+				nodoActual $\gets$ nodoActual.derecho
+			\EndIf
+		\EndIf
+	\EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de Vacio}
+\begin{algorithmic}[0]
+\Function{iVacio}{}{$\rightarrow$ res: estr\_AA}
+	\State res $\gets$ tupla(0, NULO, NULO, NULO, 0)
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de Definir}
+\begin{algorithmic}[0]
+\Function{iDefinir}{in d: estr\_AA , in c: nat, in s: $\alpha$}{}
+	\State nodoActual $\gets$ d
+	\State yaDefini $\gets$ FALSE
+	\While{$\neg$yaDefini}
+		\If{c < nodoActual.id}
+			\If{nodoActual.izquierdo == NULO}
+				\State nuevoNodo $\gets$ Vacio() \Comment{Dicc$\_AA$}
+				\State nuevoNodo.valor $\gets$ Copiar(s)
+				\State nuevoNodo.id $\gets$ c
+				\State nodoActual.izquierdo $\gets$ nuevoNodo
+				\State yaDefini $gets$ TRUE
+			\Else
+				\State nodoActual $\gets$ nodoActual.izquierdo
+			\EndIf
+		\Else
+			\If{nodoActual.derecho == NULO}
+				\State nuevoNodo $\gets$ Vacio() \Comment{Dicc$\_AA$}
+				\State nuevoNodo.valor $\gets$ Copiar(s)
+				\State nuevoNodo.id $\gets$ c
+				\State nodoActual.derecho $\gets$ nuevoNodo
+				\State yaDefini $gets$ TRUE
+			\Else
+				\State nodoActual $\gets$ nodoActual.derecho
+			\EndIf
+		\EndIf
+	\EndWhile
+	\State nodoActual $\gets$ Torsion(nodoActual)
+	\State nodoACtual $\gets$ Division(nodoActual)
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\FloatBarrier
+\end{Algoritmos}

@@ -1,0 +1,13 @@
+\select@language {spanish}
+\contentsline {section}{\numberline {1}TAD \textsc {Bool}}{2}{section.1}
+\contentsline {section}{\numberline {2}TAD \textsc {Nat}}{2}{section.2}
+\contentsline {section}{\numberline {3}TAD \textsc {Tupla($\alpha _1$, \ldots , $\alpha _n$)}}{3}{section.3}
+\contentsline {section}{\numberline {4}TAD \textsc {Secuencia($\alpha $)}}{4}{section.4}
+\contentsline {section}{\numberline {5}TAD \textsc {Conjunto($\alpha $)}}{5}{section.5}
+\contentsline {section}{\numberline {6}TAD \textsc {Multiconjunto($\alpha $)}}{6}{section.6}
+\contentsline {section}{\numberline {7}TAD \textsc {Arreglo dimensionable($\alpha $)}}{7}{section.7}
+\contentsline {section}{\numberline {8}TAD \textsc {Pila($\alpha $)}}{8}{section.8}
+\contentsline {section}{\numberline {9}TAD \textsc {Cola($\alpha $)}}{9}{section.9}
+\contentsline {section}{\numberline {10}TAD \textsc {\'Arbol binario($\alpha $)}}{9}{section.10}
+\contentsline {section}{\numberline {11}TAD \textsc {Diccionario(clave, significado)}}{10}{section.11}
+\contentsline {section}{\numberline {12}TAD \textsc {Cola de prioridad($\alpha $)}}{11}{section.12}

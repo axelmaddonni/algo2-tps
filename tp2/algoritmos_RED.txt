@@ -1,0 +1,51 @@
+iComputadoras(in r: red) -> res: conj(hostname)
+	it <- crearIt(r)
+	res <- Vacio(); //conjunto
+	while (haySiguiente(it)) {
+		agregar(res, siguienteClave(it))
+		avanzar(it)
+	}
+
+iConectadas?(in r: red, in c1: hostname, in c2: hostname) -> res: bool
+	it <- crearIt(significado(r,c1).alcanzables)
+	while (haySiguiente && !res) {
+		if (siguienteClave(it)==c2) {
+			res <- TRUE
+		}
+	}
+
+iInterfazUsada(in r: red, in c1: hostname, in c2: hostname) -> res: interfaz
+	it <- crearIt(significado(r,c1).conexiones)
+	while (haySiguiente) {
+		if (siguienteSignificado(it)==c2) {
+			res <- siguienteClave(it) //por copia nat
+		}
+	}
+
+iIniciarRed() -> res: red
+	res <- Vacio(); //diccionario
+
+
+
+
+--------DCNET----------
+
+iRed(in d: dcnet) -> res: red
+	res <- d.red //aliasing
+
+iCaminoRecorrido(in d: dcnet, in p: IDPaquete) -> res: lista(hostname)
+	itCompus <- crearIt(d.computadoras)
+	encontrado <- FALSE
+	while (haySiguiente(itCompus) && !encontrado) {
+		if (definido?(siguienteSignifiado(itCompus).paquetesPorID, p)) {
+			paquete <- significado(siguienteSignifiado(itCompus).paquetesPorID, p))
+			encontrado <- TRUE
+		}
+	}
+
+	//buscar camino
+	res<-Caminos()
+
+
+
+	o(n x log(n+k))

@@ -1,0 +1,39 @@
+\begin{Interfaz}
+  
+  \textbf{usa}: \tadNombre{}.
+  
+  \textbf{se explica con}: \tadNombre{Cola de Prioridad Alternativa}.
+
+  \Titulos{Operaciones}
+
+  \Titulos{Operaciones}
+
+  \InterfazFuncion{Definida}{\In{d}{dicc$_{TRIE}$(clave, significado)}, \In{c}{clave}}{Bool}
+  {res $\igobs$ def?(c,d)}
+  [O(L)]
+
+  \InterfazFuncion{Obtener}{\In{d}{dicc$_{TRIE}$(clave,significado)}, \In{c}{clave}}{significado}
+  [def?(c,d)]
+  {res $\igobs$ obtener(c,d)}
+  [O(L)]
+  
+  \InterfazFuncion{vacio}{}{dicc$_{TRIE}$(clave,significado)}
+  {res $\igobs$ vacio()}
+  [O(1)]
+  
+  \InterfazFuncion{definir}{\Inout{d}{dicc$_{TRIE}$(clave,significado)}, \In{c}{}clave, \In{s}{significado}}{Bool}
+  [$\neg$def?(c,d) $\wedge$ d=d$_0$]
+  {d=definir(c,d$_0$)}
+  [O(L)]
+  
+  \InterfazFuncion{borrar}{\Inout{d}{dicc$_{TRIE}$(clave,significado)}, \In{c}{clave}}{Bool}
+  [d=d$_0$]
+  {d=borrar(c,d$_0$)}
+  [O(L)]
+  [Devuelve TRUE si se pudo borrar la clave, o FALSE si no la encontró]
+  
+  \InterfazFuncion{claves}{\In{d}{dicc$_{TRIE}$(clave,significado)}}{conj(clave)}
+  {res $\igobs$ claves(d)}
+  [O()]
+
+\end{Interfaz}
