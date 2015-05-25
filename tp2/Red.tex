@@ -363,7 +363,7 @@ FI}
 \caption{Implementaci\'on de HayCamino?}
 \begin{algorithmic}[0]
 \Function{iHayCamino?}{in r: estr\_red, in c1: hostname, in c2: hostname}{$\rightarrow$ res: bool}
-	\State res $\gets$ Definido?(Significado(r,c1).alcanzables, c2)
+	\State res $\gets$ Definido?(Significado(r,c1).alcanzables, c2) \Comment{O(n*n)}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -374,67 +374,74 @@ FI}
 \Function{iIgualdad}{in r1: estr\_red, in r2: estr\_red}{$\rightarrow$ res: bool}
 	\State res $\gets$ TRUE	\Comment{O(1)}
 	\If{$\neg$($\#$Claves(r1)==$\#$Claves(r2))} \Comment{O(comparar(nat))}
+\comentario{Si la cantidad de claves son distintas => las redes son distintas}
 		\State res $\gets$ FALSE \Comment{O(1)}
 	\Else
 		\State itRed1 $\gets$ CrearIt(r1) \Comment{O(1)}
 		\While{HaySiguiente(itRed1) $\&\&$ res} \Comment{O(1)}
+\comentario{Recorro la red 1 y me fijo para cada una de sus computadoras}
 			\If{$\neg$(Definido?(r2, SiguienteClave(itRed1))} \Comment{O(L*n)}
+\comentario{Si no está definido su hostname en la red 2 => las redes son distintas}
 				\State res $\gets$ FALSE \Comment{O(1)}
 			\Else
 				\State Compu2 $\gets$ Significado(r2,SiguienteClave(itRed1)) \Comment{O(L*n)}
 				\State Compu1 $\gets$ SiguienteSignificado(itRed1) \Comment{O(1)}
-				
+\comentario{Tomo las computadoras de red 1 y red 2 con el mismo hostname y las comparo}
 				\If{$\neg$(Comp1.interfaces == Comp2.interfaces)} \Comment{O(m*m) con m=cantidad de interfaces}
+\comentario{Si sus interfaces son distintas => las redes son distintas}
 					\State res $\gets$ FALSE \Comment{O(1)}
 				\EndIf
 				
 				\If{$\neg$(Comp1.conexiones == Comp2.conexiones)}
+\comentario{Si sus conexiones son distintas => las redes son distintas}
 					\State res $\gets$ FALSE \Comment{O(1)}
 				\EndIf
-				
 				\If{$\neg$($\#$Claves(Compu1.alcanzables)==$\#$Claves(Compu2.alcanzables))}
+\comentario{Si sus cantidades de alcanzables son distintas => las redes son distintas}
 					\State res $\gets$ FALSE \Comment{O(1)}
 				\Else
 					\State itAlc1 $\gets$ CrearIt(Compu1.alcanzables) \Comment{O(1)}
 					\While{HaySiguiente(itAlc1) $\&\&$ res} \Comment{se ejecuta a lo sumo n$-$1 veces} \Comment{O(n)}
+\comentario{Para cada alcanzable de la computadora de la red 1}
 						\If{$\neg$(Definido?(Comp2.alcanzables, SiguienteClave(itAlc1)))} \Comment{O(m)}
+\comentario{Si no est\'a definida en los alcanzables de la compu de la red 2 => las redes son distintas}
 							\State res $\gets$ FALSE
 						\Else
 							\State Caminos1 $\gets$ SiguienteSignificado(itAlc1) \Comment{O(1)}
 							\State Caminos2 $\gets$ Significado(Comp2.alcanzables, itAlc1) \Comment{O(n)}
+\comentario{Me guardo los 2 conjuntos de caminos (de la compu de la red 1 y la de la red 2)}
 							\If{$\neg$(Longitud(Caminos1) == Longitud(Caminos2))} \Comment{O(comparar(nat))}
+\comentario{Si sus cantidades son distintas => las redes son distintas}
 								\State res $\gets$ FALSE
 							\Else
 								\State itCaminos1 $\gets$ CrearIt(Caminos1) \Comment{O(1)}
 								\While{HaySiguiente(itCaminos1) $\&\&$ res}
+\comentario{Para cada camino en el conjunto de caminos de la compu de la red 1}
+\comentario{Recorro los caminos de la compu de la red 2}
 									\State itCaminos2 $\gets$ CrearIt(Caminos2) \Comment{O(1)}
 									\State noEncontro $\gets$ TRUE \Comment{O(1)}
 									\While{HaySiguiente(itCaminos2) $\&\&$ noEncontro}
+\comentario{Busco que el camino de la compu de la red 1 est\'e en la compu de la red 2}
 										\If{Siguiente(itCaminos2) == Siguiente(ItCaminos1)}
 											\State noEncontro $\gets$ FALSE
 										\EndIf
 										\State Avanzar(itCaminos2) \Comment{O(1)}
 									\EndWhile
 									\If{noEncontro} \Comment{O(1)}
+\comentario{Si no encontr\'o alguno => las redes son distintas}
 										\State res $\gets$ FALSE \Comment{O(1)}
 									\EndIf
 									\State Avanzar(itCaminos1) \Comment{O(1)}
 								\EndWhile
 							\EndIf
-							
-							
 						\EndIf
 						\State Avanzar(itAlc1) \Comment{O(1)}
 					\EndWhile
-					
 				\EndIf
-				
 			\EndIf
 			\State Avanzar(itRed1) \Comment{O(1)}
 		\EndWhile
 	\EndIf
-	
-	
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
