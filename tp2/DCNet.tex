@@ -191,7 +191,7 @@ FI}
 \begin{algorithm}
 \caption{Implementaci\'on de CaminoRecorrido}
 \begin{algorithmic}[0]
-\Function{iRed}{\In{d}{estr\_dcnet}, \In{p}{IDPaquete}}{$\rightarrow$ res: lista(hostname)}
+\Function{iCaminoRecorrido}{\In{d}{estr\_dcnet}, \In{p}{IDPaquete}}{$\rightarrow$ res: lista(hostname)}
 	\State itCompu $\gets$ CrearIt(d.computadoras) \Comment{O(1)}
 	\State yaEncontrado $\gets$ FALSE \Comment{O(1)}
 	\While{HaySiguiente(itCompu) $\&\&$ $\neg$yaEncontrado} \Comment{Guarda: O(1)} \Comment{Se repite a lo sumo n veces} \Comment{O(n)}
