@@ -180,6 +180,35 @@ FI}
 
 
 \begin{algorithm}
+\caption{Implementaci\'on de Red}
+\begin{algorithmic}[0]
+\Function{iRed}{\In{d}{estr\_dcnet}}{$\rightarrow$ res: Red}
+	\State res $\gets$ d.red
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de CaminoRecorrido}
+\begin{algorithmic}[0]
+\Function{iRed}{\In{d}{estr\_dcnet}, \In{p}{IDPaquete}}{$\rightarrow$ res: lista(hostname)}
+	\State itCompu $\gets$ CrearIt(d.computadoras) \Comment{O(1)}
+	\State yaEncontrado $\gets$ FALSE \Comment{O(1)}
+	\While{HaySiguiente(itCompu) $\&\&$ $\neg$yaEncontrado} \Comment{Guarda: O(1)} \Comment{Se repite a lo sumo n veces} \Comment{O(n)}
+		\If{Definido?(SiguienteSignificado(itCompu).paqPorID, p)} \Comment{O(log(k))} 
+			\State paquete $\gets$ Significado(SiguienteSignificado(itCompu).paqPorID, p) \Comment{O(1)}
+			\State yaEncontrado $\gets$ TRUE \Comment{O(1)}
+		\Else
+			\State Avanzar(itCompu) \Comment{O(1)}
+		\EndIf
+	\EndWhile
+	
+	\State res $\gets$ caminos[Significado(d.computadoras, $\pi$3(paquete)).indice][SiguienteSignificado(itCompu).indice] \Comment{O(1) + O(n) + O(1)}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
 \caption{Implementaci\'on de paquetes enviados}
 \begin{algorithmic}[0]
 \Function{CantidadEnviados}{\In{d}{estr\_dcnet}, \In{c}{hostname}}{$\rightarrow res$: $nat$}

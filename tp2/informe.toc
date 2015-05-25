@@ -1,6 +1,6 @@
 \select@language {spanish}
 \contentsline {section}{\numberline {1}M\'odulo Red}{3}{section.1}
-\contentsline {section}{\numberline {2}M\'odulo DCNet}{9}{section.2}
-\contentsline {section}{\numberline {3}M\'odulo Cola de Prioridad $_{HEAP}$ ($\alpha $) }{15}{section.3}
-\contentsline {section}{\numberline {4}M\'odulo Diccionario $_{TRIE}$ ($\alpha $) }{20}{section.4}
-\contentsline {section}{\numberline {5}M\'odulo Diccionario $_{AVL}$ ($\kappa $, $\sigma $) }{21}{section.5}
+\contentsline {section}{\numberline {2}M\'odulo DCNet}{10}{section.2}
+\contentsline {section}{\numberline {3}M\'odulo Cola de Prioridad $_{HEAP}$ ($\alpha $) }{18}{section.3}
+\contentsline {section}{\numberline {4}M\'odulo Diccionario $_{TRIE}$ ($\alpha $) }{23}{section.4}
+\contentsline {section}{\numberline {5}M\'odulo Diccionario $_{AVL}$ ($\kappa $, $\sigma $) }{24}{section.5}
