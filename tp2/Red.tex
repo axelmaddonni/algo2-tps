@@ -44,7 +44,7 @@
   []
 
   \InterfazFuncion{Conectar}{\In{r}{red}, \In{c_1}{hostname}, \In{i_1}{interfaz} \In{c_2}{hostname}, \In{i_2}{interfaz}}{}
-  [$r$ = $r_0$ $\wedge$ $c_1, c_2$ $\in$ dameHostnames(computadoras($r$)) $\wedge$ $c_1$ $\neq$ $c_2$	$\wedge$ \newline $\neg$conectadas?($r$, dameCompu($c_1$), dameCompu($c_2$)) $\wedge$ $\neg$usaInterfaz?($r$, dameCompu($c_1$), $i_1$) $\wedge$ $\neg$usaInterfaz?($r$, dameCompu($c_2$), $i_2$)]
+  [$r$ = $r_0$ $\wedge$ $c_1, c_2$ $\in$ dameHostnames(computadoras($r$)) $\wedge$ $c_1$ $\neq$ $c_2$	$\wedge$ \newline $\neg$conectadas?($r$, dameCompu($c_1$), dameCompu($c_2$)) $\wedge$ $\neg$usaInterfaz?($r$, dameCompu($c_1$), $i_1$) $\wedge$ $\neg$usaInterfaz?($r$, dameCompu($c_2$), $i_2$) $\wedge$ $i_1$ $\in$ dameCompu($c_1$).interfaces $\wedge$ $i_2$ $\in$ dameCompu($c_2$).interfaces]
   {$r$ $=_{obs}$ (conectar($r_0$, dameCompu($c_1$), $i_1$, dameCompu($c_2$), $i_2$)}
   []
   [conectar dos computadoras de la red.]
@@ -63,6 +63,8 @@
   []
   [indica si la interfaz est\'a siendo utilizada.]
   []
+
+\newpage
 
   \InterfazFuncion{CaminosMinimos}{\In{r}{red}, \In{c_1}{hostname}, \In{c_2}{hostname}}{conj(lista(hostname))}
   [$c1,\ c2$ $\in$ dameHostnames(computadoras($r$))]
@@ -94,13 +96,15 @@
 
 \textbf{} %dejo un espacio
 
-\textbf{Especificaci\'on de las operaciones auxiliares utilizadas en la interfaz}
+\textbf{Especificaci\'on de las operaciones auxiliares utilizadas en la interfaz (no exportadas)}
 
 \begin{tad}{\tadNombre{Red extendida}}
 
 \tadExtiende{\tadNombre{Red}}
 
-\tadOtrasOperaciones (no exportadas)
+\setlength{\tadAnchoTipoFunciones}{0pt}
+
+\tadOtrasOperaciones 
 
 \tadOperacion{damehostnames}{conj(compu)}{conj(hostname)}{}
 \tadOperacion{dameCompu}{red /r, hostname /s}{compu}{$s$ $\in$ hostnames($r$)}
@@ -148,15 +152,97 @@ FI}
 \begin{Tupla}[datos]
 \tupItem{interfaces}{\TipoVariable{conj(interfaz)}} \newline \nomoreitems{}	 
 \tupItem{conexiones}{\TipoVariable{dicc(interfaz, hostname)}} \newline \nomoreitems{}
-\tupItem{alcanzables}{\TipoVariable{dicc(dest: hostname, caminos: lista(lista(hostname)))}}
+\tupItem{alcanzables}{\TipoVariable{dicc(dest: hostname, caminos: conj(lista(hostname)))}}
 \end{Tupla}
 
-   
+\TipoVariable{hostname} es \TipoVariable{string}, \TipoVariable{interfaz} es \TipoVariable{nat}.
+      
 \end{Estructura}
 
-\Rep[estr]{....}
+\tadAlinearFunciones{REP}{estr\_red /e}
 
-\AbsFc[estr]{red}[r]{...}
+\Rep[estr\_red]{
+	($\forall$ $c$: hostname, $c$ $\in$ claves($e$)) \textcolor{red}{(} 
+	\comentario{1} claves(obtener($e$, $c$).conexiones) $\subseteq$ obtener($e$, $c$).interfaces $\wedge$ \newline
+	 ($\forall$ $i$: interfaz, $i$ $\in$ claves(obtener($e$, $c$).conexiones)) \textcolor{blue}{(}  
+	\comentario{2} obtener(obtener($e$, $c$).conexiones, $i$) $\in$ claves($e$) $\wedge$ 	
+	\comentario{3} obtener(obtener($e$, $c$).conexiones, $i$) $\neq$ $c$ 	$\wedge$ 
+	\comentario{4} ($\neg$ $\exists$ $i\sp{\prime}$: interfaz, $i\sp{\prime}$ $\in$ claves(obtener($e$, $c$).conexiones), $i$ $\neq$ $i\sp{\prime}$) obtener(obtener($e$, $c$).conexiones, $i$) == obtener(obtener($e$, $c$).conexiones, $i\sp{\prime}$) $\wedge$ 
+	\comentario{5} ($\forall$ $h$: hostname) ( $h$ == obtener(obtener($e$, $c$).conexiones, $i$)
+	$\Rightarrow$ ($\exists$ $i\sp{\prime}$:int) obtener(obtener($e$, $h$).conexiones, $i\sp{\prime}$) == $c$ ) 
+	\textcolor{blue}{)} $\wedge$ 
+	\comentario{6} claves(obtener($e$, $c$).alcanzables $\subseteq$ claves($e$) $\wedge$ \newline
+	 ($\forall$ $a$: hostname, $a$ $\in$ claves(obtener($e$, $c$).alcanzables) \textcolor{blue}{(} 
+	\comentario{7} $a$ $\neq$ $c$ $\wedge$ 
+	\comentario{8} ($\exists$ $s$: secu(hostname)) esCaminoV\'alido($c$, $a$, $s$)  $\wedge$ 
+	\comentario{9} $\#$obtener(obtener($e$, $c$).alcanzables, $a$) > 0 $\wedge_L$ \newline
+	($\forall$ $camino$: secu(hostname), $camino$ $\in$ obtener(obtener($e$, $c$).alcanzables, $a$) (
+	\comentario{10} esCaminoV\'alido($c$, $a$, $camino$) $\wedge$ 
+	\comentario{11} $\neg$($\exists$ $camino\sp{\prime}$: secu(hostname), $camino$ $\neq$ $camino\sp{\prime}$, esCaminoV\'alido($c$, $a$, $camino\sp{\prime}$)) long($camino\sp{\prime}$) < long($camino$ ) $\wedge$ 
+	\comentario{12} $\neg$($\exists$ $camino\sp{\prime}$: secu(hostname), $camino$ $\neq$ $camino\sp{\prime}$, esCaminoV\'alido($c$, $a$, $camino\sp{\prime}$), long($camino$ == long($camino\sp{\prime}$)) ($camino\sp{\prime}$ $\notin$ obtener(obtener($e$, $c$).alcanzables, $a$) )
+	\newline \textcolor{blue}{)} \textcolor{red}{)}
+}
+
+La abreviatura $esCaminoValido$ usada en el Rep se debe leer: (no son funciones, son abreviaturas para hacer m\'as f\'acil la lectura)
+
+\tadAxioma{$esCaminoValido$ ($orig$, $dest$, $secu$)} {  
+	( prim($secu$) == $orig$ $\wedge$ \newline
+	($\forall$ $i$: nat, 0 $<$ $i$ $<$ long($secu$) ) esVecino ($secu[i]$, $secu[i+1]$) $\wedge$ \newline
+	$secu$ [long($secu$)-1] == $dest$ $\wedge$ \newline
+	sinRepetidos($secu$) )
+	}
+
+Con $esVecino$ ($h1$, $h2$) $\equiv$  ($\exists$ $i$: interfaz) $h2$ == obtener (obtener($e$, $h1$).conexiones, $i$) 
+
+\newpage
+
+\comentario{Rep en Castellano: \newline
+Para cada computadora: \newline
+1: Las interfaces usadas pertenecen al conjunto de interfaces de la compu.\newline
+2: Los vecinos perteneces a las computadoras de la red.\newline
+3: Los vecinos son distintos a la compu actual.\newline
+4: Los vecinos no se repiten.\newline
+5: Las conexiones son bidireccionales.\newline
+6: Los alcanzables pertenecen a las computadoras de la red.\newline
+7: Los alcanzables son distintos a la actual.\newline
+8: Los alcanzables tienen un camino v\'alido hacia ellos desde la actual.\newline
+9: Para cada alcanzable, el conjunto de camiinos v\'alidos no es vac\'io.\newline
+10: Todos los caminos en el diccionario alcanzables son v\'alidos.\newline
+11: Los caminos son m\'inimos.\newline
+12: Est\'an todos los m\'inimos.
+}
+
+\AbsFc[estr\_red]{red}[e]{$r$ $|$ computadoras ($r$) = dameComputadoras($e$) $\wedge_L$ \newline
+	($\forall$ $c1$, $c2$: compu, $c1$, $c2$ $\in$ computadoras($r$)) conectadas?($r$, $c1$, $c2$) = ($\exists$ $i$: interfaz) ( $c2$.ip = obtener(obtener($e$, $c1$.ip).conexiones, $i$) ) $\wedge_L$ \newline
+	interfazUsada($r$, $c1$, $c2$) = buscarClave (obtener($e$, $c1$.ip).conexiones, $c2$.ip)	
+	}
+
+\textbf{} %dejo un espacio
+
+\textbf{Especificaci\'on de las funciones auxiliares utilizadas en abs}
+
+\tadAlinearFunciones{auxDameComputadoras}{dicc(interfaz, hostname), hostname, conj(interfaz)}
+
+\tadOperacion{dameComputadoras}{dicc(hostname; X)}{conj(computadoras)}{}
+\tadOperacion{auxDameComputadoras}{dicc(hostname; X), conj(hostname)}{conj(computadoras)}{}
+\tadOperacion{buscarClave}{dicc(interfaz; hostname), hostname}{interfaz}{}
+\tadOperacion{auxBuscarClave}{dicc(interfaz; hostname), hostname, conj(interfaz)}{interfaz}{}
+
+\tadAxiomas[\paratodo{dicc(hostname, X)}{e}, \paratodo{dicc(interfaz, hostname)}{d}, \paratodo{conj(hostname)}{cc}, \paratodo{conj(interfaz)}{ci}, \paratodo{hostname}{h}]
+
+\tadAxioma{dameComputadoras($e$)}{auxDameComputadoras($e$, claves($e$)}
+\tadAxioma{auxDameComputadoras($e$, $cc$)}
+{ \IF {$\emptyset$?($cc$)} 
+THEN {$\emptyset$}
+ELSE {Ag( <dameUno($cc$), obtener($e$, dameUno($cc$)).interfaces>, auxDameComputadoras($e$, sinUno($cc$)) )}
+FI}
+
+\tadAxioma{buscarClave($d$, $h$)}{auxBuscarClave($d$, $h$, claves($d$))}
+\tadAxioma{auxBuscarClave($d$, $h$, $ci$)}
+{ \IF {obtener($d$, dameUno($cc$)) = $h$} 
+THEN {dameUno($cc$)}
+ELSE {auxBuscarClave($d$, $h$, sinUno($ci$))}
+FI}
 
 \end{Representacion}
 
