@@ -378,7 +378,7 @@ FI}
 		\State res $\gets$ FALSE \Comment{O(1)}
 	\Else
 		\State itRed1 $\gets$ CrearIt(r1) \Comment{O(1)}
-		\While{HaySiguiente(itRed1) $\&\&$ res} \Comment{O(1)}
+		\While{HaySiguiente(itRed1) $\&\&$ res} \Comment{Guarda: O(1)} \Comment{Se ejecuta n veces} \Comment{O(n)}
 \comentario{Recorro la red 1 y me fijo para cada una de sus computadoras}
 			\If{$\neg$(Definido?(r2, SiguienteClave(itRed1))} \Comment{O(L*n)}
 \comentario{Si no está definido su hostname en la red 2 => las redes son distintas}
@@ -442,7 +442,7 @@ FI}
 			\State Avanzar(itRed1) \Comment{O(1)}
 		\EndWhile
 	\EndIf
-\EndFunction
+\EndFunction \Comment{\textbf{O(n*n * ( L + n*n + m ) + n*m*m)}}
 \end{algorithmic}
 \end{algorithm}
 
