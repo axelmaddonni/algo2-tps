@@ -66,22 +66,23 @@ $\ $\newline
 \newline \indent ((n.derecho).derecho).nivel < n.nivel) \wedge
 \newline \indent ((\forall n:\ estr(\kappa, \sigma))(\ n \in\ arbol(e) \wedge n.nivel > 1 \Rightarrow\ (n.izquierdo \neq NULO \wedge n.derecho \neq NULO)$
 $\ $\newline$\ $
-\newline \indent Abs: $dicc(\kappa, \sigma)\ d \rightarrow\ dicc(\kappa, \sigma)$ \{Rep($d$) \}
+\newline \indent Abs: $diccLog(\kappa, \sigma)\ d \rightarrow\ dicc(\kappa, \sigma)$ \{Rep($d$) \}
 $\ $\newline
-$\ $\newline \indent Abs($d$) $\equiv$ c: dicc($\kappa, \sigma$) | $((\forall k:\ \kappa)(\ k \in claves(c) \Rightarrow Definido?(c, k)) \wedge
-\newline \indent (\ Definido?(c, k) \Rightarrow\ k \in claves(c))) \wedge_L
-\newline \indent (\forall k:\ \kappa)(\ k \in claves(c) \Rightarrow_L obtener(c,k) =_{obs} Significado(d, k)$
+$\ $\newline \indent Abs($d$) $\equiv$ c: dicc($\kappa, \sigma$) | $((\forall k:\ \kappa)(\ k \in claves(c) \Rightarrow (\exists n:\ estr(\kappa, \sigma))( n \in arbol(d)\wedge n.clave = k)) \wedge
+\newline \indent ((\forall n:\ estr(\kappa, \sigma))( n \in arbol(d) \Rightarrow\ n.clave \in claves(c)))) \wedge_L
+\newline \indent (\forall n:\ estr(\kappa, \sigma))( n \in arbol(d) \Rightarrow\ obtener(c,n.clave) =_{obs} n.significado)$
 
 $\ $\newline$\ $
 \newline \indent \textbf{Especificaci\'on de las operaciones auxiliares utilizadas para Rep y Abs}
-\newline \indent arbol:$\ puntero(estr(\kappa\, \sigma)) \rightarrow conj(\kappa)$
+\newline \indent arbol:$\ puntero(estr(\kappa\, \sigma)) \rightarrow conj(puntero(\kappa,\sigma))$
+
 
 \tadAxioma{arbol(n)}{
 \IF {$n.izq \neq null \wedge n.der \neq null$}
-THEN {Ag($n.clave,arbol(n.izq)\cup arbol(n.der)$)}
+THEN {Ag($\&n,arbol(n.izq)\cup arbol(n.der)$)}
 ELSE { \IF {$n.izq \neq null$}
-		THEN {Ag($n.clave,arbol(n.izq)$)}
-		ELSE { \LIF\ $n.der \neq null$ \LTHEN\ Ag($n.clave,arbol(n.der)$) \LELSE\ Ag($n.clave,\emptyset$) \LFI}
+		THEN {Ag($\&n,arbol(n.izq)$)}
+		ELSE { \LIF\ $n.der \neq null$ \LTHEN\ Ag($\&n,arbol(n.der)$) \LELSE\ Ag($\&n,\emptyset$) \LFI}
 		FI}
 FI}
 
