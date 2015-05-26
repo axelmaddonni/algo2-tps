@@ -46,12 +46,7 @@
 \begin{tad}{\tadNombre{Cola de prioridad alternativa($\alpha$)}}
 \tadGeneros{colaPrio($\alpha$)}
 \tadExporta{colaPrio($\alpha$), generadores, observadores}
-
-\tadUsa{\tadNombre{Bool, Nat, Conjunto($\alpha$)}}
-
-\tadGeneros{colaPrior($\alpha$)}
-\tadExporta{colaPrior($\alpha$), generadores, observadores}
-\tadUsa{\tadNombre{Bool}}
+\tadUsa{\tadNombre{Bool, Nat, Tupla}}
 
 \tadAlinearFunciones{desencolar}{nat,$\alpha$,colaPrior($\alpha$)}
 
@@ -91,7 +86,7 @@
 	\tupItem{izq}{puntero(nodo($\alpha$))} \newline \nomoreitems
 	\tupItem{der}{puntero(nodo($\alpha$))} \newline \nomoreitems
 	\tupItem{prio}{nat} \newline \nomoreitems
-	\tupItem{valro}{$\alpha$} \newline \nomoreitems
+	\tupItem{valor}{$\alpha$} \newline \nomoreitems
 \end{Tupla} 
 
 \end{Estructura}
@@ -104,10 +99,10 @@ Rep: estr $\rightarrow$ bool
 \newline \indent (\forall e: estr)( e \in arbol(estr.primero) \Rightarrow ((estr.izq \neq null \Rightarrow estr.prio \geq (estr.izq).prio) \wedge (estr.der \neq null \Rightarrow estr.prio \geq (estr.der).prio))) \wedge
 \newline \indent (\forall e: estr)( e \in arbol(estr.primero) \Rightarrow caminoHastaRaiz(e,arbol(estr.primero)) \leq \left \lfloor{log_2(size)}\right \rfloor + 1))$
 
-Abs: estr $d \rightarrow$ colaPrio($\alpha$) \{ Rep($d$) \}
-\newline \indent Abs($Vacia()$) $\equiv$ Vac\'ia
-\newline \indent ($\forall e: \ estr, n:\ nat, valor:\ \alpha$)(Abs($encolar(e,n,valor)$) $\equiv$ encolar($Abs(e),n,valor$)
-\newline \indent ($\forall e: \ estr$)(Abs($desencolar(e)$) $\equiv$ desencolar($Abs(e)$)
+Abs: estr $e \rightarrow$ colaPrio($\alpha$) \{ Rep($d$) \}
+Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $Vacia?(e) = Vacia?(c) \ \wedge_L
+\newline \indent (\neg Vacia?(e) \Rightarrow Proximo(e) = Proximo(c)) \ \wedge
+\newline \indent (\neg Vacia?(e) \Rightarrow Desencolar(e) = Desencolar(c))$
 
 \textbf{Especificaci\'on de las operaciones auxiliares utilizadas para Rep y Abs}
 \tadOperacion{arbol}{nodo($\alpha$)}{conj(nodo($\alpha$))}{}
