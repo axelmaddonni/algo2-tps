@@ -168,9 +168,96 @@ FI}
 
 \end{Estructura}
 
-\Rep[estr\_dcnet]{....}
+\comentario{REP en Castellano: \newline
+1: Las compus de Red son las compus de DCNet.\newline
+2: PorHostname y computadoras tienen el mismo conjunto de claves. \newline
+3: PorHostname permite acceder a los datos de todas las computadoras a trav\'es de iteradores.\newline
+4: Los indices de las computadoras van de 0 a n-1. \newline
+5: Los indices no se repiten.\newline
+6: ConMasEnvios es un interador a la computadora con mayor cant de envios.\newline
+7: La matriz de caminos es de n x n.\newline
+8: En la matriz caminos[i][j] se guarda uno de los caminos minimos de la red correspondiente al origen y destino correspondientes a los indices i, j, respectivamente. Si no hay, se guarda una lista vacia.\newline
+9: Las claves del diccionario paquetesPorID son los ID del conjunto paquetes.\newline
+10: El conjunto de paquetes y la cola de prioridad tienen el mismo tamano.\newline 
+11: La cola ordena los paquetes por prioridad. (usando los observadores del TAD Cola de Prioridad Alaternativa adjunto). \newpage
+Para todos los paquetes de una computadora:\newline
+12: El origen y el destino estan entre las computadoras de la dcnet.\newline
+13: El origen y el destino son distintos.\newline
+14: Hay un camino posible entre el origen y el destino.\newline
+15: La computadora actual esta en el camino minimo entre el origen y el destino.\newline
+16: El id es unico.\newline
+17: Son accesibles por el dicc usando su ID.\newline
+18: En la cola hay un iterador a cada paquete.\newline
+}
 
-\AbsFc[estr\_dcnet]{dcnet}[d]{...}
+\tadAlinearFunciones{REP}{estr\_dcnet /d}
+
+\Rep[estr\_dcnet]{
+	\comentario{1} dameHostnames(computadoras($e$.red)) = claves ($e$.computadoras) $\wedge$ 
+	\comentario{2} claves ($e$.computadoras) = claves ($e$.porHostname) $\wedge$ 
+	\comentario{3} ($\forall$ $c$: hostname, $c$ $\in$ claves($e$.porHostname)) (
+	SiguienteClave(obtener($e$.porHostname, $c$)) = $c$ $\wedge$
+	SiguienteSignificado(obtener($e$.porHostname, $c$)) = obtener($e$.computadoras, $c$) ) $\wedge$ \newline
+	($\forall$ $c$: hostname, $c$ $\in$ claves($e$.computadoras))
+	\comentario{4} 0 $<$ obtener($e$.computadoras, $c$).indice $<$ $\#$claves($e$.computadoras)-1 $\wedge$ 
+	\comentario{5} $\neg$($\exists$ $c\sp{\prime}$: hostname, $c\sp{\prime}$ $\in$ claves($e$.computadoras), $c$ $\neq$ $c\sp{\prime}$) obtener($e$.computadoras, $c\sp{\prime}$).indice = obtener($e$.computadoras, $c$).indice $\wedge$ 
+	\comentario{6} $\neg$($\exists$ $c\sp{\prime}$: hostname, $c\sp{\prime}$ $\in$ claves($e$.computadoras), $c$ $\neq$ $c\sp{\prime}$) obtener($e$.computadoras, $c\sp{\prime}$).cantEnvios > SiguienteSignificado($e$.conMasEnvios).cantEnvios $\wedge$ 
+	\comentario{7} tam($e$.caminos) = $\#$claves($e$.computadoras) $\wedge_L$ 
+	($\forall$ $i$: nat, 0 $<$ i $<$ $\#$claves($e$.computadoras)-1 ) tam($e$.caminos[$i$]) = $\#$claves($e$.computadoras) $\wedge$ 
+	\comentario{8} ($\forall$ $c1, c2$: hostname, $c1, c2$ $\in$ claves($e$.porHostname)) \newline
+	$\neg$ $\emptyset$? (caminosMinimos($e$.red, dameCompu($c1$), dameCompu($c2$))) $\Rightarrow$ 
+	$e$.caminos[obtener($e$.computadoras, $c1$).indice][obtener($e$.computadoras, $c2$).indice] = dameUno(caminosMinimos($e$.red, dameCompu($c1$), dameCompu($c2$))) $\wedge$ \newline
+	$\emptyset$? (caminosMinimos($e$.red, dameCompu($c1$), dameCompu($c2$))) $\Rightarrow$ 
+	$e$.caminos[obtener($e$.computadoras, $c1$).indice][obtener($e$.computadoras, $c2$).indice] = Vacia() $\wedge$ \newline
+	($\forall$ $c$: hostname, $c$ $\in$ claves($e$.computadoras)) (
+	\comentario{9} dameIDpaquetes(obtener($e$.computadoras, $c$).paquetes) = claves(obtener($e$.computadoras, $c$).paquetesPorID) $\wedge$ 
+	\comentario{10} $\#$(obtener($e$.computadoras, $c$).paquetes) = $\#$(obtener($e$.computadoras, $c$).cola) $\wedge$ 
+	\comentario{11} vacia?(obtener($e$.computadoras, $c$).cola) = $\emptyset$?(obtener($e$.computadoras, $c$).paquetes) $\wedge$ \newline Siguiente($\Pi_2$(proximo(obtener($e$.computadoras, $c$).cola))) $\in$ obtener($e$.computadoras, $c$).paquetes \newline $\wedge$ 
+	$\neg$($\exists$ $p\sp{\prime}$: paquete, $p\sp{\prime}$ $\in$ obtener($e$.computadoras, $c$).paquetes) $p\sp{\prime}$.prioridad $<$ Siguiente($\Pi_2$(proximo(obtener($e$.computadoras, $c$).cola))).prioridad $\wedge$ \newline
+	$\Pi_1$(proximo(obtener($e$.computadoras, $c$).cola)) = Siguiente($\Pi_2$(proximo(obtener($e$.computadoras, $c$).cola))).prioridad $\wedge$ \newline
+	desencolar(obtener($e$.computadoras, $c$).cola) = armarCola(obtener($e$.computadoras, $c$).paquetes - $\{$Siguiente($\Pi_2$(proximo(obtener($e$.computadoras, $c$).cola)))$\}$ $\wedge$
+	\newline
+	($\forall$ $p$: paquete, $p$ $\in$ obtener($e$.computadoras, $c$).paquetes) (
+	\comentario{12} origen($p$).ip $\in$ claves ($e$.computadoras) $\wedge$ 
+destino($p$).ip $\in$ claves ($e$.computadoras) $\wedge$ 
+	\comentario{13} origen($p$).ip $\neq$ destino($p$).ip $\wedge$ 
+	\comentario{14} hayCamino?($e$.red, origen($p$), destino($p$)) $\wedge$ 
+	\comentario{15} esta? ($c$, caminos[obtener($e$.computadoras, origen($p$).ip)][obtener($e$.computadoras, destino($p$).ip) ) $\wedge$
+	\comentario{16} ($\forall$ $c\sp{\prime}$: hostname, $c\sp{\prime}$ $\in$ claves($e$.computadoras), $c\sp{\prime}$ $\neq$ $c$ )  $\neg$($\exists$ $p\sp{\prime}$: paquete, $p\sp{\prime}$ $\in$ obtener($e$.computadoras, $c\sp{\prime}$).paquetes, $p$ $\neq$ $p\sp{\prime}$) $p$.id = $p\sp{\prime}$.id 
+	\comentario{17} 
+	definido?(obtener($e$.computadoras, $c$).paquetesPorID, $p$.id) $\wedge_L$ \newline
+	Siguiente(obtener(obtener($e$.computadoras, $c$).paquetesPorID,  $p$.id)) = $p$  $\wedge$ 
+	\comentario{18} ($\exists$ $it$: itConj(paquete), $it$ $\in$ obtener($e$.computadoras, $c$).cola ) 
+	Siguiente($it$) = $p$  ) )
+}
+
+\newpage
+
+\textbf{Especificaci\'on de las funciones auxiliares utilizadas en Rep}
+
+\tadAlinearFunciones{armarCola}{conj(paquetes)} 
+
+\tadOperacion{armarCola}{conj(paquete)}{cola(paquete)}{}
+
+\tadAxiomas[\paratodo{conj(paquete)}{cc}]
+
+\tadAxioma{armarCola($cc$)}{
+{ \IF {$\emptyset$?($cc$)} 
+THEN {Vacia()}
+ELSE {encolar(dameUno($cc$).prioridad, dameUno($cc$), armarCola(sinUno($cc$)))}
+FI}
+}
+
+\textbf{}
+
+\AbsFc[estr\_dcnet]{dcnet}[e]{ $d$ $|$ 
+red($d$) = $e$.red $\wedge$ \newline
+($\forall$ $c$: compu, $c$ $\in$ computadoras(red($d$))) ( \newline
+cantidadEnviados($d$, $c$) = obtener($e$.computadoras, $c$.ip).cantEnvios $\wedge$ \newline
+enEspera($d$, $c$) = obtener($e$.computadoras, $c$.ip).paquetes $\wedge$ \newline
+($\forall$ $p$: paquete, $p$ $\in$  obtener($e$.computadoras, $c$.ip).paquetes ) 
+caminoRecorrido ($d$, $p$) = $e$.caminos[obtener($e$.computadoras, origen($p$).ip).indice][obtener($e$.computadoras, $c$.ip).indice] ) 
+}
 
 \end{Representacion}
 

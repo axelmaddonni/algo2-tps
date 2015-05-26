@@ -1,15 +1,15 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.5.6)  26 MAY 2015 02:02
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  26 MAY 2015 02:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **informe.tex
 (./informe.tex
-LaTeX2e <2014/05/01>
-Babel <3.9l> and hyphenation patterns for 4 languages loaded.
+LaTeX2e <2011/06/27>
+Babel <3.9h> and hyphenation patterns for 78 languages loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@section=\count80
@@ -27,7 +27,7 @@ File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 Package: geometry 2010/09/12 v5.6 Page Geometry
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2014/05/08 v1.15 key=value parser (DPC)
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks14
 )
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
@@ -55,12 +55,12 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@dimlist=\toks15
 )
 (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
-Package: inputenc 2014/04/30 v1.2b Input encoding file
+Package: inputenc 2008/03/30 v1.1d Input encoding file
 \inpenc@prehook=\toks16
 \inpenc@posthook=\toks17
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/latin1.def
-File: latin1.def 2014/04/30 v1.2b Input encoding file
+File: latin1.def 2008/03/30 v1.1d Input encoding file
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
@@ -70,37 +70,25 @@ File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2014/09/25 3.9l The Babel package
+Package: babel 2013/12/03 3.9h The Babel package
 
+(/usr/share/texlive/texmf-dist/tex/generic/babel-spanish/spanish.ldf
+Language: spanish.ldf 2014/01/29 v5.0m Spanish support from the babel system
 
-! Package babel Error: Unknown option `spanish'. Either you misspelled it
-(babel)                or the language definition file spanish.ldf was not foun
-d.
-
-See the babel package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.299 \ProcessOptions*
-                      
-Valid options are: shorthands=, KeepShorthandsActive,
-activeacute, activegrave, noconfigs, safe=, main=, math=
-headfoot=, strings=, config=, hyphenmap=, or a language name.
-
-
-! Package babel Error: You haven't specified a language option.
-
-See the babel package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.332 ...ry to proceed from here, type x to quit.}
-                                                  
-You need to specify a language, either as a global option
-or as an optional argument to the \usepackage command;
-You shouldn't try to proceed from here, type x to quit.
-
-) (/usr/share/texlive/texmf-dist/tex/latex/tools/indentfirst.sty
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
+File: babel.def 2013/12/03 3.9h Babel common definitions
+\babel@savecnt=\count90
+\U@D=\dimen111
+)
+\es@datefmt=\count91
+\es@quottoks=\toks18
+\es@quotdepth=\count92
+Package babel Info: Making " an active character on input line 496.
+Package babel Info: Making . an active character on input line 599.
+Package babel Info: Making < an active character on input line 644.
+Package babel Info: Making > an active character on input line 644.
+))
+(/usr/share/texlive/texmf-dist/tex/latex/tools/indentfirst.sty
 Package: indentfirst 1995/11/23 v1.03 Indent first paragraph (DPC)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
@@ -124,28 +112,26 @@ LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
 Package: lastpage 2013/01/28 v1.2l Refers to last page's name (HMM; JPG)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
-Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
+Package: xspace 2009/10/20 v1.13 Space after command names (DPC,MH)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/xargs/xargs.sty
 Package: xargs 2008/03/22 v1.1  extended macro definitions  (mpg)
 
 (/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
-Package: xkeyval 2014/05/25 v2.7 package option processing (HA)
+Package: xkeyval 2012/10/14 v2.6b package option processing (HA)
 
 (/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
-(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
-\XKV@toks=\toks18
-\XKV@tempa@toks=\toks19
-)
-\XKV@depth=\count90
-File: xkeyval.tex 2014/05/25 v2.7 key=value parser (HA)
+\XKV@toks=\toks19
+\XKV@tempa@toks=\toks20
+\XKV@depth=\count93
+File: xkeyval.tex 2012/10/14 v2.6b key=value parser (HA)
 ))
-\xargs@max=\count91
-\xargs@toksa=\toks20
-\xargs@toksb=\toks21
+\xargs@max=\count94
+\xargs@toksa=\toks21
+\xargs@toksb=\toks22
 )
 (/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
-Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 )
 (./Paquetes-Latex/texmf/tex/latex/aed2-tad/aed2-tad.sty
 
@@ -155,16 +141,16 @@ tad/aed2-tad',
 
 Package: aed2-tad 2011/04/04 - Para especificar TADs en formato AED2
 (/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
-Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count92
-\calc@Bcount=\count93
-\calc@Adimen=\dimen111
-\calc@Bdimen=\dimen112
+Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count95
+\calc@Bcount=\count96
+\calc@Adimen=\dimen112
+\calc@Bdimen=\dimen113
 \calc@Askip=\skip52
 \calc@Bskip=\skip53
-LaTeX Info: Redefining \setlength on input line 75.
-LaTeX Info: Redefining \addtolength on input line 76.
-\calc@Ccount=\count94
+LaTeX Info: Redefining \setlength on input line 76.
+LaTeX Info: Redefining \addtolength on input line 77.
+\calc@Ccount=\count97
 \calc@Cskip=\skip54
 )
 Package aed2-tad Info: Cargando package 'tad' (04/04/2011) on input line 26.
@@ -207,51 +193,51 @@ Package: amstext 2000/06/29 v2.01
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
-\@emptytoks=\toks22
-\ex@=\dimen113
+\@emptytoks=\toks23
+\ex@=\dimen114
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d
-\pmbraise@=\dimen114
+\pmbraise@=\dimen115
 )
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 1999/12/14 v2.01 operator names
 )
-\inf@bad=\count95
+\inf@bad=\count98
 LaTeX Info: Redefining \frac on input line 210.
-\uproot@=\count96
-\leftroot@=\count97
+\uproot@=\count99
+\leftroot@=\count100
 LaTeX Info: Redefining \overline on input line 306.
-\classnum@=\count98
-\DOTSCASE@=\count99
+\classnum@=\count101
+\DOTSCASE@=\count102
 LaTeX Info: Redefining \ldots on input line 378.
 LaTeX Info: Redefining \dots on input line 381.
 LaTeX Info: Redefining \cdots on input line 466.
 \Mathstrutbox@=\box27
 \strutbox@=\box28
-\big@size=\dimen115
+\big@size=\dimen116
 LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
-\macc@depth=\count100
-\c@MaxMatrixCols=\count101
+\macc@depth=\count103
+\c@MaxMatrixCols=\count104
 \dotsspace@=\muskip10
-\c@parentequation=\count102
-\dspbrk@lvl=\count103
-\tag@help=\toks23
-\row@=\count104
-\column@=\count105
-\maxfields@=\count106
-\andhelp@=\toks24
-\eqnshift@=\dimen116
-\alignsep@=\dimen117
-\tagshift@=\dimen118
-\tagwidth@=\dimen119
-\totwidth@=\dimen120
-\lineht@=\dimen121
-\@envbody=\toks25
+\c@parentequation=\count105
+\dspbrk@lvl=\count106
+\tag@help=\toks24
+\row@=\count107
+\column@=\count108
+\maxfields@=\count109
+\andhelp@=\toks25
+\eqnshift@=\dimen117
+\alignsep@=\dimen118
+\tagshift@=\dimen119
+\tagwidth@=\dimen120
+\totwidth@=\dimen121
+\lineht@=\dimen122
+\@envbody=\toks26
 \multlinegap=\skip74
 \multlinetaggap=\skip75
-\mathdisplay@stack=\toks26
+\mathdisplay@stack=\toks27
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
 )
@@ -291,7 +277,7 @@ ula/caratula',
 
 Package: caratula 2003/4/13 v0.1 Para componer caratulas de TPs del DC
 Cargando package 'caratula' v0.2 (21/4/2003)
-\intlist=\toks27
+\intlist=\toks28
 ) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
 
@@ -344,14 +330,14 @@ Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 )
-\@linkdim=\dimen122
-\Hy@linkcounter=\count107
-\Hy@pagecounter=\count108
+\@linkdim=\dimen123
+\Hy@linkcounter=\count110
+\Hy@pagecounter=\count111
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
 )
-\Hy@SavedSpaceFactor=\count109
+\Hy@SavedSpaceFactor=\count112
 
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -364,17 +350,17 @@ Package hyperref Info: Plain pages OFF on input line 4458.
 Package hyperref Info: Backreferencing OFF on input line 4463.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4688.
-\c@Hy@tempcnt=\count110
+\c@Hy@tempcnt=\count113
 
 (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip11
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5041.
-\XeTeXLinkMargin=\dimen123
-\Fld@menulength=\count111
-\Field@Width=\dimen124
-\Fld@charsize=\dimen125
+\XeTeXLinkMargin=\dimen124
+\Fld@menulength=\count114
+\Field@Width=\dimen125
+\Fld@charsize=\dimen126
 Package hyperref Info: Hyper figures OFF on input line 6295.
 Package hyperref Info: Link nesting OFF on input line 6300.
 Package hyperref Info: Hyper index ON on input line 6303.
@@ -384,17 +370,17 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6320.
 Package hyperref Info: PDF/A mode OFF on input line 6325.
 LaTeX Info: Redefining \ref on input line 6365.
 LaTeX Info: Redefining \pageref on input line 6369.
-\Hy@abspage=\count112
-\c@Item=\count113
-\c@Hfootnote=\count114
+\Hy@abspage=\count115
+\c@Item=\count116
+\c@Hfootnote=\count117
 )
 
 Package hyperref Message: Driver (autodetected): hpdftex.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
-\Fld@listcount=\count115
-\c@bookmark@seq@number=\count116
+\Fld@listcount=\count118
+\c@bookmark@seq@number=\count119
 
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
 Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
@@ -407,22 +393,22 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 Package: vmargin 2004/07/15 V2.5 set document margins (VK)
 
 Package: vmargin 2004/07/15 V2.5 set document margins (VK)
-\PaperWidth=\dimen126
-\PaperHeight=\dimen127
+\PaperWidth=\dimen127
+\PaperHeight=\dimen128
 ) (/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithm.sty
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
 nment
 
 (/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count117
-\float@exts=\toks28
+\c@float@type=\count120
+\float@exts=\toks29
 \float@box=\box29
-\@float@everytoks=\toks29
+\@float@everytoks=\toks30
 \@floatcapt=\box30
 )
-\@float@every@algorithm=\toks30
-\c@algorithm=\count118
+\@float@every@algorithm=\toks31
+\c@algorithm=\count121
 )
 (/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
 Package: algpseudocode 
@@ -431,15 +417,15 @@ Package: algpseudocode
 Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
 
 Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count119
-\c@ALG@rem=\count120
-\c@ALG@nested=\count121
+\c@ALG@line=\count122
+\c@ALG@rem=\count123
+\c@ALG@nested=\count124
 \ALG@tlm=\skip80
 \ALG@thistlm=\skip81
-\c@ALG@Lnr=\count122
-\c@ALG@blocknr=\count123
-\c@ALG@storecount=\count124
-\c@ALG@tmpcounter=\count125
+\c@ALG@Lnr=\count125
+\c@ALG@blocknr=\count126
+\c@ALG@storecount=\count127
+\c@ALG@tmpcounter=\count128
 \ALG@tmplength=\skip82
 )
 Document Style - pseudocode environments for use with the `algorithmicx' style
@@ -503,6 +489,8 @@ LaTeX Font Info:    ... okay on input line 192.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
+LaTeX Info: Redefining \. on input line 192.
+LaTeX Info: Redefining \% on input line 192.
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             http://www.ctan.org/tex-archive/ 
 (lastpage)             macros/latex/contrib/pageslts/ 
@@ -512,30 +500,30 @@ Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             ! on input line 192.
 \AtBeginShipoutBox=\box31
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
-Package: color 2014/04/23 v1.1a Standard LaTeX Color (DPC)
+Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
 
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg
 File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
-Package color Info: Driver file: pdftex.def on input line 137.
+Package color Info: Driver file: pdftex.def on input line 130.
 
 (/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
-\Gread@gobject=\count126
+\Gread@gobject=\count129
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count127
-\scratchdimen=\dimen128
+\scratchcounter=\count130
+\scratchdimen=\dimen129
 \scratchbox=\box32
-\nofMPsegments=\count128
-\nofMParguments=\count129
-\everyMPshowfont=\toks31
-\MPscratchCnt=\count130
-\MPscratchDim=\dimen129
-\MPnumerator=\count131
-\makeMPintoPDFobject=\count132
-\everyMPtoPDFconversion=\toks32
+\nofMPsegments=\count131
+\nofMParguments=\count132
+\everyMPshowfont=\toks32
+\MPscratchCnt=\count133
+\MPscratchDim=\dimen130
+\MPnumerator=\count134
+\makeMPintoPDFobject=\count135
+\everyMPtoPDFconversion=\toks33
 )))
 Package hyperref Info: Link coloring ON on input line 192.
  (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
@@ -544,7 +532,7 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count133
+\c@section@level=\count136
 )
 LaTeX Info: Redefining \ref on input line 192.
 LaTeX Info: Redefining \pageref on input line 192.
@@ -573,8 +561,33 @@ LaTeX Font Info:    Try loading font information for T1+cmtt on input line 205.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [1
+File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 205.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 205.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 205.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 205.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 205.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 205.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 205.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 205.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 205.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 205.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 205.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 205.
+ [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./informe.toc)
 \tf@toc=\write4
@@ -587,7 +600,44 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[2] (./Red.tex
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 210.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 210.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 210.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 210.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 210.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 210.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 210.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 210.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 210.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 210.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 210.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 210.
+[2]
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 214.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 214.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 214.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 214.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 214.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 214.
+ (./Red.tex
 Underfull \hbox (badness 10000) in paragraph at lines 52--52
 \OMS/cmsy/m/n/10 :$\T1/cmr/m/n/10 conectadas?($\OML/cmm/m/it/10 r$\T1/cmr/m/n/1
 0 , dameCompu($\OML/cmm/m/it/10 c[]$\T1/cmr/m/n/10 ), dameCompu($\OML/cmm/m/it/
@@ -612,6 +662,30 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 66.
 [3]
 
 Package Fancyhdr Warning: \headheight is too small (11.0pt): 
@@ -619,6 +693,30 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 127.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 127.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 127.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 127.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 127.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 127.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 127.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 127.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 127.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 127.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 127.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 127.
 [4]
 Underfull \hbox (badness 10000) in paragraph at lines 139--139
 []\T1/cmr/m/n/10 Ag( dameSecuDeHostnames(dameUno($\OML/cmm/m/it/10 cs$\T1/cmr/m
@@ -628,6 +726,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 139--139
 
 Underfull \hbox (badness 10000) in paragraph at lines 153--155
 
+ []
+
+
+Underfull \hbox (badness 1014) in paragraph at lines 188--188
+\OMS/cmsy/m/n/10 nn$ \T1/cmr/m/it/10 4[] \T1/cmr/m/n/10 ($\OMS/cmsy/m/n/10 :$ $
+9$ $\OML/cmm/m/it/10 i[]$\T1/cmr/m/n/10 : in-ter-faz, $\OML/cmm/m/it/10 i[]$ $\
+OMS/cmsy/m/n/10 2$ \T1/cmr/m/n/10 claves(obtener($\OML/cmm/m/it/10 e$\T1/cmr/m/
+n/10 , $\OML/cmm/m/it/10 c$\T1/cmr/m/n/10 ).conexiones), $\OML/cmm/m/it/10 i$ $
+\OMS/cmsy/m/n/10 6\OT1/cmr/m/n/10 =$ $\OML/cmm/m/it/10 i[]$\T1/cmr/m/n/10 ) obt
+ener(obtener($\OML/cmm/m/it/10 e$\T1/cmr/m/n/10 ,
  []
 
 
@@ -642,8 +750,32 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 190.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 190.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 190.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 190.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 190.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 190.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 190.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 190.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 190.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 190.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 190.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 190.
 [5]
-Overfull \hbox (12.1118pt too wide) in paragraph at lines 197--197
+Overfull \hbox (11.6697pt too wide) in paragraph at lines 197--197
 []$\OML/cmm/m/it/10 esCaminoValido$ \T1/cmr/m/n/10 ($\OML/cmm/m/it/10 orig$\T1/
 cmr/m/n/10 , $\OML/cmm/m/it/10 dest$\T1/cmr/m/n/10 , $\OML/cmm/m/it/10 secu$\T1
 /cmr/m/n/10 )| $\OMS/cmsy/m/n/10 ^^Q$| [] 
@@ -655,6 +787,30 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 201.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 201.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 201.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 201.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 201.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 201.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 201.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 201.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 201.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 201.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 201.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 201.
 [6]
 Overfull \hbox (14.99998pt too wide) in paragraph at lines 222--222
 []\T1/cmr/m/n/10 Abs($\OML/cmm/m/it/10 e$\T1/cmr/m/n/10 )| $\OMS/cmsy/m/n/10 ^^
@@ -685,19 +841,19 @@ OML/cmm/m/it/10 e$\T1/cmr/m/n/10 , dameUno($\OML/cmm/m/it/10 cc$\T1/cmr/m/n/10
  []
 
 
-Overfull \hbox (14.11131pt too wide) in paragraph at lines 242--242
+Overfull \hbox (13.89026pt too wide) in paragraph at lines 242--242
 []\T1/cmr/m/n/10 auxDameComputadoras($\OML/cmm/m/it/10 e$\T1/cmr/m/n/10 , $\OML
 /cmm/m/it/10 cc$\T1/cmr/m/n/10 )| $\OMS/cmsy/m/n/10 ^^Q$| [] 
  []
 
 
-Overfull \hbox (14.11131pt too wide) in paragraph at lines 244--244
+Overfull \hbox (13.89026pt too wide) in paragraph at lines 244--244
 []\T1/cmr/m/n/10 buscarClave($\OML/cmm/m/it/10 d$\T1/cmr/m/n/10 , $\OML/cmm/m/i
 t/10 h$\T1/cmr/m/n/10 )| $\OMS/cmsy/m/n/10 ^^Q$| [] 
  []
 
 
-Overfull \hbox (13.22264pt too wide) in paragraph at lines 249--249
+Overfull \hbox (12.78053pt too wide) in paragraph at lines 249--249
 []\T1/cmr/m/n/10 auxBuscarClave($\OML/cmm/m/it/10 d$\T1/cmr/m/n/10 , $\OML/cmm/
 m/it/10 h$\T1/cmr/m/n/10 , $\OML/cmm/m/it/10 ci$\T1/cmr/m/n/10 )| $\OMS/cmsy/m/
 n/10 ^^Q$| [] 
@@ -709,14 +865,38 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 253.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 253.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 253.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 253.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 253.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 253.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 253.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 253.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 253.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 253.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 253.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 253.
 [7]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 257.
 
-Underfull \hbox (badness 4621) in paragraph at lines 355--356
-[]\T1/cmr/bx/n/10 func-tion \T1/cmr/m/sc/10 iCaminos-Min-i-mos\T1/cmr/m/n/10 (i
-n r: estr_red, in c1: host-name, in c2: hostname)$\OMS/cmsy/m/n/10 !$ \T1/cmr/m
-/n/10 res:
+Underfull \hbox (badness 10000) in paragraph at lines 355--356
+[]\T1/cmr/bx/n/10 fun-ction \T1/cmr/m/sc/10 iCa-mi-nos-Mi-ni-mos\T1/cmr/m/n/10 
+(in r: estr_red, in c1: host-na-me, in c2: hostname)$\OMS/cmsy/m/n/10 !$ \T1/cm
+r/m/n/10 res:
  []
 
 
@@ -724,8 +904,8 @@ LaTeX Warning: Float too large for page by 216.07861pt on input line 451.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 480--482
-[] \T1/cmr/m/n/10 Definir(res, Sigu-ien-te-Clave(itRed), Tu-pla(Copiar(Siguient
-eSignificado(itRed).interfaces),
+[] \T1/cmr/m/n/10 De-fi-nir(res, Si-guien-te-Cla-ve(itRed), Tu-pla(Copiar(Sigui
+enteSignificado(itRed).interfaces), Co-
  []
 
 
@@ -734,6 +914,30 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 491.
 [8]
 
 Package Fancyhdr Warning: \headheight is too small (11.0pt): 
@@ -741,6 +945,30 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 491.
 [9]
 
 Package Fancyhdr Warning: \headheight is too small (11.0pt): 
@@ -748,6 +976,30 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 491.
 [10]
 
 Package Fancyhdr Warning: \headheight is too small (11.0pt): 
@@ -755,8 +1007,45 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[11]) (./DCNet.tex
-Underfull \hbox (badness 1769) in paragraph at lines 3--4
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 491.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 491.
+[11])
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 219.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 219.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 219.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 219.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 219.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 219.
+ (./DCNet.tex
+Underfull \hbox (badness 4403) in paragraph at lines 3--4
 []\T1/cmr/bx/n/10 usa\T1/cmr/m/n/10 : \T1/cmr/m/sc/10 red, conj($\OML/cmm/m/it/
 10 $\T1/cmr/m/sc/10 ), itConj($\OML/cmm/m/it/10 $\T1/cmr/m/sc/10 ), lista($\O
 ML/cmm/m/it/10 $\T1/cmr/m/sc/10 ), itLista($\OML/cmm/m/it/10 $\T1/cmr/m/sc/10
@@ -771,6 +1060,30 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 66.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 66.
 [12]
 
 Package Fancyhdr Warning: \headheight is too small (11.0pt): 
@@ -778,21 +1091,198 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 130.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 130.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 130.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 130.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 130.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 130.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 130.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 130.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 130.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 130.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 130.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 130.
 [13]
 Underfull \hbox (badness 10000) in paragraph at lines 154--159
-\T1/cmr/m/it/10 caminos\T1/cmr/m/n/10 : \T1/cmtt/m/n/10 arreglo_dimensionable d
-e arreglo_dimensionable de
+\T1/cmr/m/it/10 ca-mi-nos\T1/cmr/m/n/10 : \T1/cmtt/m/n/10 arreglo_dimensionable
+ de arreglo_dimensionable de
  []
 
 
-Overfull \hbox (14.99998pt too wide) in paragraph at lines 171--171
+Package Fancyhdr Warning: \headheight is too small (11.0pt): 
+ Make it at least 12.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 191.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 191.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 191.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 191.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 191.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 191.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 191.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 191.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 191.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 191.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 191.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 191.
+[14]
+Underfull \hbox (badness 1668) in paragraph at lines 232--232
+\OMS/cmsy/m/n/10 nn$ \T1/cmr/m/it/10 6[] $\OMS/cmsy/m/n/10 :$\T1/cmr/m/n/10 ($\
+OMS/cmsy/m/n/10 9$ $\OML/cmm/m/it/10 c[]$\T1/cmr/m/n/10 : host-na-me, $\OML/cmm
+/m/it/10 c[]$ $\OMS/cmsy/m/n/10 2$ \T1/cmr/m/n/10 claves($\OML/cmm/m/it/10 e$\T
+1/cmr/m/n/10 .computadoras), $\OML/cmm/m/it/10 c$ $\OMS/cmsy/m/n/10 6\OT1/cmr/m
+/n/10 =$ $\OML/cmm/m/it/10 c[]$\T1/cmr/m/n/10 ) obtener($\OML/cmm/m/it/10 e$\T1
+/cmr/m/n/10 .computadoras,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 232--232
+\OMS/cmsy/m/n/10 :$ $;$\T1/cmr/m/n/10 ? (caminosMinimos($\OML/cmm/m/it/10 e$\T1
+/cmr/m/n/10 .red, dameCompu($\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 1$\T1/cmr/m/n/10
+ ), dameCompu($\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 2$\T1/cmr/m/n/10 ))) $\OMS/cms
+y/m/n/10 )$
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 232--232
+\OML/cmm/m/it/10 e$\T1/cmr/m/n/10 .caminos[obtener($\OML/cmm/m/it/10 e$\T1/cmr/
+m/n/10 .computadoras, $\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 1$\T1/cmr/m/n/10 ).ind
+ice][obtener($\OML/cmm/m/it/10 e$\T1/cmr/m/n/10 .computadoras, $\OML/cmm/m/it/1
+0 c\OT1/cmr/m/n/10 2$\T1/cmr/m/n/10 ).indice] =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 232--232
+\OMS/cmsy/m/n/10 ;$\T1/cmr/m/n/10 ? (caminosMinimos($\OML/cmm/m/it/10 e$\T1/cmr
+/m/n/10 .red, dameCompu($\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 1$\T1/cmr/m/n/10 ), 
+dameCompu($\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 2$\T1/cmr/m/n/10 ))) $\OMS/cmsy/m/
+n/10 )$
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 232--232
+\OML/cmm/m/it/10 e$\T1/cmr/m/n/10 .caminos[obtener($\OML/cmm/m/it/10 e$\T1/cmr/
+m/n/10 .computadoras, $\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 1$\T1/cmr/m/n/10 ).ind
+ice][obtener($\OML/cmm/m/it/10 e$\T1/cmr/m/n/10 .computadoras, $\OML/cmm/m/it/1
+0 c\OT1/cmr/m/n/10 2$\T1/cmr/m/n/10 ).indice] = Va-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 232--232
+\OMS/cmsy/m/n/10 ^$ $:$\T1/cmr/m/n/10 ($\OMS/cmsy/m/n/10 9$ $\OML/cmm/m/it/10 p
+[]$\T1/cmr/m/n/10 : pa-que-te, $\OML/cmm/m/it/10 p[]$ $\OMS/cmsy/m/n/10 2$ \T1/
+cmr/m/n/10 obtener($\OML/cmm/m/it/10 e$\T1/cmr/m/n/10 .computadoras, $\OML/cmm/
+m/it/10 c$\T1/cmr/m/n/10 ).paquetes) $\OML/cmm/m/it/10 p[]$\T1/cmr/m/n/10 .prio
+ridad $\OML/cmm/m/it/10 <$
+ []
+
+
+Overfull \hbox (0.94962pt too wide) in paragraph at lines 232--232
+\OT1/cmr/m/n/10 ^^E[]$\T1/cmr/m/n/10 (proximo(obtener($\OML/cmm/m/it/10 e$\T1/c
+mr/m/n/10 .computadoras, $\OML/cmm/m/it/10 c$\T1/cmr/m/n/10 ).cola)) = Siguient
+e($\OT1/cmr/m/n/10 ^^E[]$\T1/cmr/m/n/10 (proximo(obtener($\OML/cmm/m/it/10 e$\T
+1/cmr/m/n/10 .computadoras,
+ []
+
+
+Underfull \hbox (badness 7344) in paragraph at lines 232--232
+\OMS/cmsy/m/n/10 nn$ \T1/cmr/m/it/10 15[] \T1/cmr/m/n/10 es-ta? ($\OML/cmm/m/it
+/10 c$\T1/cmr/m/n/10 , caminos[obtener($\OML/cmm/m/it/10 e$\T1/cmr/m/n/10 .comp
+utadoras, origen($\OML/cmm/m/it/10 p$\T1/cmr/m/n/10 ).ip)][obtener($\OML/cmm/m/
+it/10 e$\T1/cmr/m/n/10 .computadoras,
+ []
+
+
+Underfull \hbox (badness 1231) in paragraph at lines 232--232
+\OMS/cmsy/m/n/10 nn$ \T1/cmr/m/it/10 16[] \T1/cmr/m/n/10 ($\OMS/cmsy/m/n/10 8$ 
+$\OML/cmm/m/it/10 c[]$\T1/cmr/m/n/10 : host-na-me, $\OML/cmm/m/it/10 c[]$ $\OMS
+/cmsy/m/n/10 2$ \T1/cmr/m/n/10 claves($\OML/cmm/m/it/10 e$\T1/cmr/m/n/10 .compu
+tadoras), $\OML/cmm/m/it/10 c[]$ $\OMS/cmsy/m/n/10 6\OT1/cmr/m/n/10 =$ $\OML/cm
+m/m/it/10 c$ \T1/cmr/m/n/10 ) $\OMS/cmsy/m/n/10 :$\T1/cmr/m/n/10 ($\OMS/cmsy/m/
+n/10 9$ $\OML/cmm/m/it/10 p[]$\T1/cmr/m/n/10 : pa-que-te, $\OML/cmm/m/it/10 p[]
+$ $\OMS/cmsy/m/n/10 2$
+ []
+
+
+Overfull \hbox (14.99998pt too wide) in paragraph at lines 232--232
 []\T1/cmr/m/n/10 Rep($\OML/cmm/m/it/10 e$\T1/cmr/m/n/10 )| $\OMS/cmsy/m/n/10 ^^
 Q$| [] 
  []
 
 
-Overfull \hbox (14.99998pt too wide) in paragraph at lines 173--173
-[]\T1/cmr/m/n/10 Abs($\OML/cmm/m/it/10 d$\T1/cmr/m/n/10 )| $\OMS/cmsy/m/n/10 ^^
+Package Fancyhdr Warning: \headheight is too small (11.0pt): 
+ Make it at least 12.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 234.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 234.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 234.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 234.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 234.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 234.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 234.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 234.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 234.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 234.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 234.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 234.
+[15]
+Overfull \hbox (14.99998pt too wide) in paragraph at lines 249--249
+[]\T1/cmr/m/n/10 armarCola($\OML/cmm/m/it/10 cc$\T1/cmr/m/n/10 )| $\OMS/cmsy/m/
+n/10 ^^Q$| [] 
+ []
+
+
+Underfull \hbox (badness 1331) in paragraph at lines 260--260
+\T1/cmr/m/n/10 ($\OMS/cmsy/m/n/10 8$ $\OML/cmm/m/it/10 p$\T1/cmr/m/n/10 : pa-qu
+e-te, $\OML/cmm/m/it/10 p$ $\OMS/cmsy/m/n/10 2$ \T1/cmr/m/n/10 obtener($\OML/cm
+m/m/it/10 e$\T1/cmr/m/n/10 .computadoras, $\OML/cmm/m/it/10 c$\T1/cmr/m/n/10 .i
+p).paquetes ) ca-mi-no-Re-co-rri-do ($\OML/cmm/m/it/10 d$\T1/cmr/m/n/10 , $\OML
+/cmm/m/it/10 p$\T1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (14.99998pt too wide) in paragraph at lines 260--260
+[]\T1/cmr/m/n/10 Abs($\OML/cmm/m/it/10 e$\T1/cmr/m/n/10 )| $\OMS/cmsy/m/n/10 ^^
 Q$| [] 
  []
 
@@ -802,11 +1292,35 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[14]
-Overfull \hbox (0.81102pt too wide) in paragraph at lines 206--207
-[] \T1/cmr/m/n/10 res $\OMS/cmsy/m/n/10  $ \T1/cmr/m/n/10 caminos[Significado(d
-.computadoras, $\OML/cmm/m/it/10 ^^Y$\T1/cmr/m/n/10 3(paquete)).indice][Siguien
-teSignificado(itCompu).indice]
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 264.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 264.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 264.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 264.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 264.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 264.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 264.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 264.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 264.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 264.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 264.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 264.
+[16]
+Overfull \hbox (0.58997pt too wide) in paragraph at lines 293--294
+[] \T1/cmr/m/n/10 res $\OMS/cmsy/m/n/10  $ \T1/cmr/m/n/10 ca-mi-nos[Significado
+(d.computadoras, $\OML/cmm/m/it/10 ^^Y$\T1/cmr/m/n/10 3(paquete)).indice][Sigui
+enteSignificado(itCompu).indice]
  []
 
 
@@ -815,20 +1329,30 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[15]
-
-Package Fancyhdr Warning: \headheight is too small (11.0pt): 
- Make it at least 12.0pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[16]
-
-Package Fancyhdr Warning: \headheight is too small (11.0pt): 
- Make it at least 12.0pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 541.
 [17]
 
 Package Fancyhdr Warning: \headheight is too small (11.0pt): 
@@ -836,6 +1360,30 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 541.
 [18]
 
 Package Fancyhdr Warning: \headheight is too small (11.0pt): 
@@ -843,7 +1391,106 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[19])
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 541.
+[19]
+
+Package Fancyhdr Warning: \headheight is too small (11.0pt): 
+ Make it at least 12.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 541.
+[20]
+
+Package Fancyhdr Warning: \headheight is too small (11.0pt): 
+ Make it at least 12.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 541.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 541.
+[21])
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 224.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 224.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 224.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 224.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 224.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 224.
+
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 224.
@@ -875,14 +1522,38 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[20
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 60.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 60.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 60.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 60.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 60.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 60.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 60.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 60.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 60.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 60.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 60.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 60.
+[22
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 69--69
 []\T1/cmr/bx/n/10 if \T1/cmr/m/n/10 vacía?($\OML/cmm/m/it/10 c$\T1/cmr/m/n/10 )
  $\OMS/cmsy/m/n/10 _[]$ $\OT1/cmr/m/n/10 ^^E[](\OML/cmm/m/it/10 proximo\OT1/cmr
 /m/n/10 (\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 )) \OML/cmm/m/it/10 < p$ \T1/cmr/bx/
-n/10 then $\OML/cmm/m/it/10 c$ \T1/cmr/bx/n/10 else if
+n/10 then $\OML/cmm/m/it/10 c$ \T1/cmr/bx/n/10 el-se if
  []
 
 
@@ -891,7 +1562,31 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[21]
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 73.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 73.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 73.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 73.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 73.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 73.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 73.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 73.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 73.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 73.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 73.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 73.
+[23]
 Overfull \hbox (14.99998pt too wide) in paragraph at lines 111--111
 []\T1/cmr/m/n/10 arbol(n)| $\OMS/cmsy/m/n/10 ^^Q$| [] 
  []
@@ -907,21 +1602,106 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[22]
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 240.
+[24]
 
 Package Fancyhdr Warning: \headheight is too small (11.0pt): 
  Make it at least 12.0pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[23]
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 240.
+[25]
 
 Package Fancyhdr Warning: \headheight is too small (11.0pt): 
  Make it at least 12.0pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[24])
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 240.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 240.
+[26])
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 229.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 229.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 229.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 229.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 229.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 229.
+
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 229.
@@ -953,7 +1733,44 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[25]
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 232.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 232.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 232.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 232.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 232.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 232.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 232.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 232.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 232.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 232.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 232.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 232.
+[27]
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 234.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 234.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 234.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 234.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 234.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 234.
+
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 234.
@@ -1008,20 +1825,30 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[26]
-
-Package Fancyhdr Warning: \headheight is too small (11.0pt): 
- Make it at least 12.0pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[27]
-
-Package Fancyhdr Warning: \headheight is too small (11.0pt): 
- Make it at least 12.0pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 58.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 58.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 58.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 58.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 58.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 58.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 58.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 58.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 58.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 58.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 58.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 58.
 [28]
 
 Package Fancyhdr Warning: \headheight is too small (11.0pt): 
@@ -1029,47 +1856,151 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[29]) 
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 212.
+[29]
+
+Package Fancyhdr Warning: \headheight is too small (11.0pt): 
+ Make it at least 12.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 212.
+[30]
+
+Package Fancyhdr Warning: \headheight is too small (11.0pt): 
+ Make it at least 12.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 212.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 212.
+[31]) 
 AED: lastpage setting LastPage
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 237.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 237.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 237.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 237.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 237.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 237.
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 237.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 237.
-(./informe.aux)
+(./informe.aux
+LaTeX Info: Redefining \. on input line 23.
+LaTeX Info: Redefining \% on input line 23.
+)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 237.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 237.
 Package rerunfilecheck Info: File `informe.out' has not changed.
 (rerunfilecheck)             Checksum: 4D3E125664749998926B8C36188E1E20;306.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 237.
  ) 
 Here is how much of TeX's memory you used:
- 8163 strings out of 494977
- 116204 string characters out of 6180184
- 238350 words of memory out of 5000000
- 11138 multiletter control sequences out of 15000+600000
+ 8789 strings out of 493304
+ 123961 string characters out of 6139871
+ 256969 words of memory out of 5000000
+ 11997 multiletter control sequences out of 15000+600000
  22270 words of font info for 68 fonts, out of 8000000 for 9000
- 36 hyphenation exceptions out of 8191
- 34i,13n,43p,419b,393s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/leandro/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1000.600pk> </home
-/leandro/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/leandro/
-.texmf-var/fonts/pk/ljfour/jknappen/ec/eccc1000.600pk> </home/leandro/.texmf-va
-r/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk> </home/leandro/.texmf-var/fonts/p
-k/ljfour/jknappen/ec/ecrm1000.600pk> </home/leandro/.texmf-var/fonts/pk/ljfour/
-jknappen/ec/ecbx1000.600pk> </home/leandro/.texmf-var/fonts/pk/ljfour/jknappen/
-ec/ecrm1440.600pk> </home/leandro/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx14
-40.600pk> </home/leandro/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk>
- </home/leandro/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/font
-s/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-sy7.pfb>
-Output written on informe.pdf (29 pages, 266668 bytes).
+ 957 hyphenation exceptions out of 8191
+ 34i,13n,43p,419b,431s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
+0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><
+/usr/share/texmf/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf/fon
+ts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-s
+uper/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></
+usr/share/texmf/fonts/type1/public/cm-super/sfcc1000.pfb></usr/share/texmf/font
+s/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-su
+per/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></u
+sr/share/texmf/fonts/type1/public/cm-super/sfti1000.pfb></usr/share/texmf/fonts
+/type1/public/cm-super/sftt1000.pfb>
+Output written on informe.pdf (31 pages, 353207 bytes).
 PDF statistics:
- 709 PDF objects out of 1000 (max. 8388607)
+ 323 PDF objects out of 1000 (max. 8388607)
  268 compressed objects within 3 object streams
- 70 named destinations out of 1000 (max. 500000)
+ 72 named destinations out of 1000 (max. 500000)
  41 words of extra memory for PDF output out of 10000 (max. 10000000)
 
