@@ -259,7 +259,7 @@ FI}
 		\State Agregar(res, SiguienteClave(it)) \Comment{O(1)}
 		\State Avanzar(it) \Comment{O(1)}
 	\EndWhile
-\EndFunction
+\EndFunction \Comment{\textbf{O(n)}}
 \end{algorithmic}
 \end{algorithm}
 
@@ -275,7 +275,7 @@ FI}
 		\EndIf
 		\State Avanzar(it) \Comment{O(1)}
 	\EndWhile
-\EndFunction
+\EndFunction \Comment{\textbf{O(n*L)}}
 \end{algorithmic}
 \end{algorithm}
 
@@ -290,7 +290,7 @@ FI}
 		\EndIf
 		\State Avanzar(it) \Comment{O(1)}
 	\EndWhile
-\EndFunction
+\EndFunction \Comment{\textbf{O(n*L)}}
 \end{algorithmic}
 \end{algorithm}
 
@@ -299,7 +299,7 @@ FI}
 \begin{algorithmic}[0]
 \Function{iIniciarRed()}{}{$\rightarrow$ res: estr\_red}
 	\State res $\gets$ Vacio() \Comment{Diccionario} \Comment{O(1)}
-\EndFunction
+\EndFunction \Comment{\textbf{O(1)}}
 \end{algorithmic}
 \end{algorithm}
 
@@ -308,8 +308,8 @@ FI}
 \begin{algorithmic}[0]
 \Function{iAgregarCompu}{inout r: estr\_red, in c1: compu}{}
 	\State nuevoDiccVacio $\gets$ Vacio() \Comment{Diccionario} \Comment{O(1)}
-	\State DefinirRapido(r, c1.ip, tupla(c1.interfaces, nuevoDiccVacio, nuevoDiccVacio)) \Comment{O(Copiar(L))}
-\EndFunction
+	\State DefinirRapido(r, c1.ip, tupla(c1.interfaces, nuevoDiccVacio, nuevoDiccVacio)) \Comment{O(Copiar(sL)) con sL=string de largo L}
+\EndFunction \Comment{\textbf{O(L)}}
 \end{algorithmic}
 \end{algorithm}
 
@@ -332,7 +332,7 @@ FI}
 		\State AgregarRapido(res, SiguienteSignificado(it)) \Comment{O(L)}
 		\State Avanzar(it) \Comment{O(1)}
 	\EndWhile
-\EndFunction
+\EndFunction \Comment{\textbf{O(n*L)}}
 \end{algorithmic}
 \end{algorithm}
 
@@ -341,7 +341,7 @@ FI}
 \begin{algorithmic}[0]
 \Function{iUsaInterfaz}{in r: estr\_red, in c: hostname, in i: interfaz}{$\rightarrow$ res: bool}
 	\State res $\gets$ Definido?(Significado(r,c).conexiones,i) \Comment{O(comparar(nat)*n)}
-\EndFunction
+\EndFunction \Comment{\textbf{O(n)}}
 \end{algorithmic}
 \end{algorithm}
 
@@ -355,7 +355,7 @@ FI}
 		\State AgregarRapido(res, Siguiente(itCaminos)) \Comment{O(1)}
 		\State Avanzar(itCaminos) \Comment{O(1)}	
 	\EndWhile
-\EndFunction
+\EndFunction \Comment{\textbf{O(n*L)}}
 \end{algorithmic}
 \end{algorithm}
 
@@ -364,7 +364,7 @@ FI}
 \begin{algorithmic}[0]
 \Function{iHayCamino?}{in r: estr\_red, in c1: hostname, in c2: hostname}{$\rightarrow$ res: bool}
 	\State res $\gets$ Definido?(Significado(r,c1).alcanzables, c2) \Comment{O(n*n)}
-\EndFunction
+\EndFunction \Comment{\textbf{O(n*n)}}
 \end{algorithmic}
 \end{algorithm}
 
