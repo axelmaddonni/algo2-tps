@@ -219,7 +219,6 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $Vacia?(e) = Vacia?(c) \ \wedge_L
 
 	\State \Comment{maxValor devuelve el maximo valor si ambos punteros son validos, o el valor apuntado por
 	el puntero no nulo en caso de que alguno no lo sea}
-	\EndWhile
 	\If{$z.der == null \ \vee_L \ (z.izq).valor \geq (z.der).valor$} \Comment{O(1)}
 		\State $aux\gets \ z.valor$ \Comment{O(1)}
 		\State $z.valor\gets \ (z.izq).valor$ \Comment{O(1)}
@@ -231,6 +230,8 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $Vacia?(e) = Vacia?(c) \ \wedge_L
 		\State $(z.der).valor\gets \ aux$ \Comment{O(1)}
 		\State $z\gets z.der$ \Comment{O(1)}
 	\EndIf
+	\EndWhile
+
 
 \EndFunction
 \end{algorithmic}
