@@ -20,11 +20,11 @@
   [Indica si la cola esta vacia.]
   []
 
-  \InterfazFuncion{Primero}{\In{estr}{colaLog($\alpha$)}}{tupla($nat, \alpha$)}
+  \InterfazFuncion{Pr\'oximo}{\In{estr}{colaLog($\alpha$)}}{tupla($nat, \alpha$)}
   [$\neg Vacia?(estr)$]
-  {$res =_{obs} primero(estr)$}%
+  {$res =_{obs} proximo(estr)$}%
   [$O(copiar(\alpha))$]
-  [Devuelve una tupla que contiene al primer elemento y su prioridad.]
+  [Devuelve una tupla que contiene al pr\'oximo elemento y su prioridad.]
   
 
   \InterfazFuncion{Encolar}{\Inout{estr}{colaLog($\alpha$)}, \In{prio}{nat}, \In{valor}{$\alpha$}}{bool} %res no me sirve para nada...lo puedo sacar o siempre tiene que estar aunque lo ponga siempre en true?
@@ -43,6 +43,9 @@
   
   
 \end{Interfaz}
+
+\newpage
+
 \begin{tad}{\tadNombre{Cola de prioridad alternativa($\alpha$)}}
 \tadGeneros{colaPrio($\alpha$)}
 \tadExporta{colaPrio($\alpha$), generadores, observadores}
@@ -74,9 +77,9 @@
 
 \begin{Representacion}
 
-\begin{Estructura}{colaLog($\alpha$)}[estr($\alpha$)]
+\begin{Estructura}{colaLog($\alpha$)}[estr\_heap($\alpha$)]
 
-\begin{Tupla}[estr($\alpha$)]
+\begin{Tupla}[estr\_heap($\alpha$)]
 	\tupItem{size}{nat} \newline \nomoreitems
 	\tupItem{primero}{nodo($\alpha$)} \newline \nomoreitems
 \end{Tupla}
@@ -91,27 +94,46 @@
 
 \end{Estructura}
 
-Rep: estr($\alpha$) $\rightarrow$ bool
-\newline \indent Rep($e$) $\equiv$ true $\iff \ size = \# arbol(estr.primero) \ \wedge_L
+Rep: estr\_heap($\alpha$) $\rightarrow$ bool
+\newline \indent Rep($estr$) $\equiv$ true $\iff \ size = \# arbol(estr.primero) \ \wedge_L
 \newline \indent ((estr.primero).padre = null \wedge
-\newline \indent (\forall e: estr)( e \in arbol(estr.primero) \wedge \ e \neq (estr.primero) \Rightarrow (e.padre \neq null \wedge_L (((e.padre).izq = e \vee (e.padre).der = e ) \wedge \
+\newline \indent (\forall e: estr\_heap)( e \in arbol(estr.primero) \wedge \ e \neq (estr.primero) \Rightarrow (e.padre \neq null \wedge_L (((e.padre).izq = e \vee (e.padre).der = e ) \wedge \
 \neg(((e.padre).izq = e \wedge (e.padre).der = e ))))) \wedge
-\newline \indent (\forall e: estr)( e \in arbol(estr.primero) \Rightarrow ((estr.izq \neq null \Rightarrow estr.prio \geq (estr.izq).prio) \wedge (estr.der \neq null \Rightarrow estr.prio \geq (estr.der).prio))) \wedge
-\newline \indent (\forall e: estr)( e \in arbol(estr.primero) \Rightarrow caminoHastaRaiz(e,arbol(estr.primero)) \leq \left \lfloor{log_2(size)}\right \rfloor + 1))$
+\newline \indent (\forall e: estr\_heap)( e \in arbol(estr.primero) \Rightarrow ((estr.izq \neq null \Rightarrow estr.prio \geq (estr.izq).prio) \wedge (estr.der \neq null \Rightarrow estr.prio \geq (estr.der).prio))) \wedge
+\newline \indent (\forall e: estr\_heap)( e \in arbol(estr.primero) \Rightarrow caminoHastaRaiz(e,arbol(estr.primero)) \leq \left \lfloor{log_2(size)}\right \rfloor + 1))$
 
-Abs: estr($\alpha$) $e \rightarrow$ colaPrio($\alpha$) \{ Rep($e$) \}
+\textbf{}
+\textbf{}
+
+Abs: estr\_heap($\alpha$) $e \rightarrow$ colaPrio($\alpha$) \{ Rep($e$) \} \newline
 Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $Vacia?(e) = Vacia?(c) \ \wedge_L
 \newline \indent (\neg Vacia?(e) \Rightarrow Proximo(e) = Proximo(c)) \ \wedge
 \newline \indent (\neg Vacia?(e) \Rightarrow Desencolar(e) = Desencolar(c))$
 
+\textbf{}
+\textbf{}
+
 \textbf{Especificaci\'on de las operaciones auxiliares utilizadas para Rep y Abs}
 \tadOperacion{arbol}{nodo($\alpha$)}{conj(nodo($\alpha$))}{}
 \tadOperacion{caminoHastaRaiz}{nodo($\alpha$)}{nat}{}
-\tadAxioma{arbol(n)}{\textbf{if} $n.izq \neq null \wedge n.der \neq null$ \textbf{then} Ag($n.valor,arbol(n.izq)\cup arbol(n.der)$) \textbf{else}
-\textbf{if} $n.izq \neq null$ \textbf{then} Ag($n.valor,arbol(n.izq)$) \textbf{else} \textbf{if} $n.der \neq null$ \textbf{then} Ag($n.valor,arbol(n.der)$) \textbf{else} Ag($n.valor,\emptyset$)}
-\tadAxioma{caminoHastaRaiz(n)}{\textbf{if} $n.padre = null$ \textbf{then} $0$ \textbf{else} $caminoHastaRaiz(n.padre)+1$}
+\tadAxioma{arbol(n)}{
+\IF {$n.izq \neq null \wedge n.der \neq null$}
+THEN {Ag($n.valor,arbol(n.izq)\cup arbol(n.der)$)}
+ELSE { \IF {$n.izq \neq null$}
+		THEN {Ag($n.valor,arbol(n.izq)$)}
+		ELSE { \LIF\ $n.der \neq null$ \LTHEN\ Ag($n.valor,arbol(n.der)$) \LELSE\ Ag($n.valor,\emptyset$) \LFI}
+		FI}
+FI}
+
+\tadAxioma{caminoHastaRaiz(n)}{\textbf{if} $n.padre = null$ \textbf{then} $0$ \textbf{else} $caminoHastaRaiz(n.padre)+1$ \textbf{fi}}
+		
+%\textbf{if} $n.izq \neq null \wedge n.der \neq null$ \textbf{then} Ag($n.valor,arbol(n.izq)\cup arbol(n.der)$) \textbf{else}
+%\textbf{if} $n.izq \neq null$ \textbf{then} Ag($n.valor,arbol(n.izq)$) \textbf{else} \textbf{if} $n.der \neq null$ \textbf{then} Ag($n.valor,arbol(n.der)$) \textbf{else} Ag($n.valor,\emptyset$)}
+
 
 \end{Representacion}
+
+\newpage
 
 \begin{Algoritmos}
 
@@ -128,16 +150,16 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $Vacia?(e) = Vacia?(c) \ \wedge_L
 \begin{algorithm}
 \caption{Implementaci\'on de Vacia?}
 \begin{algorithmic}[0]
-\Function{iVacia?}{\In{estr}{colaLog($\alpha$)}}{$\rightarrow res$: bool}
+\Function{iVacia?}{\In{estr}{estr\_heap($\alpha$)}}{$\rightarrow res$: bool}
 \State $res\gets \ (estr.primero == null)$ \Comment{O(1)}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
 
 \begin{algorithm}
-\caption{Implementaci\'on de Primero}
+\caption{Implementaci\'on de Pr\'oximo}
 \begin{algorithmic}[0]
-\Function{iPrimero}{\In{estr}{colaLog($\alpha$)}}{$\rightarrow res$: tupla($nat, \alpha$)}
+\Function{Pr\'oximo}{\In{estr}{estr\_heap($\alpha$)}}{$\rightarrow res$: tupla($nat, \alpha$)}
 \State $res\gets \ <(estr.primero).prioridad, (estr.primero).valor>$ \Comment{O(copiar($\alpha$))}
 \EndFunction
 \end{algorithmic}
@@ -148,7 +170,7 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $Vacia?(e) = Vacia?(c) \ \wedge_L
 \begin{algorithm}
 \caption{Implementaci\'on de Encolar}
 \begin{algorithmic}[0]
-\Function{iEncolar}{\Inout{estr}{colaLog($\alpha$)}, \In{prio}{nat}, \In{valor}{$\alpha$}}{$\rightarrow res$: bool}
+\Function{iEncolar}{\Inout{estr}{estr\_heap($\alpha$)}, \In{prio}{nat}, \In{valor}{$\alpha$}}{$\rightarrow res$: bool}
 	\State $res\gets $ $true$	 \Comment{O(1)}
 	\If{estr.size == 0} \Comment{O(1)}
 		\State $estr.primero\gets$ puntero(<$null, null, null, prio, valor$>) \Comment{O(copiar($\alpha$))}
@@ -193,7 +215,7 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $Vacia?(e) = Vacia?(c) \ \wedge_L
 \begin{algorithm}
 \caption{Implementaci\'on de Desencolar}
 \begin{algorithmic}[0]
-\Function{iDesencolar}{\Inout{estr}{colaLog($\alpha$)}}{$\rightarrow res$: $\alpha$}
+\Function{iDesencolar}{\Inout{estr}{estr\_heap($\alpha$)}}{$\rightarrow res$: $\alpha$}
 	\State $res\gets \ *(estr.primero)$ \Comment{O(1)}
 	\State $x\gets \ size$ \Comment{O(1)}
 	\State $y\gets \ $ <> \Comment{O(1)}

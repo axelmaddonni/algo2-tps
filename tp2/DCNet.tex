@@ -1,6 +1,6 @@
 \begin{Interfaz}
 
-  \textbf{usa}: \tadNombre{red, conj($\alpha$), itConj($\alpha$), lista($\alpha$), itLista($\alpha$), dicc$_{TRIE}$($\kappa$, $\sigma$), dicc$_{AVL}$($\kappa$, $\sigma$), conj$_{HEAP}$($\alpha$),  itConj$_{HEAP}$($\alpha$)}.
+  \textbf{usa}: \tadNombre{red, conj($\alpha$), itConj($\alpha$), lista($\alpha$), itLista($\alpha$), dicc$_{UNIV}$($\kappa$, $\sigma$), dicc$_{LOG}$($\kappa$, $\sigma$), cola$_{LOG}$($\alpha$)}.
   
   \textbf{se explica con}: \tadNombre{DCNet}.
 
@@ -89,15 +89,15 @@
    
 \end{Interfaz}
 
-\textbf{} %dejo un espacio
+\newpage
 
-\textbf{Especificaci\'on de las operaciones auxiliares utilizadas en la interfaz}
+\textbf{Especificaci\'on de las operaciones auxiliares utilizadas en la interfaz (no exportadas)}
 
 \begin{tad}{\tadNombre{DCNet extendida}}
 
 \tadExtiende{\tadNombre{DCNet}}
 
-\tadOtrasOperaciones (no exportadas)
+\tadOtrasOperaciones 
 
 \tadOperacion{damehostnames}{conj(compu)}{conj(hostname)}{}
 \tadOperacion{dameCompu}{dcnet /d, hostname /s}{compu}{$s$ $\in$ dameHostnames(computadoras(red($d$)))}
@@ -157,7 +157,7 @@ FI}
 \begin{Tupla}[estr\_dcnet]
 	\tupItem{red}{red} \newline \nomoreitems
 	\tupItem{computadoras}{dicc(hostname, X)} \newline \nomoreitems
-	\tupItem{porHostname}{dicc$_{TRIE}$ (hostname, itDicc(hostname, X))} \newline \nomoreitems
+	\tupItem{porHostname}{dicc$_{UNIV}$ (hostname, itDicc(hostname, X))} \newline \nomoreitems
 	\tupItem{conMasEnvios}{itDicc(hostname, X)} \newline \nomoreitems
 	\tupItem{caminos}{arreglo\_dimensionable de arreglo\_dimensionable de lista(hostname)} \nomoreitems
 \end{Tupla}
@@ -165,8 +165,8 @@ FI}
 \begin{Tupla}[X]
 	\tupItem{indice}{nat} \newline \nomoreitems
 	\tupItem{paquetes}{conj(paquete)} \newline \nomoreitems
-	\tupItem{cola}{conj$_{HEAP}$(itConj(paquete))} \newline \nomoreitems
-	\tupItem{paqPorID}{dicc$_{AVL}$ (IDpaquete, itConj(paquete))} \newline \nomoreitems
+	\tupItem{cola}{cola$_{LOG}$(itConj(paquete))} \newline \nomoreitems
+	\tupItem{paqPorID}{dicc$_{LOG}$ (IDpaquete, itConj(paquete))} \newline \nomoreitems
 	\tupItem{cantEnvios}{nat} \nomoreitems
 \end{Tupla} 
 
