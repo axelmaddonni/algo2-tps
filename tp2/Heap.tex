@@ -20,6 +20,13 @@
   [Indica si la cola esta vacia.]
   []
 
+  \InterfazFuncion{Primero}{\In{estr}{heap}}{tupla($nat, \alpha$)}
+  [$\neg Vacia?(estr)$]
+  {$res =_{obs} primero(estr)$}%
+  [O(1)]
+  [Devuelve una tupla que contiene al primer elemento y su prioridad.]
+  
+
   \InterfazFuncion{Encolar}{\Inout{estr}{heap}, \In{prio}{nat}, \In{valor}{$\alpha$}}{bool} %res no me sirve para nada...lo puedo sacar o siempre tiene que estar aunque lo ponga siempre en true?
   [estr = estr$_0$]
   {$res$ $\wedge$ estr =$_{obs}$ encolar(estr$_0$)}%
@@ -36,47 +43,35 @@
   
   
 \end{Interfaz}
-
 \begin{tad}{\tadNombre{Cola de prioridad alternativa($\alpha$)}}
 \tadGeneros{colaPrio($\alpha$)}
 \tadExporta{colaPrio($\alpha$), generadores, observadores}
-\tadIgualdadObservacionalSimple{$(\forall c_1, c_2: colaPrio(\alpha)) (c_1 =_{obs} c_2 \iff (\forall n:nat)\ conjPorPrio(c_1, n) =_{obs} conjPorPrio(c_2, n))$}
-
 
 \tadUsa{\tadNombre{Bool, Nat, Conjunto($\alpha$)}}
-\tadAlinearFunciones{proximaPrio}{colaPrio($\alpha$),nat,$\alpha$}
+
+\tadGeneros{colaPrior($\alpha$)}
+\tadExporta{colaPrior($\alpha$), generadores, observadores}
+\tadUsa{\tadNombre{Bool}}
+
+\tadAlinearFunciones{desencolar}{nat,$\alpha$,colaPrior($\alpha$)}
 
 \tadObservadores
-\tadOperacion{prioridades}{colaPrio($\alpha$)}{conj($nat$)}{}
-\tadOperacion{conjPorPrio}{colaPrio($\alpha$), nat}{conj($\alpha$)}{}
-\tadOperacion{pr\'oximo}{colaPrio($\alpha$)/c}{$\alpha$}{$\neg\emptyset$?(prioridades($c$))}
+\tadOperacion{vac\'ia?}{colaPrior($\alpha$)}{bool}{}
+\tadOperacion{pr\'oximo}{colaPrior($\alpha$)/c}{tupla($nat, \alpha$)}{$\neg$ vac\'ia?($c$)}
+\tadOperacion{desencolar}{colaPrior($\alpha$)/c}{colaPrior($\alpha$)}{$\neg$ vac\'ia?($c$)}
 
 \tadGeneradores
-\tadOperacion{vac\'ia}{}{colaPrio($\alpha$)}{}
-\tadOperacion{encolar}{colaPrio($\alpha$),nat,$\alpha$}{colaPrio($\alpha$)}{}
-\tadOperacion{desencolar}{colaPrio($\alpha$)/c}{colaPrio($\alpha$)}{$\neg \emptyset$?(prioridades($c$))}
+\tadOperacion{vac\'ia}{}{colaPrior($\alpha$)}{}
+\tadOperacion{encolar}{nat,$\alpha$,colaPrior($\alpha$)}{colaPrior($\alpha$)}{}
 
-\tadOtrasOperaciones
-\tadOperacion{pr\'oximaPrio}{colaPrio($\alpha$)}{nat}{}
-\tadOperacion{maxConjunto}{conjunto($nat$)/C}{nat}{}
-\tadAxiomas[$\forall \ c:\ colaPrio(\alpha), \forall \ n,\ p:\ nat, \forall \ val:\ \alpha, \forall \ conj:\ conj(nat)$]
+\tadAxiomas[\paratodo{colaPrior($\alpha$)}{c}, \paratodo{$\alpha$}{e}]
+\tadAlinearAxiomas{desencolar(encolar($p$, $e$, $c$))}{}
 
-\tadAxioma{pr\'oximaPrio($c$)}{maxConjunto($prioridades(c)$)}
-\tadAxioma{maxConjunto($conj$)}{\textbf{if} $\emptyset$?(conj) \textbf{then} 0 \textbf{else}
-\textbf{if} dameUno($conj$) $\geq$ maxConjunto($sinUno(conj)$) \textbf{then} dameUno($conj$) \textbf{else}
-maxConjunto($sinUno(conj)$)}
-\tadAxioma{prioridades($vacia$)}{$\emptyset$}
-\tadAxioma{prioridades($encolar(c,n,val)$)}{Ag($n,prioridades(c)$)}
-\tadAxioma{prioridades($desencolar(c)$)}{\textbf{if} \#$conjPorPrio$($c,proximaPrio(c)$) = 1 \textbf{the}
-prioridades($c$) - \{pr\'oximaPrio($c$)\} \textbf{else} prioridades($c$)}
-\tadAxioma{conjPorPrio($vacia, p$)}{$\emptyset$}
-\tadAxioma{conjPorPrio($encolar(c,n,val),p$)}{\textbf{if} $p = n$ \textbf{then} Ag(val, conjPorPrio($c,p$)
-\textbf{else} conjPorPrio($c,p$)}
-\tadAxioma{conjPorPrio($desencolar(c),p$)}{\textbf{if} $p = proximaPrio(c)$ \textbf{then} sinUno($conjPorPrio(c,p)$)
-\textbf{else} conjPorPrio($c,p$)}
-\tadAxioma{pr\'oximo(encolar($c,n,val$))}{\textbf{if} $n = proximaPrio(c)$ \textbf{then} dameUno($Ag(conjPorPrio(c, n))$) \textbf{else} dameUno($conjPorPrio(c,proximaPrio(c))$)}
-\tadAxioma{pr\'oximo(desencolar($c$))}{\textbf{if} \#$conjPorPrio$($c,proximaPrio(c)$) = 1 \textbf{then} dameUno($conjPorPrio(c, maxConjunto(prioridades(c)-\{proximaPrio(c)\})))$)
-\textbf{else} dameUno($sinUno(conjPorPrio(c,proximaPrio(c)))$)}
+\tadAxioma{vac\'ia?(vac\'ia)}{true}
+\tadAxioma{vac\'ia?(encolar($p$, $e$, $c$))}{false}
+
+\tadAxioma{pr\'oximo(encolar($p$, $e$, $c$))}{\textbf{if} vac\'ia?($c$) $\oluego$\ $\Pi_1(proximo(c)) < p$ \textbf{then} $<p,e>$ \textbf{else} \textbf{if} $\Pi_1(proximo(c)) = p$ \textbf{then} $<p,e>  \vee \ proximo(c)$ \textbf{else} $proximo(c)$ \textbf{fi} \textbf{fi}}
+\tadAxioma{desencolar(encolar($p$, $e$, $c$))}{\textbf{if} vac\'ia?($c$) $\oluego$\ $\Pi_1(proximo(c)) < p$ \textbf{then} $c$ \textbf{else} \textbf{if} $\Pi_1(proximo(c)) = p$ \textbf{then} $c\  \vee \ encolar(p, e, desencolar(c)$ \textbf{else}  $encolar(p, e, desencolar(c)$ \textbf{fi} \textbf{fi}}
 
 \end{tad}
 
@@ -143,6 +138,16 @@ Abs: estr $d \rightarrow$ colaPrio($\alpha$) \{ Rep($d$) \}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de Primero}
+\begin{algorithmic}[0]
+\Function{iPrimero}{\In{estr}{heap}}{$\rightarrow res$: tupla($nat, \alpha$)}
+\State $res\gets \ <(estr.primero).prioridad, (estr.primero).valor>$ \Comment{O(1)}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
 
 
 \begin{algorithm}
