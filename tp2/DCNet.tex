@@ -10,35 +10,35 @@
 
   \InterfazFuncion{Red}{\In{d}{dcnet}}{red}
   {alias($res$ =$_{obs}$ red($d$))}%
-  []
+  [O()]
   [devuelve la red asociada.]
   [res no es modificable.]
 
   \InterfazFuncion{CaminoRecorrido}{\In{d}{dcnet}, \In{p}{IDpaquete}}{lista(hostname)}
   [IDpaqueteEnTransito?($d$, $p$)]
   {$res$ =$_{obs}$ dameSecuDeHostnames(caminoRecorrido($d$, damePaquete($p$)))}%
-  []
+  [O()]
   [devuelve el camino recorrido desde el origen hasta el actual.]
   [res se devuelve por copia.]
   
   \InterfazFuncion{CantidadEnviados}{\In{d}{dcnet}, \In{c}{hostname}}{nat}
   [$c$ $\in$ dameHostnames(computadoras(red($d$)))]
   {$res$ =$_{obs}$ cantidadEnviados($d$, dameCompu($c$))}%
-  []
+  [O()]
   [devuelve la cantidad de paquetes enviados por la computadora.]
   []
 
   \InterfazFuncion{EnEspera}{\In{d}{dcnet}, \In{c}{hostname}}{conj(paquete)}
   [$c$ $\in$ dameHostnames(computadoras(red($d$)))]
   {alias($res$ =$_{obs}$ enEspera($d$, dameCompu($c$)))}%
-  []
+  [O()]
   [devuelve los paquetes en la cola de la computadora.]
   [res no es modificable.]
   
   \InterfazFuncion{IniciarDCNet}{\In{r}{red}}{dcnet}
   [true]
   {$res$ =$_{obs}$ iniciarDCNet($r$)}%
-  []
+  [O()]
   [crea una nueva Dcnet.]
   [la red se agrega por copia.]
     
@@ -46,35 +46,37 @@
   [$d$ = $d_0$ $\wedge$ $\neg$( ($\exists$ $p\sp{\prime}$: paquete) (paqueteEnTransito?($d$, $p\sp{\prime}$) $\wedge$ id($p\sp{\prime}$) = id($p$) ) $\wedge$ \newline
   origen($p$) $\in$ computadoras(red($d$)) $\wedge_L$ destino($p$) $\in$ computadoras(red($d$)) $\wedge_L$ hayCamino?(red($d$), origen($p$), destino($p$))]
   {$d$ $=_{obs}$ crearPaquete($d_0$, $p$)}%
-  []
+  [O()]
   [agrega un paquete a la red.]
   [el paquete se agrega por copia.]
+
+\newpage
 
   \InterfazFuncion{AvanzarSegundo}{\Inout{d}{dcnet}}{}
   [$d$ = $d_0$]
   {$d$ =$_{obs}$ avanzarSegundo($d_0$)}%
-  []
+  [O()]
   [realiza los movimientos de paquetes correspondientes, aplicando los cambios necesarios a la dcnet.]
   []
   
   \InterfazFuncion{PaqueteEnTransito?}{\In{d}{dcnet}, \In{p}{IDpaquete}}{bool}
   [true]
   {$res$ =$_{obs}$ IDpaqueteEnTransito?($d$, $p$)}%
-  []
+  [O()]
   [indica si el paquete esta en alguna de las colas dado el ID.]
   []
   
   \InterfazFuncion{LaQueMasEnvio}{\In{d}{dcnet}}{hostname}
   [true]
   {$res$ =$_{obs}$ laQueMasEnvio($d$).ip}%
-  []
+  [O()]
   [devuelve la computadora que m\'as paquetes envi\'o.]
   [res se devuelve por copia.]  
   
   \InterfazFuncion{$\bullet = \bullet$}{\In{d_1}{dcnet}, \In{d_2}{dcnet}}{bool}
   [true]
   {$res$ =$_{obs}$ ($d_1$ =$_{obs}$ $d_2$}%
-  []
+  [O()]
   [indica si dos dcnet son iguales.]
   []  
   
@@ -146,6 +148,8 @@ FI}
 
 \end{tad}
 
+\newpage
+
 \begin{Representacion}
 
 \begin{Estructura}{dcnet}[estr\_dcnet]
@@ -179,7 +183,7 @@ FI}
 8: En la matriz caminos[i][j] se guarda uno de los caminos minimos de la red correspondiente al origen y destino correspondientes a los indices i, j, respectivamente. Si no hay, se guarda una lista vacia.\newline
 9: Las claves del diccionario paquetesPorID son los ID del conjunto paquetes.\newline
 10: El conjunto de paquetes y la cola de prioridad tienen el mismo tamano.\newline 
-11: La cola ordena los paquetes por prioridad. (usando los observadores del TAD Cola de Prioridad Alaternativa adjunto). \newpage
+11: La cola ordena los paquetes por prioridad. (usando los observadores del TAD Cola de Prioridad Alaternativa adjunto). \newline
 Para todos los paquetes de una computadora:\newline
 12: El origen y el destino estan entre las computadoras de la dcnet.\newline
 13: El origen y el destino son distintos.\newline
@@ -189,6 +193,8 @@ Para todos los paquetes de una computadora:\newline
 17: Son accesibles por el dicc usando su ID.\newline
 18: En la cola hay un iterador a cada paquete.\newline
 }
+
+\newpage
 
 \tadAlinearFunciones{REP}{estr\_dcnet /d}
 
@@ -231,7 +237,7 @@ destino($p$).ip $\in$ claves ($e$.computadoras) $\wedge$
 	Siguiente($it$) = $p$  ) )
 }
 
-\newpage
+\textbf{}
 
 \textbf{Especificaci\'on de las funciones auxiliares utilizadas en Rep}
 
@@ -261,10 +267,7 @@ caminoRecorrido ($d$, $p$) = $e$.caminos[obtener($e$.computadoras, origen($p$).i
 
 \end{Representacion}
 
-\newpage
-
 \begin{Algoritmos}
-
 
 \begin{algorithm}
 \caption{Implementaci\'on de Red}
@@ -367,44 +370,13 @@ caminoRecorrido ($d$, $p$) = $e$.caminos[obtener($e$.computadoras, origen($p$).i
 \end{algorithm}
 
 \begin{algorithm}
-\caption{}
+\caption{Implementaci\'on de crearPaquete}
 \begin{algorithmic}[0]
-\Function{CrearPaquete}{\Inout{d}{estr\_dcnet}, \In{p}{paquete}}
+\Function{iCrearPaquete}{\Inout{d}{estr\_dcnet}, \In{p}{paquete}}
 	\State itPC $\gets$ Significado(d.porHostname, paquete.origen)\Comment{O(L)}
 	\State itPaq $\gets$ AgregarRapido(SiguienteSignificado(itPC).paquetes, p)\Comment{O(copy(p))}
 	\State Encolar(SiguienteSignificado(itPC).cola, p.prioridad ,itPaq)	\Comment{O(log(n)), n cantidad de nodos)}
 	\State Definir(SiguienteSignificado(itPC).paquetesPorID, IDpaquete, itPaq) \Comment{O(log(n)), n cantidad de nodos}
-\EndFunction
-\end{algorithmic}
-\end{algorithm}
-
-\begin{algorithm}
-\caption{Implementaci\'on de PaqueteEnTransito?}
-\begin{algorithmic}[0]
-\Function{iPaqueteEnTransito?}{in d: estr\_dcnet, in p:IDpaquete}{$\rightarrow$ res: bool}
-	\State res $\gets$ false \Comment{O(1)}
-	\State itCompu $\gets$ crearIt(d.computadoras) \Comment{O(1)}
-	\While { HaySiguiente(itCompu) $\&\&$ $\neg$res}  
-		\newline  \Comment{a lo sumo n veces, la guarda es O(1)}
-		\State itPaq $\gets$ crearIt(siguienteSignificado(itCompu).paquetes) \Comment{O(1)}
-		\While {(HaySiguiente(itPaq) $\&\&$ Siguiente(itPaq).id $\neq$ p)} 
-		\Comment{a lo sumo k veces, la guarda es O(1)}
-			\State Avanzar(itPaq)  \Comment{O(1)}
-		\EndWhile
-		\If {Siguiente(itPaq) == p)} \Comment{O(1)}
-			\State res $\gets$ True \Comment{O(1)}
-		\EndIf
-		\State Avanzar(itCompu) \Comment{O(1)}
-	\EndWhile
-\EndFunction
-\end{algorithmic}
-\end{algorithm}
-
-\begin{algorithm}
-\caption{Implementaci\'on de LaQueMasEnvi\'o}
-\begin{algorithmic}[0]
-\Function{iLaQueMasEnvi\'o}{in d: estr\_dcnet}{$\rightarrow$ res: hostname}
-	\State res $\gets$ SiguienteClave(d.conMasEnvios)	
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -504,6 +476,39 @@ caminoRecorrido ($d$, $p$) = $e$.caminos[obtener($e$.computadoras, origen($p$).i
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de PaqueteEnTransito?}
+\begin{algorithmic}[0]
+\Function{iPaqueteEnTransito?}{in d: estr\_dcnet, in p:IDpaquete}{$\rightarrow$ res: bool}
+	\State res $\gets$ false \Comment{O(1)}
+	\State itCompu $\gets$ crearIt(d.computadoras) \Comment{O(1)}
+	\While { HaySiguiente(itCompu) $\&\&$ $\neg$res}  
+		\newline  \Comment{a lo sumo n veces, la guarda es O(1)}
+		\State itPaq $\gets$ crearIt(siguienteSignificado(itCompu).paquetes) \Comment{O(1)}
+		\While {(HaySiguiente(itPaq) $\&\&$ Siguiente(itPaq).id $\neq$ p)} 
+		\Comment{a lo sumo k veces, la guarda es O(1)}
+			\State Avanzar(itPaq)  \Comment{O(1)}
+		\EndWhile
+		\If {Siguiente(itPaq) == p)} \Comment{O(1)}
+			\State res $\gets$ True \Comment{O(1)}
+		\EndIf
+		\State Avanzar(itCompu) \Comment{O(1)}
+	\EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de LaQueMasEnvi\'o}
+\begin{algorithmic}[0]
+\Function{iLaQueMasEnvi\'o}{in d: estr\_dcnet}{$\rightarrow$ res: hostname}
+	\State res $\gets$ SiguienteClave(d.conMasEnvios)	
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
 
 \begin{algorithm}
 \caption{Implementaci\'on de ==}

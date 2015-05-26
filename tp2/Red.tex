@@ -163,6 +163,24 @@ FI}
       
 \end{Estructura}
 
+\comentario{Rep en Castellano: \newline
+Para cada computadora: \newline
+1: Las interfaces usadas pertenecen al conjunto de interfaces de la compu.\newline
+2: Los vecinos perteneces a las computadoras de la red.\newline
+3: Los vecinos son distintos a la compu actual.\newline
+4: Los vecinos no se repiten.\newline
+5: Las conexiones son bidireccionales.\newline
+6: Los alcanzables pertenecen a las computadoras de la red.\newline
+7: Los alcanzables son distintos a la actual.\newline
+8: Los alcanzables tienen un camino v\'alido hacia ellos desde la actual.\newline
+9: Para cada alcanzable, el conjunto de camiinos v\'alidos no es vac\'io.\newline
+10: Todos los caminos en el diccionario alcanzables son v\'alidos.\newline
+11: Los caminos son m\'inimos.\newline
+12: Est\'an todos los m\'inimos.
+}
+
+\newpage
+
 \tadAlinearFunciones{REP}{estr\_red /e}
 
 \Rep[estr\_red]{
@@ -198,23 +216,8 @@ La abreviatura $esCaminoValido$ usada en el Rep se debe leer: (no son funciones,
 
 Con $esVecino$ ($h1$, $h2$) $\equiv$  ($\exists$ $i$: interfaz) $h2$ == obtener (obtener($e$, $h1$).conexiones, $i$) 
 
-\newpage
-
-\comentario{Rep en Castellano: \newline
-Para cada computadora: \newline
-1: Las interfaces usadas pertenecen al conjunto de interfaces de la compu.\newline
-2: Los vecinos perteneces a las computadoras de la red.\newline
-3: Los vecinos son distintos a la compu actual.\newline
-4: Los vecinos no se repiten.\newline
-5: Las conexiones son bidireccionales.\newline
-6: Los alcanzables pertenecen a las computadoras de la red.\newline
-7: Los alcanzables son distintos a la actual.\newline
-8: Los alcanzables tienen un camino v\'alido hacia ellos desde la actual.\newline
-9: Para cada alcanzable, el conjunto de camiinos v\'alidos no es vac\'io.\newline
-10: Todos los caminos en el diccionario alcanzables son v\'alidos.\newline
-11: Los caminos son m\'inimos.\newline
-12: Est\'an todos los m\'inimos.
-}
+\textbf{}
+\textbf{}
 
 \AbsFc[estr\_red]{red}[e]{$r$ $|$ computadoras ($r$) = dameComputadoras($e$) $\wedge_L$ \newline
 	($\forall$ $c1$, $c2$: compu, $c1$, $c2$ $\in$ computadoras($r$)) conectadas?($r$, $c1$, $c2$) = ($\exists$ $i$: interfaz) ( $c2$.ip = obtener(obtener($e$, $c1$.ip).conexiones, $i$) ) $\wedge_L$ \newline
@@ -222,6 +225,8 @@ Para cada computadora: \newline
 	}
 
 \textbf{} %dejo un espacio
+
+\newpage
 
 \textbf{Especificaci\'on de las funciones auxiliares utilizadas en abs}
 
@@ -320,8 +325,105 @@ FI}
 \begin{algorithm}
 \caption{Implementaci\'on de Conectar}
 \begin{algorithmic}[0]
-\Function{iConectar}{inout r: estr\_red, in c1: hostname}{}
+\Function{iConectar}{inout r: estr\_red, in c1: hostname, int i1:interfaz, in c2: hostname, in i2:interfaz}{}
+\comentario{Actualizo conexiones de ambas}
+\State DefinirRapido(Significado(r, c1).conexiones, i1, c2)
+\State DefinirRapido(Significado(r, c2).conexiones, i2, c1)
+\comentario{Actualizo caminos de ambas}
+\State ActualizarCaminos(r, c1, c2)
+\State ActualizarCaminos(r, c2, c1)
+\comentario{Creo conjunto con los actualizados hasta el momento}
+\State actualizados $\gets$ Vacio() \Comment{conjunto}
+\State AgregarRapido(actualizados, c1)
+\State AgregarRapido(actualizados, c2)
+\comentario{Actualizo caminos del resto de la Red por recursion}
+\State ActualizarVecinos(r, c1, actualizados)
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
 
+\begin{algorithm}
+\caption{Implementaci\'on de funci\'on auxiliar Actualizar Caminos}
+\begin{algorithmic}[0]
+\Function{iActualizarCaminos}{inout r: estr\_red, in c1: hostname, in c2: hostname}{}
+\comentario{Actualiza los caminos de c1 con los de c2}
+\comentario{Recorro los alcanzables de c2}
+\State itAlcanzables2 $\gets$ crearIt(Significado(r, c2).alcanzables)
+\While {(HaySiguiente(itAlcanzables2)}
+	\comentario{Recorro alcanzables de c1}
+	\State itAlcanzables1 $\gets$ crearIt(Significado(r, c1).alcanzables)
+	\While{(HaySiguiente(itAlcanzables1))}
+		\If{(SiguienteClave(itAlcanzables2) == SiguienteClave(itAlcanzables1))}
+			\comentario{El alcanzable ya estaba, me fijo que caminos son m\'as cortos}
+			\State itCaminos $\gets$ crearIt (SiguienteSignificado(itAlcanzables2))
+			\State camino2 $\gets$ Siguiente(itCaminos) \Comment{camino minimo del c2}
+			\State itCaminos $\gets$ crearIt (SiguienteSignificado(itAlcanzables1))
+			\State camino1 $\gets$ Siguiente(itCaminos) \Comment{camino minimo del c1}
+			
+			\If{(longitud(camino1) > longitud(camino2))}
+				\comentario{Los caminos nuevos son mas cortos, borro los que están y copio los nuevos}
+				\State Borrar(Significado(r, c1).alcanzables, SiguienteClave(itAlcanzables1))
+				\comentario{Nuevo alcanzable: me copio los caminos agregando c1 al principio}
+				\State itCaminos $\gets$ crearIt (SiguienteSignificado(itAlcanzables2))
+				\State caminos $\gets$ Vacio() \Comment{conjunto donde voy a guardar los caminos modificados}
+				\While { (HaySiguiente(itCaminos))}
+					\State nuevoCamino $\gets$ copy(Siguiente(itCaminos)) \Comment{copio el camino que voy a modificar}
+					\State AgregarAdelante(nuevoCamino, c1)
+					\State AgregarRapido (caminos, nuevoCamino)
+					\State Avanzar(itCaminos)
+				\EndWhile
+				\comentario {agrego el nuevo alcanzable con el camino}
+				\State DefinirRapido(Significado(r,c1).alcanzables, SiguienteClave(itAlcanzables2), caminos)
+			
+			\Else 
+				\If {(longitud(camino1) == longitud(camino2))}
+					\comentario{ Tengo que agregar los nuevos caminos (modificados) al conjunto de caminos actual}
+					\State itCaminos $\gets$ crearIt(SiguienteSignificado(itAlcanzables2))
+					\While {(HaySiguiente(itCaminos))}
+						\State nuevoCamino $\gets$ copy(Siguiente(itCaminos)) \Comment {copio el camino que voy a modificar}
+						\State AgregarAdelante(nuevoCamino, c1)
+						\State Agregar(SiguienteSignificado(itAlcanzables1), nuevoCamino)
+						\State Avanzar(itCaminos)
+					\EndWhile
+				\EndIf
+			\EndIf
+		\Else
+			\comentario{Nuevo alcanzable : me copio los caminos agregando c1 al principio}
+			\State itCaminos $\gets$ crearIt (SiguienteSignificado(itAlcanzables2))
+			\State caminos $\gets$ Vacio() \Comment{conjunto donde voy a guardar los caminos modificados}
+			\While { (HaySiguiente(itCaminos))}
+				\State nuevoCamino $\gets$ copy(Siguiente(itCaminos)) \Comment{copio el camino que voy a modificar}
+				\State AgregarAdelante(nuevoCamino, c1)
+				\State AgregarRapido (caminos, nuevoCamino)
+				\State Avanzar(itCaminos)
+			\EndWhile
+%			\comentario {agrego el nuevo alcanzable con el camino}
+			\State DefinirRapido(Significado(r, c1).alcanzables, SiguienteClave(itAlcanzables2), caminos)
+		\EndIf
+		\State Avanzar(itAlcanzables1)
+	\EndWhile
+	\State Avanzar(itAlcanzables2)
+\EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}		
+				
+				
+\begin{algorithm}
+\caption{Implementaci\'on de funci\'on auxiliar Actualizar Vecinos}
+\begin{algorithmic}[0]
+\Function{iActualizarVecinos}{inout r: estr\_red, in c1: hostname, in conj(hostname) actualizados}{}
+\comentario{Actualiza los caminos de los vecinos de C, y luego hace recursion para los vecinos de los vecinos.}
+\State itVecinos $\gets$ crearIt(Significado(r, c1).conexiones)
+\While{ ( HaySiguiente(itVecinos) )}
+	\comentario{ Si todavía no fue actualizado, lo actualizo y hago recursi\'on sobre los vecinos.}
+	\If{(SiguienteClave(itVecinos) $\notin$ actualizados)}
+		\State ActualizarCaminos(r, SiguienteClave(itVecinos), c )
+		\State AgregarRapido (actualizados, SiguienteClave(itVecinos))
+		\State ActualizarVecinos(r, SiguienteClave(itVecinos), actualizados)
+	\EndIf
+\State Avanzar(itVecinos)
+\EndWhile
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -414,7 +516,18 @@ FI}
 							\State Caminos1 $\gets$ SiguienteSignificado(itAlc1) \Comment{O(1)}
 							\State Caminos2 $\gets$ Significado(Comp2.alcanzables, itAlc1) \Comment{O(n)}
 \comentario{Me guardo los 2 conjuntos de caminos (de la compu de la red 1 y la de la red 2)}
-							\If{$\neg$(Longitud(Caminos1) == Longitud(Caminos2))} \Comment{O(comparar(nat))}
+							
+	\algstore {igualdadRed}						
+
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}
+\begin{algorithmic}[0]
+
+\algrestore {igualdadRed}					
+					\If{$\neg$(Longitud(Caminos1) == Longitud(Caminos2))} \Comment{O(comparar(nat))}
 \comentario{Si sus cantidades son distintas => las redes son distintas}
 								\State res $\gets$ FALSE
 							\Else
