@@ -4,40 +4,40 @@
   
   \textbf{se explica con}: \tadNombre{Cola de Prioridad Alternativa}.
 
-  \textbf{g\'eneros}: \TipoVariable{heap}.
+  \textbf{g\'eneros}: \TipoVariable{colaLog($\alpha$)}.
 
   \Titulos{Operaciones de Cola de Prioridad $_{HEAP}$}
 
-  \InterfazFuncion{Vacia}{}{heap}
+  \InterfazFuncion{Vacia}{}{colaLog($\alpha$)}
   {res =$_{obs}$ vacia}%
-  [O(1)]
+  [$O(1)$]
   [Crea una cola vacia.]
   []
 
-  \InterfazFuncion{Vacia?}{\In{estr}{heap}}{bool}
+  \InterfazFuncion{Vacia?}{\In{estr}{colaLog($\alpha$)}}{bool}
   {$res$ =$_{obs}$ vacia?($estr$)}%
-  [O(1)]
+  [$O(1)$]
   [Indica si la cola esta vacia.]
   []
 
-  \InterfazFuncion{Primero}{\In{estr}{heap}}{tupla($nat, \alpha$)}
+  \InterfazFuncion{Primero}{\In{estr}{colaLog($\alpha$)}}{tupla($nat, \alpha$)}
   [$\neg Vacia?(estr)$]
   {$res =_{obs} primero(estr)$}%
-  [O(1)]
+  [$O(copiar(\alpha))$]
   [Devuelve una tupla que contiene al primer elemento y su prioridad.]
   
 
-  \InterfazFuncion{Encolar}{\Inout{estr}{heap}, \In{prio}{nat}, \In{valor}{$\alpha$}}{bool} %res no me sirve para nada...lo puedo sacar o siempre tiene que estar aunque lo ponga siempre en true?
+  \InterfazFuncion{Encolar}{\Inout{estr}{colaLog($\alpha$)}, \In{prio}{nat}, \In{valor}{$\alpha$}}{bool} %res no me sirve para nada...lo puedo sacar o siempre tiene que estar aunque lo ponga siempre en true?
   [estr = estr$_0$]
   {$res$ $\wedge$ estr =$_{obs}$ encolar(estr$_0$)}%
-  [O(log(n))]
+  [$O(log(n) + copiar(\alpha))$]
   [Crea un nuevo elemento con los parametros dados y lo agrega a la cola.]
   []
 
-  \InterfazFuncion{Desencolar}{\Inout{estr}{heap}}{$\alpha$}
+  \InterfazFuncion{Desencolar}{\Inout{estr}{colaLog($\alpha$)}}{$\alpha$}
   [estr = $estr_0 \ \wedge \neg Vacia?(estr)$] 
   {estr =$_{obs}$ desencolar($estr_0$) $\wedge \ res =_{obs} proximo(estr_0)$}%
-  [O(log(n))]
+  [$O(log(n) + copiar(\alpha) + borrar(\alpha))$]
   [Devuelve al elemento de mayor prioridad y lo remueve de la cola. La cola no debe estar vac\'ia.]
   []
   
@@ -74,9 +74,9 @@
 
 \begin{Representacion}
 
-\begin{Estructura}{heap}[estr]
+\begin{Estructura}{colaLog($\alpha$)}[estr($\alpha$)]
 
-\begin{Tupla}[estr]
+\begin{Tupla}[estr($\alpha$)]
 	\tupItem{size}{nat} \newline \nomoreitems
 	\tupItem{primero}{nodo($\alpha$)} \newline \nomoreitems
 \end{Tupla}
@@ -91,7 +91,7 @@
 
 \end{Estructura}
 
-Rep: estr $\rightarrow$ bool
+Rep: estr($\alpha$) $\rightarrow$ bool
 \newline \indent Rep($e$) $\equiv$ true $\iff \ size = \# arbol(estr.primero) \ \wedge_L
 \newline \indent ((estr.primero).padre = null \wedge
 \newline \indent (\forall e: estr)( e \in arbol(estr.primero) \wedge \ e \neq (estr.primero) \Rightarrow (e.padre \neq null \wedge_L (((e.padre).izq = e \vee (e.padre).der = e ) \wedge \
@@ -99,7 +99,7 @@ Rep: estr $\rightarrow$ bool
 \newline \indent (\forall e: estr)( e \in arbol(estr.primero) \Rightarrow ((estr.izq \neq null \Rightarrow estr.prio \geq (estr.izq).prio) \wedge (estr.der \neq null \Rightarrow estr.prio \geq (estr.der).prio))) \wedge
 \newline \indent (\forall e: estr)( e \in arbol(estr.primero) \Rightarrow caminoHastaRaiz(e,arbol(estr.primero)) \leq \left \lfloor{log_2(size)}\right \rfloor + 1))$
 
-Abs: estr $e \rightarrow$ colaPrio($\alpha$) \{ Rep($e$) \}
+Abs: estr($\alpha$) $e \rightarrow$ colaPrio($\alpha$) \{ Rep($e$) \}
 Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $Vacia?(e) = Vacia?(c) \ \wedge_L
 \newline \indent (\neg Vacia?(e) \Rightarrow Proximo(e) = Proximo(c)) \ \wedge
 \newline \indent (\neg Vacia?(e) \Rightarrow Desencolar(e) = Desencolar(c))$
@@ -118,7 +118,7 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $Vacia?(e) = Vacia?(c) \ \wedge_L
 \begin{algorithm}
 \caption{Implementaci\'on de Vacia}
 \begin{algorithmic}[0]
-\Function{iVacia}{}{$\rightarrow res$: heap}
+\Function{iVacia}{}{$\rightarrow res$: colaLog($\alpha$)}
 \State $res\gets $ <$0, null$> \Comment{O(1)}
 \EndFunction
 \end{algorithmic}
@@ -128,7 +128,7 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $Vacia?(e) = Vacia?(c) \ \wedge_L
 \begin{algorithm}
 \caption{Implementaci\'on de Vacia?}
 \begin{algorithmic}[0]
-\Function{iVacia?}{\In{estr}{heap}}{$\rightarrow res$: bool}
+\Function{iVacia?}{\In{estr}{colaLog($\alpha$)}}{$\rightarrow res$: bool}
 \State $res\gets \ (estr.primero == null)$ \Comment{O(1)}
 \EndFunction
 \end{algorithmic}
@@ -137,8 +137,8 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $Vacia?(e) = Vacia?(c) \ \wedge_L
 \begin{algorithm}
 \caption{Implementaci\'on de Primero}
 \begin{algorithmic}[0]
-\Function{iPrimero}{\In{estr}{heap}}{$\rightarrow res$: tupla($nat, \alpha$)}
-\State $res\gets \ <(estr.primero).prioridad, (estr.primero).valor>$ \Comment{O(1)}
+\Function{iPrimero}{\In{estr}{colaLog($\alpha$)}}{$\rightarrow res$: tupla($nat, \alpha$)}
+\State $res\gets \ <(estr.primero).prioridad, (estr.primero).valor>$ \Comment{O(copiar($\alpha$))}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -148,13 +148,13 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $Vacia?(e) = Vacia?(c) \ \wedge_L
 \begin{algorithm}
 \caption{Implementaci\'on de Encolar}
 \begin{algorithmic}[0]
-\Function{iEncolar}{\Inout{estr}{heap}, \In{prio}{nat}, \In{valor}{$\alpha$}}{$\rightarrow res$: bool}
+\Function{iEncolar}{\Inout{estr}{colaLog($\alpha$)}, \In{prio}{nat}, \In{valor}{$\alpha$}}{$\rightarrow res$: bool}
 	\State $res\gets $ $true$	 \Comment{O(1)}
 	\If{estr.size == 0} \Comment{O(1)}
-		\State $estr.primero\gets$ <$null, null, null, prio, valor$> \Comment{O(1)}
+		\State $estr.primero\gets$ puntero(<$null, null, null, prio, valor$>) \Comment{O(copiar($\alpha$))}
 	\Else
 		\State $size++$ \Comment{O(1)}
-		\State $x\gets \ valor$ \Comment{O(1)}
+		\State $x\gets \ sizer$ \Comment{O(1)}
 		\State $y\gets$ <> \Comment{O(1)}
 		\While{x $\neq$ 0} \Comment{La cantidad de veces que se ejecuta el ciclo es igual a la altura del heap. Al ser un arbol binario completo, la altura siempre ser\'a O(log(n))}
 			\State $y\gets$ $(x \% 2) \bullet y$ \Comment{O(1)}
@@ -167,17 +167,20 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $Vacia?(e) = Vacia?(c) \ \wedge_L
 			\State $z\gets$ \textbf{if} prim($y$) $==$ 0 \textbf{then} $z.izq$ \textbf{else} $z.der$ \Comment{O(1)}
 			\State $y\gets$ fin($y$) \Comment{O(1)}
 		\EndWhile
-		\State $w\gets$ <$null,null,null,prio,valor$> \Comment{O(1)}
+		\State $w\gets$ <$null,null,null,prio,valor$> \Comment{O(copiar($\alpha$))}
 		\State $w.padre\gets$ $z$ \Comment{O(1)}
 		\If{prim($y$) $==$ 0} \Comment{O(1)}
 			\State $z.izq\gets \ w$ \Comment{O(1)}
 		\Else
 			\State $z.der\gets \ w$ \Comment{O(1)}
 		\EndIf
-		\While{w $\neq \ estr.primero \ \wedge_L \ w.prio >(w.padre).prio$} \Comment{La cantidad de veces que se ejecuta el ciclo es a lo sumo la altura del heap, que es O(log(n))}
-			\State $aux\gets \ w.valor$ \Comment{O(1)}
-			\State $w.valor\gets \ (w.padre).valor$ \Comment{O(1)}
-			\State $(w.padre).valor\gets \ aux$ \Comment{O(1)}
+		\While{w $\neq \ estr.primero \ \wedge_L \ w.prio > (w.padre).prio$} \Comment{La cantidad de veces que se ejecuta el ciclo es a lo sumo la altura del heap, que es O(log(n))}
+			\State $aux\gets \ w.valor$ \Comment{O(copiar($\alpha$))}
+			\State $w.valor\gets \ (w.padre).valor$ \Comment{O(copiar($\alpha$))}
+			\State $(w.padre).valor\gets \ aux$ \Comment{O(copiar($\alpha$))}
+			\State $aux2\gets \ w.prio$ \Comment{O(1)}
+			\State $w.prio\gets \ (w.padre).prio$ \Comment{O(1)}
+			\State $(w.padre).prio\gets \ aux2$ \Comment{O(1)}
 			\State $w\gets \ w.padre$ \Comment{O(1)}
 		\EndWhile
 	\EndIf
@@ -190,9 +193,9 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $Vacia?(e) = Vacia?(c) \ \wedge_L
 \begin{algorithm}
 \caption{Implementaci\'on de Desencolar}
 \begin{algorithmic}[0]
-\Function{iDesencolar}{\Inout{estr}{heap}}{$\rightarrow res$: $\alpha$}
-	\State $res\gets \ estr.primero$ \Comment{O(1)}
-	\State $x\gets \ valor$ \Comment{O(1)}
+\Function{iDesencolar}{\Inout{estr}{colaLog($\alpha$)}}{$\rightarrow res$: $\alpha$}
+	\State $res\gets \ *(estr.primero)$ \Comment{O(1)}
+	\State $x\gets \ size$ \Comment{O(1)}
 	\State $y\gets \ $ <> \Comment{O(1)}
 	\While{x $\neq$ 0} \Comment{La cantidad de veces que se ejecuta el ciclo es igual a la altura del heap. Al ser un arbol binario completo, la altura siempre ser\'a O(log(n))}
 		\State $y\gets$ $(x \% 2) \bullet y$ \Comment{O(1)}
@@ -205,29 +208,37 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $Vacia?(e) = Vacia?(c) \ \wedge_L
 		\State $z\gets$ \textbf{if} prim($y$) $==$ 0 \textbf{then} $z.izq$ \textbf{else} $z.der$ \Comment{O(1)}
 		\State $y\gets$ fin($y$) \Comment{O(1)}
 	\EndWhile
-	\State $w\gets$ <$null,null,null,prio,valor$> \Comment{O(1)}
+	\State $w\gets$ <$null,null,null,prio,valor$> \Comment{O(copiar($\alpha$))}
 	\State $w.padre\gets$ $z$ \Comment{O(1)}
 	\If{prim($y$) $==$ 0} \Comment{O(1)}
-		\State $z.izq\gets \ w$ \Comment{O(1)}
+		\State $z.izq\gets \ puntero(w)$ \Comment{O(1)}
 	\Else
-		\State $z.der\gets \ w$ \Comment{O(1)}
+		\State $z.der\gets \ puntero(w)$ \Comment{O(1)}
 	\EndIf
-	\State $(estr.primero).valor\gets \ z.valor$ \Comment{O(1)}
-	\State borrar($z$) \Comment{O(1)}
+	\State $(estr.primero).valor\gets \ z.valor$ \Comment{O(copiar($\alpha$))}
+	\State $(estr.primero).prio\gets\ z.prio$ \Comment{O(1)}
+	\State borrar($z$) \Comment{O(borrar($\alpha$))}
+	\State $z\gets\ estr.primero$ \Comment{O(1)}
 	\State $size--$ \Comment{O(1)}
-	\While{$(z.izq \neq null \ \vee z.der \neq null) \ \wedge_L \ z.valor < \ maxValor(z.izq, z.der)$} \Comment{La cantidad de veces que se ejecuta el ciclo es a lo sumo la altura del heap, que es O(log(n))}
+	\While{$(z.izq \neq null \ \vee z.der \neq null) \ \wedge_L \ z.prio < \ maxPrio(z.izq, z.der)$} \Comment{La cantidad de veces que se ejecuta el ciclo es a lo sumo la altura del heap, que es O(log(n))}
 
-	\State \Comment{maxValor devuelve el maximo valor si ambos punteros son validos, o el valor apuntado por
+	\State \comentario{maxPrio devuelve la maxima prioridad si ambos punteros son validos, o la prioridad apuntada por
 	el puntero no nulo en caso de que alguno no lo sea}
-	\If{$z.der == null \ \vee_L \ (z.izq).valor \geq (z.der).valor$} \Comment{O(1)}
-		\State $aux\gets \ z.valor$ \Comment{O(1)}
-		\State $z.valor\gets \ (z.izq).valor$ \Comment{O(1)}
-		\State $(z.izq).valor\gets \ aux$ \Comment{O(1)}
+	\If{$z.der == null \ \vee_L \ (z.izq).prio \geq (z.der).prio$} \Comment{O(1)}
+		\State $aux\gets \ z.valor$ \Comment{O(copiar($\alpha$))}
+		\State $z.valor\gets \ (z.izq).valor$ \Comment{O(copiar($\alpha$))}
+		\State $(z.izq).valor\gets \ aux$ \Comment{O(copiar($\alpha$))}
+		\State $aux2\gets \ z.prio$ \Comment{O(1)}
+		\State $z.prio\gets \ (z.izq).prio$ \Comment{O(1)}
+		\State $(z.izq).prio\gets \ aux2$ \Comment{O(1)}
 		\State $z\gets z.izq$ \Comment{O(1)}
 	\Else
-		\State $aux\gets \ z.valor$ \Comment{O(1)}
-		\State $z.valor\gets \ (z.der).valor$ \Comment{O(1)}
-		\State $(z.der).valor\gets \ aux$ \Comment{O(1)}
+		\State $aux\gets \ z.valor$ \Comment{O(copiar($\alpha$))}
+		\State $z.valor\gets \ (z.der).valor$ \Comment{O(copiar($\alpha$))}
+		\State $(z.der).valor\gets \ aux$ \Comment{O(copiar($\alpha$))}
+		\State $aux2\gets \ z.prio$ \Comment{O(1)}
+		\State $z.prio\gets \ (z.der).prio$ \Comment{O(1)}
+		\State $(z.der).prio\gets \ aux2$ \Comment{O(1)}
 		\State $z\gets z.der$ \Comment{O(1)}
 	\EndIf
 	\EndWhile
