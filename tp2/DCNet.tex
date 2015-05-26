@@ -234,40 +234,40 @@ FI}
 \caption{Implementaci\'on de iniciarDCNet}
 \begin{algorithmic}[0]
 \Function{iIniciarDCNet}{\In{r}{red}}{$\rightarrow res$: $estr\_dcnet$}
-	\State $res.red\gets \ r$ \Comment{Hay que copiar Red?}{O(copy(r)}
-	\State $diccCompus\gets Vac\'io() $ \Comment{O(1)}
-	\State $diccHostname\gets Vac\'io() $ \Comment{O(1)}
-	\State $index\gets \ 0 $\Comment{O(1)}
-	\State $itHostname \gets  CrearIt(Computadoras(r))$ \Comment{O(1)}
-	\State $res.conMasEnv\'ios \gets Siguiente(itHostname)$\Comment{O(1)}
-	\While{HaySiguiente(itHostname)} \Comment{O($\#$Computadoras(r))}
-		\State $X\gets <index, Vac\'io(), Vac\'io(), Vac\'io(), 0>$ \Comment{O(n) segun el apunte }
-		\State $itX \gets Definir(diccCompus, Siguiente(itHostname), X)$\Comment{O(copy(Siguiente(itHostname) + copy(X))} 
-		\State $Definir(diccHostname, Siguiente(itHostname), itX)$\Comment{O(copy(Siguiente(itHostname) + copy(X))} 
-		\State $index \gets index + 1$ \Comment{O(1)}
-		\State $Avanzar(itHostname)$\Comment{O(1)}
+	\State res.red $\gets$ Copiar(r) \Comment{O(copy(r))}
+	\State diccCompus $\gets$ Vac\'io() \Comment{O(1)}
+	\State diccHostname $\gets$ Vac\'io() \Comment{O(1)}
+	\State index $\gets$ 0 \Comment{O(1)}
+	\State itHostname $\gets$  CrearIt(Computadoras(r)) \Comment{O(1)}
+	\State res.conMasEnv\'ios $\gets$ Siguiente(itHostname) \Comment{O(1)}
+	\While{HaySiguiente(itHostname)} \Comment{O($\#$Computadoras(r))} \Comment{O(n)}
+		\State X $\gets$ <index, Vac\'io(), Vac\'io(), Vac\'io(), 0> \Comment{O(n) segun el apunte}
+		\State itX $\gets$ Definir(diccCompus, Siguiente(itHostname), X) \Comment{O(copy(Siguiente(itHostname) + copy(X))} 
+		\State Definir(diccHostname, Siguiente(itHostname), itX) \Comment{O(copy(Siguiente(itHostname) + copy(X))} 
+		\State index $\gets$ index + 1 \Comment{O(1)}
+		\State Avanzar(itHostname) \Comment{O(1)}
 	\EndWhile
-	\State $res.computadoras \gets diccCompus$ \Comment{O(1)}
-	\State $res.porHostaname \gets diccHostname$\Comment{O(1)}
-	\State $n \gets \#Claves(diccCompus)$ \Comment{O(1)}
-	\State $arrayCaminos \gets CrearArreglo(n)$\Comment{O(n)}
-	\State $itPC \gets CrearIt(diccCompus)$\Comment{O(1)}
-	\State $itPC2 \gets CrearIt(diccCompus)$\Comment{O(1)}				 	 	
+	\State res.computadoras $\gets$ diccCompus \Comment{O(1)}
+	\State res.porHostaname $\gets$ diccHostname \Comment{O(1)}
+	\State n $\gets$ $\#$Claves(diccCompus) \Comment{O(1)}
+	\State arrayCaminos $\gets$ CrearArreglo(n) \Comment{O(n)}
+	\State itPC $\gets$ CrearIt(diccCompus) \Comment{O(1)}
+	\State itPC2 $\gets$ CrearIt(diccCompus) \Comment{O(1)}				 	 	
 	\While{HaySiguiente(itPC)}\Comment{O(1)}
-		\State $arrayDestinos \gets CrearArreglo(n)$\Comment{O(n)}
+		\State arrayDestinos $\gets$ CrearArreglo(n) \Comment{O(n)}
 		\While{HaySiguiente(itPC2)}\Comment{O(1)}
-			\State $itConj \gets CaminosMinimos(r, SiguienteClave(itPC), SiguienteClave(itPC2))$\Comment{O(???)}
+			\State itConj $\gets$ CaminosMinimos(r, SiguienteClave(itPC), SiguienteClave(itPC2)) \Comment{O(???)}
 			\If{HaySiguiente(itConj)}\Comment{O(1)}
-				\State $arrayDestinos[SiguienteSignificado(itPC2).indice] \gets Siguiente(itConj)$\Comment{el apunte dice que no es modificable O(1)}
+				\State arrayDestinos[SiguienteSignificado(itPC2).indice] $\gets$ Siguiente(itConj) \Comment{el apunte dice que no es modificable O(1)}
 			\Else 
-				\State $arrayDestinos[SiguienteSignificado(itPC2).indice] \gets Vac\'io$ \Comment{es necesario esto?O(1)}
+				\State arrayDestinos[SiguienteSignificado(itPC2).indice] $\gets$ Vac\'io \Comment{es necesario esto?O(1)}
 			\EndIf
-			\State $Avanzar(itPC2)$\Comment{O(1)}
+			\State Avanzar(itPC2) \Comment{O(1)}
 		\EndWhile
-		\State $arrayCaminos[SiguienteSignificado(itPC).indice] \gets arrayDestinos$\Comment{O(1)}
-		\State $Avanzar(itPC)$\Comment{O(1)}
+		\State  arrayCaminos[SiguienteSignificado(itPC).indice] $\gets$ arrayDestinos \Comment{O(1)}
+		\State Avanzar(itPC) \Comment{O(1)}
 	\EndWhile	
-	\State $res.caminos \gets arrayCaminos$\Comment{O(1)}
+	\State res.caminos $\gets$ arrayCaminos \Comment{O(1)}
 
 \EndFunction
 \end{algorithmic}

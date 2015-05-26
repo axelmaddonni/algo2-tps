@@ -64,8 +64,6 @@
   [indica si la interfaz est\'a siendo utilizada.]
   []
 
-\newpage
-
   \InterfazFuncion{CaminosMinimos}{\In{r}{red}, \In{c_1}{hostname}, \In{c_2}{hostname}}{conj(lista(hostname))}
   [$c1,\ c2$ $\in$ dameHostnames(computadoras($r$))]
   {$res$ $=_{obs}$ dameCaminosdeHostnames(caminosMinimos($r$, dameCompu($c_1$), dameCompu($c_2$)))}
@@ -86,6 +84,12 @@
   [O(n*n * ( L + n*n + m ) + n*m*m)]
   [indica si dos redes son iguales.]
   [] 
+  
+  \InterfazFuncion{Copiar}{\In{r}{red}}{red}
+  {$res$ =$_{obs}$ r}
+  []
+  [copia la red.]
+  [res se devuelve por copia]
   
    \textbf{donde:} \newline 
    \TipoVariable{hostname} es \TipoVariable{string}, \newline
@@ -443,6 +447,41 @@ FI}
 		\EndWhile
 	\EndIf
 \EndFunction \Comment{\textbf{O(n*n * ( L + n*n + m ) + n*m*m)}}
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de Copiar}
+\begin{algorithmic}[0]
+\Function{iCopiar}{in r: estr\_red}{$\rightarrow$ res: red}
+	\State res $\gets$ IniciarRed() \Comment{O(1)}
+\comentario{Crea una red vacia.}
+	\State itRed $\gets$ CrearIt(r) \Comment{O(1)}
+	\While{HaySiguiente(itRed)} \Comment{O(1)} \Comment{se ejecuta n veces} \Comment{O(n)}
+\comentario{Para cada computadora en la red original.}
+		\State copiaAlcanzables $\gets$ Vacio() \Comment{diccionario} \Comment{O(1)}
+\comentario{Inicia los alcanzables en vacio.}
+		\State itAlcanzables $\gets$ CrearIt(SiguienteSignificado(itRed).alcanzables) \Comment{O(1)}
+		\While{HaySiguiente(itAlcanzables)} \Comment{Guarda: O(1)} \Comment{se ejecuta a lo sumo n veces} \Comment{O(n)}
+\comentario{Para cada conjunto de caminos m\'inimos (cada destino).}
+			\State copiaCaminos $\gets$ Vacia() \Comment{lista} \Comment{O(1)}
+\comentario{Inicia el conjunto de caminos m\'inimos como vac\'io.}
+			\State itCaminos $\gets$ CrearIt(SiguienteSignificado(itAlcanzables)) \Comment{O(1)}
+			\While{HaySiguiente(itCaminos)}
+\comentario{Para cada camino en el conjunto original.}
+				\State AgregarAdelante(copiaCaminos, Siguiente(itCaminos)) \Comment{O(copiar(camino))}
+\comentario{Copia el camino original y lo agrega adelante del conjunto de caminos m\'inimos.}
+				\State Avanzar(itCaminos) \Comment{O(1)}
+			\EndWhile			
+			\State Definir(copiaAlcanzables, SiguienteClave(itAlcanzables), copiaCaminos)
+\comentario{Define el destino y sus caminos m\'inimos en la copia de alcanzables.}
+			\State Avanzar(itAlcanzables) \Comment{O(1)}
+		\EndWhile
+		\State Definir(res, SiguienteClave(itRed), Tupla(Copiar(SiguienteSignificado(itRed).interfaces), Copiar(SiguienteSignificado(itRed).conexiones), copiaAlcanzables))
+\comentario{Define la copia de la computadora con los campos antes copiados.}
+		\State Avanzar(itRed) \Comment{O(1)}
+	\EndWhile
+\EndFunction
 \end{algorithmic}
 \end{algorithm}
 
