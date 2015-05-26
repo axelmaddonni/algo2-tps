@@ -2,36 +2,44 @@
   
   \textbf{usa}: \tadNombre{}.
   
-  \textbf{se explica con}: \tadNombre{Diccionario(clave, significado)}.
+  \textbf{se explica con}: \tadNombre{Diccionario(STRING, $\sigma$)}.
+  
+  \textbf{g\'eneros}: \TipoVariable{diccUniv($\kappa, \sigma$)}.
 
   \Titulos{Operaciones}
 
-  \InterfazFuncion{Definida}{\In{d}{dicc$_{TRIE}$(clave, significado)}, \In{c}{clave}}{Bool}
+  \InterfazFuncion{Definida}{\In{d}{diccUniv(STRING, $\sigma$)}, \In{c}{STRING}}{Bool}
   {res $\igobs$ def?(c,d)}
-  [O(L)]
+  [O(L), donde L es la cantidad de caracteres de la clave m\'as grande.]
+  [Indica si la clave dada est\'a definida en el diccionario.]
 
-  \InterfazFuncion{Obtener}{\In{d}{dicc$_{TRIE}$(clave,significado)}, \In{c}{clave}}{significado}
+  \InterfazFuncion{Obtener}{\In{d}{diccUniv(STRING, $\sigma$)}, \In{c}{STRING}}{$\sigma$}
   [def?(c,d)]
   {res $\igobs$ obtener(c,d)}
   [O(L)]
+  [Devuelve el significado asociado a la clave dada.]
+  [Devuelve al significado por alias.]
   
-  \InterfazFuncion{vacio}{}{dicc$_{TRIE}$(clave,significado)}
+  \InterfazFuncion{vacio}{}{diccUniv(STRING,$\sigma$)}
   {res $\igobs$ vacio()}
   [O(1)]
+  [Crea un diccionario vac\'io.]
   
-  \InterfazFuncion{definir}{\Inout{d}{dicc$_{TRIE}$(clave,significado)}, \In{c}{}clave, \In{s}{significado}}{Bool}
+  \InterfazFuncion{definir}{\Inout{d}{diccUniv(STRING,$\sigma$)}, \In{c}{}STRING, \In{s}{$\sigma$}}{Bool}
   [$\neg$def?(c,d) $\wedge$ d=d$_0$]
-  {d=definir(c,d$_0$)}
-  [O(L)]
+  {$d = definir(c,d_0)$}
+  [$O(L)+O(copiar(\sigma)$]
+  [Agrega la clave al diccionario, asoci\'andole el significado dado como par\'ametro. $res$ indica si la clave ya estaba definida.]
   
-  \InterfazFuncion{borrar}{\Inout{d}{dicc$_{TRIE}$(clave,significado)}, \In{c}{clave}}{Bool}
+  \InterfazFuncion{borrar}{\Inout{d}{diccUniv(STRING,$\sigma$)}, \In{c}{STRING}}{Bool}
   [d=d$_0$]
   {d=borrar(c,d$_0$)}
-  [O(L)]
-  [Devuelve TRUE si se pudo borrar la clave, o FALSE si no la encontró]
+  [$O(L)+O(borrar(\sigma)$]
+  [Borra la clave dada y su significado del diccionario. $res$ indica si la clave estaba definida (su valor es $true$ en caso de estarlo).]
   
-  \InterfazFuncion{claves}{\In{d}{dicc$_{TRIE}$(clave,significado)}}{conj(clave)}
+  \InterfazFuncion{claves}{\In{d}{diccUniv(STRING,$\sigma$)}}{conj(STRING)}
   {res $\igobs$ claves(d)}
-  [O()]
+  [O(n*L), donde n es la cantidad de claves.]
+  [Devuelve el conjunto de las claves del diccionario.]
 
 \end{Interfaz}

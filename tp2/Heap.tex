@@ -99,7 +99,7 @@ Rep: estr $\rightarrow$ bool
 \newline \indent (\forall e: estr)( e \in arbol(estr.primero) \Rightarrow ((estr.izq \neq null \Rightarrow estr.prio \geq (estr.izq).prio) \wedge (estr.der \neq null \Rightarrow estr.prio \geq (estr.der).prio))) \wedge
 \newline \indent (\forall e: estr)( e \in arbol(estr.primero) \Rightarrow caminoHastaRaiz(e,arbol(estr.primero)) \leq \left \lfloor{log_2(size)}\right \rfloor + 1))$
 
-Abs: estr $e \rightarrow$ colaPrio($\alpha$) \{ Rep($d$) \}
+Abs: estr $e \rightarrow$ colaPrio($\alpha$) \{ Rep($e$) \}
 Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $Vacia?(e) = Vacia?(c) \ \wedge_L
 \newline \indent (\neg Vacia?(e) \Rightarrow Proximo(e) = Proximo(c)) \ \wedge
 \newline \indent (\neg Vacia?(e) \Rightarrow Desencolar(e) = Desencolar(c))$

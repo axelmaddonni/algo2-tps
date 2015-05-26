@@ -2,56 +2,78 @@
   
   \textbf{usa}: \tadNombre{}.
   
-  \textbf{se explica con}: \tadNombre{Diccionario(clave,significado)}.
+  \textbf{se explica con}: \tadNombre{Diccionario($\kappa, \sigma$)}.
 
-  \textbf{g\'eneros}: \TipoVariable{dicc$_{AA}$(clave, significado)}.
+  \textbf{g\'eneros}: \TipoVariable{diccLog($\kappa, \sigma$)}.
 
   \Titulos{Operaciones}
 
-  \InterfazFuncion{Definido?}{\In{d}{dicc$_{AA}$(clave, significado)}, \In{c}{clave}}{Bool}
-  []
-  {res $\igobs$ def?(c,d)}
+  \InterfazFuncion{Definido?}{\In{d}{diccLog($\kappa, \sigma$)}, \In{c}{$\kappa$}}{Bool}
+  {res $\igobs$ def?(c,d)}%
   [O(log(n))]
 
-  \InterfazFuncion{Significado}{\In{d}{dicc$_{AA}$(clave,significado)}, \In{c}{clave}}{significado}
+  \InterfazFuncion{Significado}{\In{d}{diccLog($\kappa, \sigma$)}, \In{c}{$\kappa$}}{$\sigma$}
   [def?(c,d)]
-  {res $\igobs$ obtener(c,d)}
+  {res $\igobs$ obtener(c,d)}%
   [O(log(n))]
   
-  \InterfazFuncion{Vacio}{}{dicc$_{AA}$(clave,significado)}
-  {res $\igobs$ vacio()}
+  \InterfazFuncion{Vacio}{}{diccLog($\kappa, \sigma$)}
+  {res $\igobs$ vacio()}%
   [O(1)]
   
-  \InterfazFuncion{Definir}{\Inout{d}{dicc$_{AA}$(clave,significado)}, \In{c}{clave}, \In{s}{significado}}{}
+  \InterfazFuncion{Definir}{\Inout{d}{diccLog($\kappa, \sigma$)}, \In{c}{$\kappa$}, \In{s}{$\sigma$}}{}
   [$\neg$def?(c,d) $\wedge$ d=d$_0$]
-  {d=definir(c,d$_0$)}
-  [O()]
+  {d=definir(c,d$_0$)}%
+  [O(log(n))]
   
-  \InterfazFuncion{Borrar}{\Inout{d}{dicc$_{AA}$(clave,significado)}, \In{c}{clave}}{}
+  \InterfazFuncion{Borrar}{\Inout{d}{diccLog($\kappa, \sigma$)}, \In{c}{$\kappa$}}{}
   [def?(c,d) $\wedge$ d=d$_0$]
-  {d=borrar(c,d$_0$)}
-  [O()]
+  {d=borrar(c,d$_0$)}%
+  [O(log(n))]
 
 \end{Interfaz}
 
 \begin{Representacion}
 
-\begin{Estructura}{dicc$_{AA}$}[estr$\_{AA}$]
+\begin{Estructura}{diccLog}[puntero(estr($\kappa, \sigma$)]
    
-\begin{Tupla}[estr$_{AA}$]
-\tupItem{id}{\TipoVariable{nat}} \newline \nomoreitems{}
-\tupItem{izquierdo}{\TipoVariable{puntero(nodo(id,it))}} \newline \nomoreitems{}	 
-\tupItem{derecho}{\TipoVariable{puntero(nodo(id,it))}} \newline \nomoreitems{}
-\tupItem{valor}{\TipoVariable{itConj($\alpha$)}} \newline \nomoreitems{}
-%\tupItem{altura}{\TipoVariable{nat}}
+\begin{Tupla}[estr($\kappa, \sigma$)]
+\tupItem{clave}{\TipoVariable{$\kappa$}} \newline \nomoreitems{}
+\tupItem{izquierdo}{\TipoVariable{puntero(nodo($\kappa,\sigma$))}} \newline \nomoreitems{}	 
+\tupItem{derecho}{\TipoVariable{puntero(nodo($\kappa,\sigma$))}} \newline \nomoreitems{}
+\tupItem{significado}{\TipoVariable{$\sigma$}} \newline \nomoreitems{}
+\tupItem{nivel}{\TipoVariable{nat}}
 \end{Tupla}
 
    
 \end{Estructura}
 
-\Rep[estr]{....}
+Rep: estr $\rightarrow$ bool
+$\ $\newline
+\newline \indent Rep($e$) $\equiv$ true $\iff$ (($\forall n_1, n_2:\ estr(\kappa, \sigma))(\ n_1 \in\ arbol(e) \wedge \ n_2 \in\ arbol(e) \Rightarrow_L\
+\newline \indent (n_1.clave < n_2.clave \Rightarrow n_1 \in arbol(n_2.izquierdo)) \wedge\ (n_1.clave > n_2.clave \Rightarrow n_1 \in arbol(n_2.derecho)) \wedge\ 
+\newline \indent ((\forall n_1, n_2:\ estr(\kappa, \sigma))(\ n_1 \in\ arbol(e) \wedge \ n_2 \in\ arbol(e) \wedge\ n_1.clave\neq n_2.clave \Rightarrow_L\
+\newline \indent (n_1.izquierdo = n_2.izquierdo \vee n_1.izquierdo = n_2.derecho \Rightarrow n_1.izquierdo = NULO) \wedge\ 
+\newline \indent (n_1.derecho = n_2.izquierdo \vee n_1.derecho = n_2.derecho \Rightarrow n_1.derecho = NULO)) \wedge\ 
+\newline \indent ((\forall n:\ estr(\kappa, \sigma))(\ n \in\ arbol(e) \wedge n.izquierdo = NULO \wedge n.derecho = NULO \Rightarrow\ n.nivel = 1) \wedge
+\newline \indent ((\forall n:\ estr(\kappa, \sigma))(\ n \in\ arbol(e) \wedge n.izquierdo \neq NULO \Rightarrow\ (n.izquierdo).nivel = n.nivel-1) \wedge
+\newline \indent ((\forall n:\ estr(\kappa, \sigma))(\ n \in\ arbol(e) \wedge n.derecho \neq NULO \Rightarrow
+\newline \indent ((n.derecho).nivel = n.nivel-1 \vee\ (n.derecho).nivel = n.nivel)) \wedge
+\newline \indent ((\forall n:\ estr(\kappa, \sigma))(\ n \in\ arbol(e) \wedge n.derecho \neq NULO \wedge_L (n.derecho).derecho \neq NULO \Rightarrow_L
+\newline \indent ((n.derecho).derecho).nivel < n.nivel) \wedge
+\newline \indent ((\forall n:\ estr(\kappa, \sigma))(\ n \in\ arbol(e) \wedge n.nivel > 1 \Rightarrow\ (n.izquierdo \neq NULO \wedge n.derecho \neq NULO)$
+$\ $\newline$\ $
+\newline \indent Abs: $dicc(\kappa, \sigma)\ d \rightarrow\ dicc(\kappa, \sigma)$ \{Rep($d$) \}
+$\ $\newline
+$\ $\newline \indent Abs($d$) $\equiv$ c: dicc($\kappa, \sigma$) | $((\forall k:\ \kappa)(\ k \in claves(c) \Rightarrow Definido?(c, k)) \wedge
+\newline \indent (\ Definido?(c, k) \Rightarrow\ k \in claves(c))) \wedge_L
+\newline \indent (\forall k:\ \kappa)(\ k \in claves(c) \Rightarrow_L obtener(c,k) =_{obs} Significado(d, k)$
 
-\AbsFc[estr]{dicc$_{AA}$(id, it)}[r]{...}
+$\ $\newline$\ $
+\newline \indent \textbf{Especificaci\'on de las operaciones auxiliares utilizadas para Rep y Abs}
+\newline \indent arbol:$\ puntero(estr(\kappa\, \sigma)) \rightarrow conj(\kappa)$
+\tadAxioma{arbol(n)}{\textbf{if} $n.izq \neq null \wedge n.der \neq null$ \textbf{then} Ag($n.clave,arbol(n.izq)\cup arbol(n.der)$) \textbf{else}
+\textbf{if} $n.izq \neq null$ \textbf{then} Ag($n.clave,arbol(n.izq)$) \textbf{else} \textbf{if} $n.der \neq null$ \textbf{then} Ag($n.clave,arbol(n.der)$) \textbf{else} Ag($n.clave,\emptyset$)}
 
 \end{Representacion}
 
@@ -62,17 +84,17 @@
 \begin{algorithm}
 \caption{Implementaci\'on de Definido?}
 \begin{algorithmic}[0]
-\Function{iDefinido?}{in d: estr$\_{AA}$ , in c: clave}{$\rightarrow$ res: bool}
+\Function{iDefinido?}{in d: estr , in c: $\kappa$}{$\rightarrow$ res: bool}
 	\State nodoActual $\gets$ d
 	\State res $\gets$ FALSE
 	\While{$\neg$(nodoActual == NULO) $\&\&$ $\neg$res}
-		\If{nodoActual.id == c}
-			res $\gets$ TRUE
+		\If{nodoActual.clave == c}
+			\State res $\gets$ TRUE
 		\Else
-			\If{c < nodoActual.id}
-				nodoActual $\gets$ nodoActual.izquierdo
+			\If{c < nodoActual.clave}
+				\State nodoActual $\gets$ nodoActual.izquierdo
 			\Else
-				nodoActual $\gets$ nodoActual.derecho
+				\State nodoActual $\gets$ nodoActual.derecho
 			\EndIf
 		\EndIf
 	\EndWhile
@@ -83,17 +105,16 @@
 \begin{algorithm}
 \caption{Implementaci\'on de Significado}
 \begin{algorithmic}[0]
-\Function{iSignificado}{in d: estr$\_{AA}$ , in c: clave}{$\rightarrow$ res: $\alpha$}
+\Function{iSignificado}{in d: estr , in c: $\kappa$}{$\rightarrow$ res: $\sigma$}
 	\State nodoActual $\gets$ d
-	\State res $\gets$ FALSE
 	\While{$\neg$(nodoActual == NULO) $\&\&$ $\neg$res}
-		\If{nodoActual.id == c}
-			res $\gets$ nodoActual.valor
+		\If{nodoActual.clave == c}
+			\State res $\gets$ nodoActual.significado
 		\Else
-			\If{c < nodoActual.id}
-				nodoActual $\gets$ nodoActual.izquierdo
+			\If{c < nodoActual.clave}
+				\State nodoActual $\gets$ nodoActual.izquierdo
 			\Else
-				nodoActual $\gets$ nodoActual.derecho
+				\State nodoActual $\gets$ nodoActual.derecho
 			\EndIf
 		\EndIf
 	\EndWhile
@@ -104,8 +125,8 @@
 \begin{algorithm}
 \caption{Implementaci\'on de Vacio}
 \begin{algorithmic}[0]
-\Function{iVacio}{}{$\rightarrow$ res: estr$\_{AA}$}
-	\State res $\gets$ tupla(0, NULO, NULO, NULO, 0)
+\Function{iVacio}{}{$\rightarrow$ res: estr}
+	\State res $\gets$ NULO
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -113,47 +134,29 @@
 \begin{algorithm}
 \caption{Implementaci\'on de Definir}
 \begin{algorithmic}[0]
-\Function{iDefinir}{in d: estr$\_{AA}$ , in c: nat, in s: $\alpha$}{}
-	\State nodoActual $\gets$ d
-	\State yaDefini $\gets$ FALSE
-	\While{$\neg$yaDefini}
-		\If{c < nodoActual.id}
-			\If{nodoActual.izquierdo == NULO}
-				\State nuevoNodo $\gets$ Vacio() \Comment{Dicc$\_{AA}$}
-				\State nuevoNodo.valor $\gets$ Copiar(s)
-				\State nuevoNodo.id $\gets$ c
-				\State nodoActual.izquierdo $\gets$ nuevoNodo
-				\State yaDefini $gets$ TRUE
-			\Else
-				\State nodoActual $\gets$ nodoActual.izquierdo
-			\EndIf
-		\Else
-			\If{nodoActual.derecho == NULO}
-				\State nuevoNodo $\gets$ Vacio() \Comment{Dicc$\_{AA}$}
-				\State nuevoNodo.valor $\gets$ Copiar(s)
-				\State nuevoNodo.id $\gets$ c
-				\State nodoActual.derecho $\gets$ nuevoNodo
-				\State yaDefini $\gets$ TRUE
-			\Else
-				\State nodoActual $\gets$ nodoActual.derecho
-			\EndIf
-		\EndIf
-	\EndWhile
-	\State nodoActual $\gets$ Torsion(nodoActual)
-	\State nodoACtual $\gets$ Division(nodoActual)
+\Function{iDefinir}{inout d: estr , in c: $\kappa$, in s: $\sigma$}{}
+	\If{d == NULO}
+		\State $res\gets \ <c, NULO, NULO, s, 1>$
+	\ElsIf{$c < d.clave$}
+		\State $d.izquierdo\gets \ iDefinir(d.izquierdo,c,s)$
+	\ElsIf{$c > d.clave$}
+		\State $d.derecho\gets \ iDefinir(d.derecho,c,s)$
+	\EndIf
+	\State $d \gets\ Torsion(d)$
+	\State $d \gets\ Division(d)$
+	\State $res\gets \ d$
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
 
-
 \begin{algorithm}
 \caption{Implementaci\'on de Torsion}
 \begin{algorithmic}[0]
-\Function{iTorsion}{in d: estr$\_{AA}$}{$\rightarrow$ res: estr$\_{AA}$}
+\Function{iTorsion}{in d: estr}{$\rightarrow$ res: estr}
 	\If{d == NULO $\|$ d.izquierdo == NULO}
 		\State res $\gets$ d
 	\Else
-		\If{Altura(d.izquierdo) $\geq$ Altura(d)}
+		\If{(d.izquierdo).nivel $\geq$ d.nivel}
 			\State nodoAux $\gets$ d.izquierdo
 			\State d.izquierdo $\gets$ nodoAux.derecho
 			\State nodo.derecho $\gets$ d
@@ -169,15 +172,15 @@
 \begin{algorithm}
 \caption{Implementaci\'on de Division}
 \begin{algorithmic}[0]
-\Function{iDivision}{in d: estr$\_{AA}$}{$\rightarrow$ res: estr$\_{AA}$}
+\Function{iDivision}{in d: estr}{$\rightarrow$ res: estr}
 	\If{d == NULO $\|$ d.derecho == NULO $\|$ d.derecho.derecho == NULO}
 		\State res $\gets$ d
 	\Else
-		\If{Altura(d.derecho.derecho) $\geq$ Altura(d)}
+		\If{(d.derecho.derecho).nivel == d.nivel}
 			\State nodoAux $\gets$ d.derecho
 			\State d.derecho $\gets$ nodoAux.izquierdo
 			\State nodoAux.izquierdo $\gets$ d
-			\State nodoAux.altura $\gets$ nodoAux.altura + 1
+			\State nodoAux.nivel$++$
 			\State res $\gets$ nodoAux
 		\Else
 			\State res $\gets$ d
@@ -187,27 +190,55 @@
 \end{algorithmic}
 \end{algorithm}
 
+\FloatBarrier
+\end{Algoritmos}
+
 \begin{algorithm}
-\caption{Implementaci\'on de Altura}
+\caption{Implementaci\'on de Borrar}
 \begin{algorithmic}[0]
-\Function{iAltura}{in d: estr$\_{AA}$}{$\rightarrow$ res: nat$\_0$}
-	\If{d.derecho == NULO $\&\&$ d.izquierdo == NULO}
-		\State res $\gets$ 1
+\Function{iBorrar}{inout d: estr, in c: $\kappa$}{}
+	\If{$d == NULO$}
+		\State $endFunction$
+	\ElsIf{$c > d.clave$}
+		\State $d.derecho\gets \ iBorrar(d.derecho, c)$
+	\ElsIf{$c < d.clave$}
+		\State $d.izquierdo\gets \ iBorrar(d.izquierdo, c)$
+	\ElsIf{$d.izquierdo == NULO \wedge\ d.derecho == NULO$}
+		\State $d\gets\ NULO$
+	\ElsIf{$d.izquierdo == NULO$}
+		\State $aux\gets\ d.derecho$
+		\While{$aux.izquierdo \neq NULO$}
+			\State $aux\gets\ aux.izquierdo$
+		\EndWhile
+		\State $d.derecho\gets\ iBorrar(aux.clave, d.derecho)$
+		\State $d.clave\gets\ aux.clave$
 	\Else
-		\If{d.derecho == NULO}
-			\State res $\gets$ Altura(d.izquierdo) + 1
-		\Else
-			\If{d.izquierdo == NULO}
-				\State res $\gets$ Altura(d.derecho) + 1
-			\Else
-				\State Minimo(Altura(d.izquierdo), Altura(d.derecho)) \Comment{el m\'inimo de dos nat}
-			\EndIf
+		\State $aux\gets\ d.izquierdo$
+		\While{$aux.derecho \neq NULO$}
+			\State $aux\gets\ aux.derecho$
+		\EndWhile
+		\State $d.izquierdo\gets\ iBorrar(aux.clave, d.izquierdo)$
+		\State $d.clave\gets\ aux.clave$
+	\EndIf
+	\State $d\gets\ Nivelar(T)$
+	\State $d\gets\ Torsion(T)$
+	\If{$d.derecho \neq NULO$}
+		\State $(d.derecho).derecho\gets\ Torsion((d.derecho).derecho)$
+	\EndIf
+	\State $d\gets\ Division(T)$
+	\State $d.derecho\gets\ Division(d.derecho)$
+	\State $res\gets\ d$
+\EndFunction
+\Procedure{Nivelar}{inout d: estr}{}
+	\State $nivel\_correcto\gets\ min((d.izquierdo).nivel, (d.derecho).nivel)+1$
+	\If{$nivel\_correcto < d.nivel$}
+		\State $d.nivel\gets\ nivel\_correcto$	
+		\If{$nivel\_correcto < (d.derecho).nivel$}
+			\State $(d.derecho)nivel\gets\ nivel\_correcto$
 		\EndIf
 	\EndIf
-\EndFunction
+\EndProcedure
 \end{algorithmic}
 \end{algorithm}
 
 
-\FloatBarrier
-\end{Algoritmos}
