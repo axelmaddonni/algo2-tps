@@ -211,20 +211,20 @@ FI}
 \begin{algorithm}
 \caption{Implementaci\'on de paquetes enviados}
 \begin{algorithmic}[0]
-\Function{CantidadEnviados}{\In{d}{estr\_dcnet}, \In{c}{hostname}}{$\rightarrow res$: $nat$}
-	\State $it \gets Significado(d.porHostname, c)$ \Comment{O(L)}
-	\State $res \gets SiguienteSignificado(it).cantEnvios$\Comment {O(1)}
+\Function{iCantidadEnviados}{\In{d}{estr\_dcnet}, \In{c}{hostname}}{$\rightarrow res$: $nat$}
+	\State it $\gets$ Significado(d.porHostname, c) \Comment{O(L)}
+	\State res $\gets$ SiguienteSignificado(it).cantEnvios\Comment {O(1)}
 	
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
 
 \begin{algorithm}
-\caption{}
+\caption{Implementaci\'on EnEspera}
 \begin{algorithmic}[0]
 \Function{iEnEspera}{\In{d}{estr\_dcnet}, \In{c}{hostname}}{$\rightarrow res: estr$}
-	\State $it \gets Significado(d.porHostname, c)$\Comment{O(L)}
-	\State $res \gets SiguienteSignificado(it).paquetes$\Comment{O(1)}
+	\State it $\gets$ Significado(d.porHostname, c) \Comment{O(L)}
+	\State res $\gets$ SiguienteSignificado(it).paquetes \Comment{O(1)}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -234,40 +234,41 @@ FI}
 \caption{Implementaci\'on de iniciarDCNet}
 \begin{algorithmic}[0]
 \Function{iIniciarDCNet}{\In{r}{red}}{$\rightarrow res$: $estr\_dcnet$}
-	\State res.red $\gets$ Copiar(r) \Comment{O(copy(r))}
-	\State diccCompus $\gets$ Vac\'io() \Comment{O(1)}
-	\State diccHostname $\gets$ Vac\'io() \Comment{O(1)}
-	\State index $\gets$ 0 \Comment{O(1)}
+	\State diccCompus $\gets$ Vacio()  \Comment{O(1)}
+	\State diccHostname $\gets$ Vacio()  \Comment{O(1)}
+	\State index $\gets$  0 \Comment{O(1)}
 	\State itHostname $\gets$  CrearIt(Computadoras(r)) \Comment{O(1)}
-	\State res.conMasEnv\'ios $\gets$ Siguiente(itHostname) \Comment{O(1)}
-	\While{HaySiguiente(itHostname)} \Comment{O($\#$Computadoras(r))} \Comment{O(n)}
-		\State X $\gets$ <index, Vac\'io(), Vac\'io(), Vac\'io(), 0> \Comment{O(n) segun el apunte}
-		\State itX $\gets$ Definir(diccCompus, Siguiente(itHostname), X) \Comment{O(copy(Siguiente(itHostname) + copy(X))} 
-		\State Definir(diccHostname, Siguiente(itHostname), itX) \Comment{O(copy(Siguiente(itHostname) + copy(X))} 
+	\State masEnvios $\gets$ Siguiente(itHostname) \Comment{O(1)}
+	\While{HaySiguiente(itHostname)} \Comment{O($\#$Computadoras(r))}
+		\comentario{no me queda clara la complejidad} 
+		\State X $\gets$ <index, Vacio(), Vacio(), Vacio(), 0> \Comment{O(n) segun el apunte }
+		\comentario{mirar}
+		\State itX $\gets$ Definir(diccCompus, Siguiente(itHostname), X)  \Comment{O(L) + copy(X))} 
+		\comentario{mirar}
+		\State Definir(diccHostname, Siguiente(itHostname), itX)  \Comment{O(copy(Siguiente(itHostname) + copy(X))} 
 		\State index $\gets$ index + 1 \Comment{O(1)}
 		\State Avanzar(itHostname) \Comment{O(1)}
 	\EndWhile
-	\State res.computadoras $\gets$ diccCompus \Comment{O(1)}
-	\State res.porHostaname $\gets$ diccHostname \Comment{O(1)}
-	\State n $\gets$ $\#$Claves(diccCompus) \Comment{O(1)}
+	\State n $\gets$ \#Claves(diccCompus) \Comment{O(1)}
 	\State arrayCaminos $\gets$ CrearArreglo(n) \Comment{O(n)}
 	\State itPC $\gets$ CrearIt(diccCompus) \Comment{O(1)}
 	\State itPC2 $\gets$ CrearIt(diccCompus) \Comment{O(1)}				 	 	
-	\While{HaySiguiente(itPC)}\Comment{O(1)}
+	\While{HaySiguiente(itPC)} \Comment{O($\#$Computadoras(r))}
 		\State arrayDestinos $\gets$ CrearArreglo(n) \Comment{O(n)}
-		\While{HaySiguiente(itPC2)}\Comment{O(1)}
+		\While{HaySiguiente(itPC2)} \Comment{O($\#$Computadoras(r))}
 			\State itConj $\gets$ CaminosMinimos(r, SiguienteClave(itPC), SiguienteClave(itPC2)) \Comment{O(???)}
 			\If{HaySiguiente(itConj)}\Comment{O(1)}
-				\State arrayDestinos[SiguienteSignificado(itPC2).indice] $\gets$ Siguiente(itConj) \Comment{el apunte dice que no es modificable O(1)}
+				\comentario{el apunte dice que no es modificable} 
+				\State arrayDestinos[SiguienteSignificado(itPC2).indice] $\gets$ Siguiente(itConj) \Comment{O(1)}
 			\Else 
-				\State arrayDestinos[SiguienteSignificado(itPC2).indice] $\gets$ Vac\'io \Comment{es necesario esto?O(1)}
+				\State arrayDestinos[SiguienteSignificado(itPC2).indice] $\gets$ Vacia() \Comment{es necesario esto?O(1)}
 			\EndIf
 			\State Avanzar(itPC2) \Comment{O(1)}
 		\EndWhile
-		\State  arrayCaminos[SiguienteSignificado(itPC).indice] $\gets$ arrayDestinos \Comment{O(1)}
+		\State arrayCaminos[SiguienteSignificado(itPC).indice] $\gets$ arrayDestinos \Comment{O(1)}
 		\State Avanzar(itPC) \Comment{O(1)}
 	\EndWhile	
-	\State res.caminos $\gets$ arrayCaminos \Comment{O(1)}
+	\State res $\gets$ < Copiar(r), diccCompus, diccHostname, masEnvios, arrayCaminos > 
 
 \EndFunction
 \end{algorithmic}
@@ -277,10 +278,10 @@ FI}
 \caption{}
 \begin{algorithmic}[0]
 \Function{CrearPaquete}{\Inout{d}{estr\_dcnet}, \In{p}{paquete}}
-	\State $itPC \gets Significado(d.porHostname, paquete.origen)$\Comment{O(L)}
-	\State $itPaq \gets Agregar(SiguienteSignificado(itPC).paquetes, p)$\Comment{O(copy(p))}
-	\State $Encolar(SiguienteSignificado(itPC).cola, p.prioridad ,itPaq)	$\Comment{O(log(n)), n cantidad de nodos)}
-	\State $Definir(SiguienteSignificado(itPC).paquetesPorID, IDpaquete, itPaq)$ \Comment{O(log(n)), n cantidad de nodos}
+	\State itPC $\gets$ Significado(d.porHostname, paquete.origen)\Comment{O(L)}
+	\State itPaq $\gets$ Agregar(SiguienteSignificado(itPC).paquetes, p)\Comment{O(copy(p))}
+	\State Encolar(SiguienteSignificado(itPC).cola, p.prioridad ,itPaq)	\Comment{O(log(n)), n cantidad de nodos)}
+	\State Definir(SiguienteSignificado(itPC).paquetesPorID, IDpaquete, itPaq) \Comment{O(log(n)), n cantidad de nodos}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}

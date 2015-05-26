@@ -1,4 +1,3 @@
-\select@language {spanish}
 \contentsline {section}{\numberline {1}M\'odulo Red}{3}{section.1}
 \contentsline {section}{\numberline {2}M\'odulo DCNet}{12}{section.2}
 \contentsline {section}{\numberline {3}M\'odulo Cola de Prioridad $_{HEAP}$ ($\alpha $) }{20}{section.3}
