@@ -87,6 +87,12 @@
   [indica si dos redes son iguales.]
   [] 
   
+  \InterfazFuncion{Copiar}{\In{r}{red}}{red}
+  {$res$ =$_{obs}$ r}
+  []
+  [copia la red.]
+  [res se devuelve por copia]
+  
    \textbf{donde:} \newline 
    \TipoVariable{hostname} es \TipoVariable{string}, \newline
    \TipoVariable{interfaz} es \TipoVariable{nat}, \newline
@@ -443,6 +449,32 @@ FI}
 		\EndWhile
 	\EndIf
 \EndFunction \Comment{\textbf{O(n*n * ( L + n*n + m ) + n*m*m)}}
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de Copiar}
+\begin{algorithmic}[0]
+\Function{iCopiar}{in r: estr\_red}{$\rightarrow$ res: red}
+	\State res $\gets$ IniciarRed() \Comment{O(1)}
+	\State itRed $\gets$ CrearIt(r) \Comment{O(1)}
+	\While{HaySiguiente(itRed)} \Comment{O(1)} \Comment{se ejecuta n veces} \Comment{O(n)}
+		\Status copiaAlcanzables $\gets$ Vacio() \Comment{diccionario} \Comment{O(1)}
+		\Status itAlcanzables $\gets$ CrearIt(SiguienteSignificado(itRed).alcanzables) \Comment{O(1)}
+		\While{HaySiguiente(itAlcanzables)} \Comment{Guarda: O(1)} \Comment{se ejecuta a lo sumo n veces} \Comment{O(n)}
+			\Status copiaCaminos $\gets$ Vacia() \Comment{lista} \Comment{O(1)}
+			\Status itCaminos $\gets$ CrearIt(SiguienteSignificado(itAlcanzables)) \Comment{O(1)}
+			\While{HaySiguiente(itCaminos)}
+				\Status AgregarAdelante(copiaCaminos, Siguiente(itCaminos)) \Comment{O(copiar(camino))}
+				\Status Avanzar(itCaminos) \Comment{O(1)}
+			\EndWhile			
+			\Status Definir(copiaAlcanzables, SiguienteClave(itAlcanzables), copiaCaminos)
+			\Status Avanzar(itAlcanzables) \Comment{O(1)}
+		\EndWhile
+		\Status Definir(res, SiguienteClave(itRed), Tupla(Copiar(SiguienteSignificado(itRed).interfaces), Copiar(SiguienteSignificado(itRed).conexiones, copiaAlcanzables)
+		\Status Avanzar(itRed) \Comment{O(1)}
+	\EndWhile
+\EndFunction
 \end{algorithmic}
 \end{algorithm}
 
