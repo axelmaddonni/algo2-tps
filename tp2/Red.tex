@@ -10,28 +10,28 @@
 
   \InterfazFuncion{Computadoras}{\In{r}{red}}{conj(hostname)}
   {$res$ $=_{obs}$ dameHostnames(computadoras($r$))}%
-  []
+  [O(n)]
   [devuelve el conjunto de las computadoras.]
   [res se devuelve por copia.]
 
   \InterfazFuncion{Conectadas?}{\In{r}{red}, \In{c1}{hostname}, \In{c2}{hostname}}{bool}
   [$c1,\ c2$ $\in$ dameHostnames(computadoras($r$))]
   {$res$ $=_{obs}$ conectadas?($r$, dameCompu($c1$), dameCompu($c2$))}
-  []
+  [O(n*L)]
   [indica si las computadoras estan conectadas por alguna de sus interfaces.]
   []
 
   \InterfazFuncion{InterfazUsada}{\In{r}{red}, \In{c1}{hostname}, \In{c2}{hostname}}{interfaz}
   [conectadas?($r$, dameCompu($c1$), dameCompu($c2$))]
   {$res$ $=_{obs}$ interfazUsada($r$, dameCompu($c1$), dameCompu($c2$))}
-  []
+  [O(n*L)]
   [devuelve la interfaz por la cual estan conectadas c1 y c2.]
   []
 
   \InterfazFuncion{IniciarRed}{}{red}
   [true]
   {$res$ $=_{obs}$ iniciarRed()}
-  []
+  [O(1)]
   [crear una nueva Red.]
   []
   
@@ -39,9 +39,9 @@
   [$r$ = $r_0$ $\wedge$
   (\paratodo{compu}{c}) $c$ $\in$ computadoras($r_0$) $\Rightarrow$ ip($c$) $\neq$ $c1$]
   {$r$ $=_{obs}$ agregarComputadora($r_0$, $c1$)}
-  []
+  [O(L+i) i=cantidad de interfaces]
   [agregar una computadora a la Red.]
-  []
+  [la computadora se agrega por copia.]
 
   \InterfazFuncion{Conectar}{\In{r}{red}, \In{c_1}{hostname}, \In{i_1}{interfaz} \In{c_2}{hostname}, \In{i_2}{interfaz}}{}
   [$r$ = $r_0$ $\wedge$ $c_1, c_2$ $\in$ dameHostnames(computadoras($r$)) $\wedge$ $c_1$ $\neq$ $c_2$	$\wedge$ \newline $\neg$conectadas?($r$, dameCompu($c_1$), dameCompu($c_2$)) $\wedge$ $\neg$usaInterfaz?($r$, dameCompu($c_1$), $i_1$) $\wedge$ $\neg$usaInterfaz?($r$, dameCompu($c_2$), $i_2$) $\wedge$ $i_1$ $\in$ dameCompu($c_1$).interfaces $\wedge$ $i_2$ $\in$ dameCompu($c_2$).interfaces]
@@ -53,14 +53,14 @@
   \InterfazFuncion{Vecinos}{\In{r}{red}, \In{c}{hostname}}{conj(hostname)}
   [$c$ $\in$ dameHostnames(computadoras($r$))]
   {$res$ $=_{obs}$ dameHostnames(vecinos($r$, dameCompu($c$)))}
-  []
+  [O(n*L)]
   [da el conjunto de computadoras vecinas.]
   [el conjunto se devuelve por copia.]
 
   \InterfazFuncion{UsaInterfaz?}{\In{r}{red}, \In{c}{hostname}, \In{i}{interfaz}}{bool}
   [$c$ $\in$ dameHostnames(computadoras($r$))]
   {$res$ $=_{obs}$ usaInterfaz?($r$, dameCompu($c$), $i$)}
-  []
+  [O(n)]
   [indica si la interfaz est\'a siendo utilizada.]
   []
 
@@ -69,21 +69,21 @@
   \InterfazFuncion{CaminosMinimos}{\In{r}{red}, \In{c_1}{hostname}, \In{c_2}{hostname}}{conj(lista(hostname))}
   [$c1,\ c2$ $\in$ dameHostnames(computadoras($r$))]
   {$res$ $=_{obs}$ dameCaminosdeHostnames(caminosMinimos($r$, dameCompu($c_1$), dameCompu($c_2$)))}
-  []
+  [O(n*L)]
   [devuelve los conjuntos de caminos minimos entre las computadoras ingresadas.]
   [res se devuelve por copia.]
   
   \InterfazFuncion{HayCamino?}{\In{r}{red}, \In{c_1}{hostname}, \In{c_2}{hostname}}{bool}
   [$c1,\ c2$ $\in$ dameHostnames(computadoras($r$))]
   {$res$ $=_{obs}$ hayCamino?($r$, dameCompu($c_1$), dameCompu($c_2$))}
-  []
+  [O(n*n)]
   [indica si las computadoras son alcanzables mediante alg\'un camino.]
   []
   
   \InterfazFuncion{$\bullet == \bullet$}{\In{r_1}{red}, \In{r_2}{red}}{bool}
   [true]
   {$res$ =$_{obs}$ ($r_1$ =$_{obs}$ $r_2$}%
-  []
+  [O(n*n * ( L + n*n + m ) + n*m*m)]
   [indica si dos redes son iguales.]
   [] 
   
@@ -308,8 +308,8 @@ FI}
 \begin{algorithmic}[0]
 \Function{iAgregarCompu}{inout r: estr\_red, in c1: compu}{}
 	\State nuevoDiccVacio $\gets$ Vacio() \Comment{Diccionario} \Comment{O(1)}
-	\State DefinirRapido(r, c1.ip, tupla(c1.interfaces, nuevoDiccVacio, nuevoDiccVacio)) \Comment{O(Copiar(sL)) con sL=string de largo L}
-\EndFunction \Comment{\textbf{O(L)}}
+	\State DefinirRapido(r, c1.ip, tupla(Copiar(c1.interfaces), nuevoDiccVacio, nuevoDiccVacio)) \Comment{O(Copiar(sL) + Copiar(conj(interfaz)) con sL=string de largo L}
+\EndFunction \Comment{\textbf{O(L + i) con i=cantidad de interfaces}}
 \end{algorithmic}
 \end{algorithm}
 
