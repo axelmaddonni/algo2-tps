@@ -64,8 +64,6 @@
   [indica si la interfaz est\'a siendo utilizada.]
   []
 
-\newpage
-
   \InterfazFuncion{CaminosMinimos}{\In{r}{red}, \In{c_1}{hostname}, \In{c_2}{hostname}}{conj(lista(hostname))}
   [$c1,\ c2$ $\in$ dameHostnames(computadoras($r$))]
   {$res$ $=_{obs}$ dameCaminosdeHostnames(caminosMinimos($r$, dameCompu($c_1$), dameCompu($c_2$)))}
@@ -459,20 +457,20 @@ FI}
 	\State res $\gets$ IniciarRed() \Comment{O(1)}
 	\State itRed $\gets$ CrearIt(r) \Comment{O(1)}
 	\While{HaySiguiente(itRed)} \Comment{O(1)} \Comment{se ejecuta n veces} \Comment{O(n)}
-		\Status copiaAlcanzables $\gets$ Vacio() \Comment{diccionario} \Comment{O(1)}
-		\Status itAlcanzables $\gets$ CrearIt(SiguienteSignificado(itRed).alcanzables) \Comment{O(1)}
+		\State copiaAlcanzables $\gets$ Vacio() \Comment{diccionario} \Comment{O(1)}
+		\State itAlcanzables $\gets$ CrearIt(SiguienteSignificado(itRed).alcanzables) \Comment{O(1)}
 		\While{HaySiguiente(itAlcanzables)} \Comment{Guarda: O(1)} \Comment{se ejecuta a lo sumo n veces} \Comment{O(n)}
-			\Status copiaCaminos $\gets$ Vacia() \Comment{lista} \Comment{O(1)}
-			\Status itCaminos $\gets$ CrearIt(SiguienteSignificado(itAlcanzables)) \Comment{O(1)}
+			\State copiaCaminos $\gets$ Vacia() \Comment{lista} \Comment{O(1)}
+			\State itCaminos $\gets$ CrearIt(SiguienteSignificado(itAlcanzables)) \Comment{O(1)}
 			\While{HaySiguiente(itCaminos)}
-				\Status AgregarAdelante(copiaCaminos, Siguiente(itCaminos)) \Comment{O(copiar(camino))}
-				\Status Avanzar(itCaminos) \Comment{O(1)}
+				\State AgregarAdelante(copiaCaminos, Siguiente(itCaminos)) \Comment{O(copiar(camino))}
+				\State Avanzar(itCaminos) \Comment{O(1)}
 			\EndWhile			
-			\Status Definir(copiaAlcanzables, SiguienteClave(itAlcanzables), copiaCaminos)
-			\Status Avanzar(itAlcanzables) \Comment{O(1)}
+			\State Definir(copiaAlcanzables, SiguienteClave(itAlcanzables), copiaCaminos)
+			\State Avanzar(itAlcanzables) \Comment{O(1)}
 		\EndWhile
-		\Status Definir(res, SiguienteClave(itRed), Tupla(Copiar(SiguienteSignificado(itRed).interfaces), Copiar(SiguienteSignificado(itRed).conexiones, copiaAlcanzables)
-		\Status Avanzar(itRed) \Comment{O(1)}
+		\State Definir(res, SiguienteClave(itRed), Tupla(Copiar(SiguienteSignificado(itRed).interfaces), Copiar(SiguienteSignificado(itRed).conexiones, copiaAlcanzables)
+		\State Avanzar(itRed) \Comment{O(1)}
 	\EndWhile
 \EndFunction
 \end{algorithmic}
