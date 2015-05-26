@@ -33,6 +33,8 @@
 
 \end{Interfaz}
 
+\newpage 
+
 \begin{Representacion}
 
 \begin{Estructura}{diccLog}[puntero(estr($\kappa, \sigma$)]
@@ -73,8 +75,15 @@ $\ $\newline \indent Abs($d$) $\equiv$ c: dicc($\kappa, \sigma$) | $((\forall k:
 $\ $\newline$\ $
 \newline \indent \textbf{Especificaci\'on de las operaciones auxiliares utilizadas para Rep y Abs}
 \newline \indent arbol:$\ puntero(estr(\kappa\, \sigma)) \rightarrow conj(\kappa)$
-\tadAxioma{arbol(n)}{\textbf{if} $n.izq \neq null \wedge n.der \neq null$ \textbf{then} Ag($n.clave,arbol(n.izq)\cup arbol(n.der)$) \textbf{else}
-\textbf{if} $n.izq \neq null$ \textbf{then} Ag($n.clave,arbol(n.izq)$) \textbf{else} \textbf{if} $n.der \neq null$ \textbf{then} Ag($n.clave,arbol(n.der)$) \textbf{else} Ag($n.clave,\emptyset$)}
+
+\tadAxioma{arbol(n)}{
+\IF {$n.izq \neq null \wedge n.der \neq null$}
+THEN {Ag($n.clave,arbol(n.izq)\cup arbol(n.der)$)}
+ELSE { \IF {$n.izq \neq null$}
+		THEN {Ag($n.clave,arbol(n.izq)$)}
+		ELSE { \LIF\ $n.der \neq null$ \LTHEN\ Ag($n.clave,arbol(n.der)$) \LELSE\ Ag($n.clave,\emptyset$) \LFI}
+		FI}
+FI}
 
 \end{Representacion}
 
