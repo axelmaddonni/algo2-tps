@@ -204,7 +204,7 @@ Para todos los paquetes de una computadora:\newline
 	SiguienteClave(obtener($e$.porHostname, $c$)) = $c$ $\wedge$
 	SiguienteSignificado(obtener($e$.porHostname, $c$)) = obtener($e$.computadoras, $c$) ) $\wedge$ \newline
 	($\forall$ $c$: hostname, $c$ $\in$ claves($e$.computadoras))
-	\comentario{4} 0 $<$ obtener($e$.computadoras, $c$).indice $<$ $\#$claves($e$.computadoras)-1 $\wedge$ 
+	\comentario{4} 0 $<$ obtener($e$.computadoras, $c$).indice $<$ $\#$claves($e$.computadoras)-1 $\wedge$ obtener($e$.computadoras, $c$).indice = ordenLexicografico($c$, claves($e$.computadoras)) $\wedge$
 	\comentario{5} $\neg$($\exists$ $c\sp{\prime}$: hostname, $c\sp{\prime}$ $\in$ claves($e$.computadoras), $c$ $\neq$ $c\sp{\prime}$) obtener($e$.computadoras, $c\sp{\prime}$).indice = obtener($e$.computadoras, $c$).indice $\wedge$ 
 	\comentario{6} $\neg$($\exists$ $c\sp{\prime}$: hostname, $c\sp{\prime}$ $\in$ claves($e$.computadoras), $c$ $\neq$ $c\sp{\prime}$) obtener($e$.computadoras, $c\sp{\prime}$).cantEnvios > SiguienteSignificado($e$.conMasEnvios).cantEnvios $\wedge$ 
 	\comentario{7} tam($e$.caminos) = $\#$claves($e$.computadoras) $\wedge_L$ 
@@ -359,6 +359,17 @@ caminoRecorrido ($d$, $p$) = $e$.caminos[obtener($e$.computadoras, origen($p$).i
 				\comentario{si no hay camino, creo una lista vacia}
 				\State arrayDestinos[SiguienteSignificado(itPC2).indice] $\gets$ Vacia() \Comment{O(1)}
 			\EndIf
+			
+				\algstore {iniciar}
+	
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\begin{algorithmic}[0]
+
+	\algrestore {iniciar}
+	
 			\State Avanzar(itPC2) \Comment{O(1)}
 		\EndWhile
 		\State arrayCaminos[SiguienteSignificado(itPC).indice] $\gets$ arrayDestinos \Comment{O(1)}
