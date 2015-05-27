@@ -46,6 +46,9 @@
 \tupItem{significado}{\TipoVariable{$\sigma$}} \newline \nomoreitems{}
 \tupItem{nivel}{\TipoVariable{nat}}
 \end{Tupla}
+\newline \comentario{La estructura utilizada para representar al diccionario Logaritmico es un AA tree. Es un tipo de ABB auto-balanceado que provee busqueda, insercion y borrado
+en tiempo logaritmico. Los AA trees son similares a los Red-Black Trees, pero solo pueden tener hijos derechos ``rojos'' (en vez de utilizar un valor booleano de color, usan un valor entero de nivel;
+los hijos ``rojos'' son los que tienen mismo nivel que sus padres), lo que reduce considerablemente la cantidad de operaciones necesarias para mantener el arbol.}
 \newline \comentario{http://user.it.uu.se/$\sim$arnea/abs/simp.html}
 % http://user.it.uu.se/~arnea/abs/simp.html
    
@@ -96,6 +99,7 @@ FI}
 \caption{Implementaci\'on de Definido?}
 \begin{algorithmic}[0]
 \Function{iDefinido?}{in d: estr , in c: $\kappa$}{$\rightarrow$ res: bool}
+	\comentario{B\'usqueda est\'andar en un ABB}
 	\State nodoActual $\gets$ d \Comment{O(1)}
 	\State res $\gets$ FALSE \Comment{O(1)}
 	\While{$\neg$(nodoActual == NULO) $\&\&$ $\neg$res} \Comment{El ciclo se ejecuta en el peor caso una cantidad de veces igual a la altura del arbol. Al ser auto-balanceado, su altura siempre sera O(log(n))}
@@ -117,6 +121,7 @@ FI}
 \caption{Implementaci\'on de Significado}
 \begin{algorithmic}[0]
 \Function{iSignificado}{in d: estr , in c: $\kappa$}{$\rightarrow$ res: $\sigma$}
+	\comentario{B\'usqueda est\'andar en un ABB}
 	\State nodoActual $\gets$ d \Comment{O(1)}
 	\While{$\neg$(nodoActual == NULO) $\&\&$ $\neg$res} \Comment{El ciclo se ejecuta en el peor caso O(log(n)) veces.}
 		\If{nodoActual.clave == c} \Comment{O(comparar($\kappa$))}
@@ -146,8 +151,10 @@ FI}
 \caption{Implementaci\'on de Definir}
 \begin{algorithmic}[0]
 \Function{iDefinir}{inout d: estr , in c: $\kappa$, in s: $\sigma$}{}
+	\comentario{Si ya se llego a una hoja, se inserta el nuevo elemento}
 	\If{d == NULO} \Comment{O(1)}
 		\State $res\gets \ <c, NULO, NULO, s, 1>$ \Comment{O(max(copiar($\kappa$), copiar($\sigma$))}
+	\comentario{Se busca la posicion correspondiente al nuevo nodo (antes de rebalancear el arbol).}
 	\ElsIf{$c < d.clave$} \Comment{O(comparar($\kappa$)}
 		\State $d.izquierdo\gets \ iDefinir(d.izquierdo,c,s)$ \Comment{En el peor caso se llama recursivamente a la funcion una cantidad de veces igual a la altura
 		del arbol, que es O(log(n)).}
@@ -155,6 +162,7 @@ FI}
 		\State $d.derecho\gets \ iDefinir(d.derecho,c,s)$ \Comment{En el peor caso se llama recursivamente a la funcion una cantidad de veces igual a la altura
 		del arbol, que es O(log(n)).}
 	\EndIf
+	\comentario{Se tuerce y divide el arbol en cada nivel, rebalanceandolo.}
 	\State $d \gets\ Torsion(d)$ \Comment{O(1)}
 	\State $d \gets\ Division(d)$ \Comment{O(1)}
 \EndFunction
@@ -165,10 +173,12 @@ FI}
 \caption{Implementaci\'on de Torsion}
 \begin{algorithmic}[0]
 \Function{iTorsion}{in d: estr}{$\rightarrow$ res: estr}
+	\comentario{Si el nodo tiene un hijo izquierdo del mismo nivel se debe realizar una rotacion para restaurar el invariante.}
 	\If{d == NULO $\|$ d.izquierdo == NULO} \Comment{O(1)}
 		\State res $\gets$ d \Comment{O(1)}
 	\Else
-		\If{(d.izquierdo).nivel $\geq$ d.nivel} \Comment{O(1)}
+	\comentario{El hijo izquierdo de mismo nivel pasa a ser el padre del nodo derecho. El hijo derecho del nodo izquierdo pasa a ser el hijo izquierdo del nodo derecho.}
+		\If{(d.izquierdo).nivel == d.nivel} \Comment{O(1)}
 			\State nodoAux $\gets$ d.izquierdo \Comment{O(1)}
 			\State d.izquierdo $\gets$ nodoAux.derecho \Comment{O(1)}
 			\State nodo.derecho $\gets$ d \Comment{O(1)}
@@ -185,9 +195,11 @@ FI}
 \caption{Implementaci\'on de Division}
 \begin{algorithmic}[0]
 \Function{iDivision}{in d: estr}{$\rightarrow$ res: estr}
+	\comentario{Si hay dos hijos derechos del mismo nivel que el padre se debe realizar una rotacion para restaurar el invariante.}
 	\If{d == NULO $\|$ d.derecho == NULO $\|$ d.derecho.derecho == NULO} \Comment{O(1)}
 		\State res $\gets$ d \Comment{O(1)}
 	\Else
+	\comentario{El primero hijo derecho pasa a ser el padre, con un nivel mas. Su hijo izquierdo pasa a ser el hijo derecho de su padre original.}
 		\If{(d.derecho.derecho).nivel == d.nivel} \Comment{O(1)}
 			\State nodoAux $\gets$ d.derecho \Comment{O(1)}
 			\State d.derecho $\gets$ nodoAux.izquierdo \Comment{O(1)}
@@ -211,32 +223,40 @@ FI}
 \Function{iBorrar}{inout d: estr, in c: $\kappa$}{}
 	\If{$d == NULO$} \Comment{O(1)}
 		\State $endFunction$
+	\comentario{Se busca recursivamente la posicion del elemento a borrar mediante una busqueda estandar en ABB.}
 	\ElsIf{$c > d.clave$} \Comment{O(comparar($\kappa$))}
 		\State $d.derecho\gets \ iBorrar(d.derecho, c)$ \Comment{En el peor caso se llama recursivamente a la funcion una cantidad de veces igual a la altura
 		del arbol, que es O(log(n)).}
 	\ElsIf{$c < d.clave$} \Comment{O(comparar($\kappa$))}
 		\State $d.izquierdo\gets \ iBorrar(d.izquierdo, c)$ \Comment{En el peor caso se llama recursivamente a la funcion una cantidad de veces igual a la altura
 		del arbol, que es O(log(n)).}
+	\comentario{Si el elemento a borrar es una hoja, simplemente se lo borra.}
 	\ElsIf{$d.izquierdo == NULO \wedge\ d.derecho == NULO$} \Comment{O(1)}
 		\State $borrar(d)$ \Comment{O(max(borrar($\kappa$), borrar($\sigma$)))}
 		\State $d\gets\ NULO$ \Comment{O(1)}
+	\comentario{Si el elemento a borrar no es una hoja, se reduce al caso hoja.}
 	\ElsIf{$d.izquierdo == NULO$} \Comment{O(1)}
+	\comentario{Se busca el sucesor del elemento (bajando una vez por la rama izquierda y luego por la derecha hasta encontrar una hoja).}
 		\State $aux\gets\ d.derecho$ \Comment{O(1)}
 		\While{$aux.izquierdo \neq NULO$} \Comment{En el peor caso el ciclo se ejecuta O(log(n)) veces.}
 			\State $aux\gets\ aux.izquierdo$ \Comment{O(1)}
 		\EndWhile
+		\comentario{Se hace un swap y se elimina el elemento.}
 		\State $d.derecho\gets\ iBorrar(aux.clave, d.derecho)$
 		\State $d.clave\gets\ aux.clave$ \Comment{O(copiar($\kappa$))}
 		\State $d.significado\gets\ aux.significado$ \Comment{O(copiar($\sigma$))}
 	\Else
+	\comentario{Se busca el predecesor del elemento (bajando una vez por la rama derecha y luego por la izquierda hasta encontrar una hoja).}
 		\State $aux\gets\ d.izquierdo$ \Comment{O(1)}
 		\While{$aux.derecho \neq NULO$} \Comment{En el peor caso el ciclo se ejecuta O(log(n)) veces.}
 			\State $aux\gets\ aux.derecho$ \Comment{O(1)}
 		\EndWhile
+		\comentario{Se hace un swap y se elimina el elemento.}
 		\State $d.izquierdo\gets\ iBorrar(aux.clave, d.izquierdo)$
 		\State $d.clave\gets\ aux.clave$ \Comment{O(copiar($\kappa$))}
 		\State $d.significado\gets\ aux.significado$ \Comment{O(copiar($\sigma$))}
 	\EndIf
+	\comentario{Se nivela, divide y tuerce para restaurar el invariante.}
 	\State $d\gets\ Nivelar(T)$ \Comment{O(1)}
 	\State $d\gets\ Torsion(T)$ \Comment{O(1)}
 	\If{$d.derecho \neq NULO$} \Comment{O(1)}
