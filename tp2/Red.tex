@@ -327,8 +327,8 @@ FI}
 \begin{algorithmic}[0]
 \Function{iConectar}{inout r: estr\_red, in c1: hostname, int i1:interfaz, in c2: hostname, in i2:interfaz}{}
 \comentario{Actualizo conexiones de ambas}
-\State DefinirRapido(Significado(r, c1).conexiones, i1, c2)
-\State DefinirRapido(Significado(r, c2).conexiones, i2, c1)
+\State DefinirRapido(Significado(r, c1).conexiones, i1, c2) \Comment{O(n) + O(L) + O(copiar(nat))}
+\State DefinirRapido(Significado(r, c2).conexiones, i2, c1) \Comment{O(n) + O(L) + O(copiar(nat))} 
 \comentario{Actualizo caminos de ambas}
 \State ActualizarCaminos(r, c1, c2)
 \State ActualizarCaminos(r, c2, c1)
@@ -348,24 +348,24 @@ FI}
 \Function{iActualizarCaminos}{inout r: estr\_red, in c1: hostname, in c2: hostname}{}
 \comentario{Actualiza los caminos de c1 con los de c2}
 \comentario{Recorro los alcanzables de c2}
-\State itAlcanzables2 $\gets$ crearIt(Significado(r, c2).alcanzables)
-\While {(HaySiguiente(itAlcanzables2)}
+\State itAlcanzables2 $\gets$ crearIt(Significado(r, c2).alcanzables) \Comment{O(1)}
+\While {(HaySiguiente(itAlcanzables2)} \Comment{se ejecuta a lo sumo n-1 veces} \Comment{O(n)}
 	\comentario{Recorro alcanzables de c1}
-	\State itAlcanzables1 $\gets$ crearIt(Significado(r, c1).alcanzables)
-	\While{(HaySiguiente(itAlcanzables1))}
-		\If{(SiguienteClave(itAlcanzables2) == SiguienteClave(itAlcanzables1))}
+	\State itAlcanzables1 $\gets$ crearIt(Significado(r, c1).alcanzables) \Comment{O(1)}
+	\While{(HaySiguiente(itAlcanzables1))} \Comment{se ejecuta a lo sumo n-1 veces} \Comment{O(n)}
+		\If{(SiguienteClave(itAlcanzables2) == SiguienteClave(itAlcanzables1))} \Comment{O(n) + O(L)}
 			\comentario{El alcanzable ya estaba, me fijo que caminos son m\'as cortos}
-			\State itCaminos $\gets$ crearIt (SiguienteSignificado(itAlcanzables2))
-			\State camino2 $\gets$ Siguiente(itCaminos) \Comment{camino minimo del c2}
-			\State itCaminos $\gets$ crearIt (SiguienteSignificado(itAlcanzables1))
-			\State camino1 $\gets$ Siguiente(itCaminos) \Comment{camino minimo del c1}
+			\State itCaminos $\gets$ crearIt (SiguienteSignificado(itAlcanzables2)) \Comment{O(1)}
+			\State camino2 $\gets$ Siguiente(itCaminos) \Comment{camino minimo del c2} \Comment{O(1)}
+			\State itCaminos $\gets$ crearIt (SiguienteSignificado(itAlcanzables1)) \Comment{O(1)}
+			\State camino1 $\gets$ Siguiente(itCaminos) \Comment{camino minimo del c1} \Comment{O(1)}
 			
-			\If{(longitud(camino1) > longitud(camino2))}
+			\If{(longitud(camino1) > longitud(camino2))} \Comment{cada camino tiene a lo sumo n elementos} \Comment{O(n)}
 				\comentario{Los caminos nuevos son mas cortos, borro los que están y copio los nuevos}
-				\State Borrar(Significado(r, c1).alcanzables, SiguienteClave(itAlcanzables1))
+				\State Borrar(Significado(r, c1).alcanzables, SiguienteClave(itAlcanzables1)) \Comment{O(n) + O(n*L)}
 				\comentario{Nuevo alcanzable: me copio los caminos agregando c1 al principio}
-				\State itCaminos $\gets$ crearIt (SiguienteSignificado(itAlcanzables2))
-				\State caminos $\gets$ Vacio() \Comment{conjunto donde voy a guardar los caminos modificados}
+				\State itCaminos $\gets$ crearIt (SiguienteSignificado(itAlcanzables2)) \Comment{O(1)}
+				\State caminos $\gets$ Vacio() \Comment{conjunto donde voy a guardar los caminos modificados} \Comment{O(1)}
 				\While { (HaySiguiente(itCaminos))}
 					\State nuevoCamino $\gets$ copy(Siguiente(itCaminos)) \Comment{copio el camino que voy a modificar}
 					\State AgregarAdelante(nuevoCamino, c1)
