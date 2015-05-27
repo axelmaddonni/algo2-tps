@@ -46,7 +46,7 @@
   \InterfazFuncion{Conectar}{\In{r}{red}, \In{c_1}{hostname}, \In{i_1}{interfaz} \In{c_2}{hostname}, \In{i_2}{interfaz}}{}
   [$r$ = $r_0$ $\wedge$ $c_1, c_2$ $\in$ dameHostnames(computadoras($r$)) $\wedge$ $c_1$ $\neq$ $c_2$	$\wedge$ \newline $\neg$conectadas?($r$, dameCompu($c_1$), dameCompu($c_2$)) $\wedge$ $\neg$usaInterfaz?($r$, dameCompu($c_1$), $i_1$) $\wedge$ $\neg$usaInterfaz?($r$, dameCompu($c_2$), $i_2$) $\wedge$ $i_1$ $\in$ dameCompu($c_1$).interfaces $\wedge$ $i_2$ $\in$ dameCompu($c_2$).interfaces]
   {$r$ $=_{obs}$ (conectar($r_0$, dameCompu($c_1$), $i_1$, dameCompu($c_2$), $i_2$)}
-  []
+  [O(n$^{6}$ + n$^{5}$ * L)]
   [conectar dos computadoras de la red.]
   []
    
@@ -330,15 +330,15 @@ FI}
 \State DefinirRapido(Significado(r, c1).conexiones, i1, c2) \Comment{O(n) + O(L) + O(copiar(nat))}
 \State DefinirRapido(Significado(r, c2).conexiones, i2, c1) \Comment{O(n) + O(L) + O(copiar(nat))} 
 \comentario{Actualizo caminos de ambas}
-\State ActualizarCaminos(r, c1, c2)
-\State ActualizarCaminos(r, c2, c1)
+\State ActualizarCaminos(r, c1, c2) \Comment{O(n$^{4}$ + n$^{3}$ x L)}
+\State ActualizarCaminos(r, c2, c1) \Comment{O(n$^{4}$ + n$^{3}$ x L)}
 \comentario{Creo conjunto con los actualizados hasta el momento}
 \State actualizados $\gets$ Vacio() \Comment{conjunto}
-\State AgregarRapido(actualizados, c1)
-\State AgregarRapido(actualizados, c2)
+\State AgregarRapido(actualizados, c1) \Comment{O(L)}
+\State AgregarRapido(actualizados, c2) \Comment{O(L)}
 \comentario{Actualizo caminos del resto de la Red por recursion}
-\State ActualizarVecinos(r, c1, actualizados)
-\EndFunction
+\State ActualizarVecinos(r, c1, actualizados)  \Comment{O(n$^{6}$ + n$^{5}$ * L)}
+\EndFunction \Comment{O(n$^{6}$ + n$^{5}$ * L)}
 \end{algorithmic}
 \end{algorithm}
 
@@ -348,63 +348,76 @@ FI}
 \Function{iActualizarCaminos}{inout r: estr\_red, in c1: hostname, in c2: hostname}{}
 \comentario{Actualiza los caminos de c1 con los de c2}
 \comentario{Recorro los alcanzables de c2}
-\State itAlcanzables2 $\gets$ crearIt(Significado(r, c2).alcanzables) \Comment{O(1)}
-\While {(HaySiguiente(itAlcanzables2)} \Comment{se ejecuta a lo sumo n-1 veces} \Comment{O(n)}
+\State itAlcanzables2 $\gets$ crearIt(Significado(r, c2).alcanzables) \Comment{O(n)}
+\While {(HaySiguiente(itAlcanzables2)} \Comment{se ejecuta a lo sumo n-1 veces} \Comment{O(n) x}
 	\comentario{Recorro alcanzables de c1}
-	\State itAlcanzables1 $\gets$ crearIt(Significado(r, c1).alcanzables) \Comment{O(1)}
-	\While{(HaySiguiente(itAlcanzables1))} \Comment{se ejecuta a lo sumo n-1 veces} \Comment{O(n)}
-		\If{(SiguienteClave(itAlcanzables2) == SiguienteClave(itAlcanzables1))} \Comment{O(n) + O(L)}
+	\State itAlcanzables1 $\gets$ crearIt(Significado(r, c1).alcanzables) \Comment{O(n)}
+	\While{(HaySiguiente(itAlcanzables1))} \Comment{se ejecuta a lo sumo n-1 veces} \Comment{O(n) x}
+		\If{(SiguienteClave(itAlcanzables2) == SiguienteClave(itAlcanzables1))} \Comment{O(L)}
 			\comentario{El alcanzable ya estaba, me fijo que caminos son m\'as cortos}
 			\State itCaminos $\gets$ crearIt (SiguienteSignificado(itAlcanzables2)) \Comment{O(1)}
-			\State camino2 $\gets$ Siguiente(itCaminos) \Comment{camino minimo del c2} \Comment{O(1)}
+			\State camino2 $\gets$ Siguiente(itCaminos) \Comment{camino minimo del c2} \Comment{O(n)}
 			\State itCaminos $\gets$ crearIt (SiguienteSignificado(itAlcanzables1)) \Comment{O(1)}
-			\State camino1 $\gets$ Siguiente(itCaminos) \Comment{camino minimo del c1} \Comment{O(1)}
+			\State camino1 $\gets$ Siguiente(itCaminos) \Comment{camino minimo del c1} \Comment{O(n)}
 			
-			\If{(longitud(camino1) > longitud(camino2))} \Comment{cada camino tiene a lo sumo n elementos} \Comment{O(n)}
+			\If{(longitud(camino1) > longitud(camino2))} \Comment{cada camino tiene a lo sumo n elementos} \Comment{O(1)}
 				\comentario{Los caminos nuevos son mas cortos, borro los que están y copio los nuevos}
-				\State Borrar(Significado(r, c1).alcanzables, SiguienteClave(itAlcanzables1)) \Comment{O(n) + O(n*L)}
+				\State Borrar(Significado(r, c1).alcanzables, SiguienteClave(itAlcanzables1)) \Comment{O(n)}
 				\comentario{Nuevo alcanzable: me copio los caminos agregando c1 al principio}
 				\State itCaminos $\gets$ crearIt (SiguienteSignificado(itAlcanzables2)) \Comment{O(1)}
 				\State caminos $\gets$ Vacio() \Comment{conjunto donde voy a guardar los caminos modificados} \Comment{O(1)}
-				\While { (HaySiguiente(itCaminos))}
-					\State nuevoCamino $\gets$ copy(Siguiente(itCaminos)) \Comment{copio el camino que voy a modificar}
-					\State AgregarAdelante(nuevoCamino, c1)
-					\State AgregarRapido (caminos, nuevoCamino)
-					\State Avanzar(itCaminos)
-				\EndWhile
+				\While { (HaySiguiente(itCaminos))} \Comment{O(n) x}
+					\State nuevoCamino $\gets$ copy(Siguiente(itCaminos)) \Comment{copio el camino que voy a modificar} \Comment{O(n)}
+					\State AgregarAdelante(nuevoCamino, c1) \Comment{O(L)}
+					\State AgregarRapido (caminos, nuevoCamino) \Comment{O(n)}
+					\State Avanzar(itCaminos) \Comment{O(1)}
+				\EndWhile  \Comment{O(n x (n + L))}
 				\comentario {agrego el nuevo alcanzable con el camino}
-				\State DefinirRapido(Significado(r,c1).alcanzables, SiguienteClave(itAlcanzables2), caminos)
+				\State DefinirRapido(Significado(r,c1).alcanzables, SiguienteClave(itAlcanzables2), caminos) \Comment{O(n) + O(L)}
 			
 			\Else 
-				\If {(longitud(camino1) == longitud(camino2))}
+				\If {(longitud(camino1) == longitud(camino2))} \Comment{O(1)}
 					\comentario{ Tengo que agregar los nuevos caminos (modificados) al conjunto de caminos actual}
-					\State itCaminos $\gets$ crearIt(SiguienteSignificado(itAlcanzables2))
-					\While {(HaySiguiente(itCaminos))}
-						\State nuevoCamino $\gets$ copy(Siguiente(itCaminos)) \Comment {copio el camino que voy a modificar}
-						\State AgregarAdelante(nuevoCamino, c1)
-						\State Agregar(SiguienteSignificado(itAlcanzables1), nuevoCamino)
-						\State Avanzar(itCaminos)
-					\EndWhile
+					\State itCaminos $\gets$ crearIt(SiguienteSignificado(itAlcanzables2)) \Comment{O(1)}
+					\While {(HaySiguiente(itCaminos))} \Comment{O(n) x}
+						\State nuevoCamino $\gets$ copy(Siguiente(itCaminos)) \Comment {copio el camino que voy a modificar} \Comment{O(n)}
+						\State AgregarAdelante(nuevoCamino, c1) \Comment{O(L)}
+						\State Agregar(SiguienteSignificado(itAlcanzables1), nuevoCamino) \Comment{O(n)}
+						\State Avanzar(itCaminos) \Comment{O(1)}
+					\EndWhile  \Comment{O(n x (n + L))}
 				\EndIf
 			\EndIf
 		\Else
 			\comentario{Nuevo alcanzable : me copio los caminos agregando c1 al principio}
-			\State itCaminos $\gets$ crearIt (SiguienteSignificado(itAlcanzables2))
-			\State caminos $\gets$ Vacio() \Comment{conjunto donde voy a guardar los caminos modificados}
-			\While { (HaySiguiente(itCaminos))}
-				\State nuevoCamino $\gets$ copy(Siguiente(itCaminos)) \Comment{copio el camino que voy a modificar}
-				\State AgregarAdelante(nuevoCamino, c1)
-				\State AgregarRapido (caminos, nuevoCamino)
-				\State Avanzar(itCaminos)
-			\EndWhile
+			\State itCaminos $\gets$ crearIt (SiguienteSignificado(itAlcanzables2)) \Comment{O(1)}
+			\State caminos $\gets$ Vacio() \Comment{conjunto donde voy a guardar los caminos modificados} \Comment{O(1)}
+			\While { (HaySiguiente(itCaminos))}\Comment{O(n) x}
+				\State nuevoCamino $\gets$ copy(Siguiente(itCaminos)) \Comment{copio el camino que voy a modificar} \Comment{O(n)}
+				\State AgregarAdelante(nuevoCamino, c1) \Comment{O(L)}
+				\State AgregarRapido (caminos, nuevoCamino)\Comment{O(n)}
+				\State Avanzar(itCaminos) \Comment{O(1)}
+			\EndWhile  \Comment{O(n x (n + L))}
 %			\comentario {agrego el nuevo alcanzable con el camino}
 			\State DefinirRapido(Significado(r, c1).alcanzables, SiguienteClave(itAlcanzables2), caminos)
 		\EndIf
-		\State Avanzar(itAlcanzables1)
-	\EndWhile
-	\State Avanzar(itAlcanzables2)
-\EndWhile
-\EndFunction
+		
+			
+	\algstore {actualizarcaminos}						
+
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}
+\begin{algorithmic}[0]
+
+	\algrestore {actualizarcaminos}
+	
+		\State Avanzar(itAlcanzables1) \Comment{O(1)}
+	\EndWhile  \Comment{O(n x (n + (n x (n + L))) )}
+	\State Avanzar(itAlcanzables2)\Comment{O(1)}
+\EndWhile {O(n + n x (n x (n + (n x (n + L)))}
+\EndFunction \Comment{O(n$^{4}$ + n$^{3}$ x L)}
 \end{algorithmic}
 \end{algorithm}		
 				
@@ -414,17 +427,18 @@ FI}
 \begin{algorithmic}[0]
 \Function{iActualizarVecinos}{inout r: estr\_red, in c1: hostname, in conj(hostname) actualizados}{}
 \comentario{Actualiza los caminos de los vecinos de C, y luego hace recursion para los vecinos de los vecinos.}
-\State itVecinos $\gets$ crearIt(Significado(r, c1).conexiones)
-\While{ ( HaySiguiente(itVecinos) )}
+\State itVecinos $\gets$ crearIt(Significado(r, c1).conexiones) \Comment{O(n)}
+\While{ ( HaySiguiente(itVecinos) )} \Comment{O(n x)}
 	\comentario{ Si todavía no fue actualizado, lo actualizo y hago recursi\'on sobre los vecinos.}
-	\If{(SiguienteClave(itVecinos) $\notin$ actualizados)}
-		\State ActualizarCaminos(r, SiguienteClave(itVecinos), c )
-		\State AgregarRapido (actualizados, SiguienteClave(itVecinos))
-		\State ActualizarVecinos(r, SiguienteClave(itVecinos), actualizados)
+	\If{(SiguienteClave(itVecinos) $\notin$ actualizados)} \Comment{O(n x L)}
+		\State ActualizarCaminos(r, SiguienteClave(itVecinos), c )  \Comment{O(n$^{4}$ + n$^{3}$ x L)}
+		\State AgregarRapido (actualizados, SiguienteClave(itVecinos)) \Comment{O(L)}
+		\State ActualizarVecinos(r, SiguienteClave(itVecinos), actualizados) 
+		\Comment{recursi\'on hasta actualizar las n computadoras, O(n) x}
 	\EndIf
-\State Avanzar(itVecinos)
+\State Avanzar(itVecinos) \Comment{O(1)}
 \EndWhile
-\EndFunction
+\EndFunction \Comment{O(n$^{6}$ + n$^{5}$ * L)}
 \end{algorithmic}
 \end{algorithm}
 
