@@ -24,14 +24,14 @@
   \InterfazFuncion{CantidadEnviados}{\In{d}{dcnet}, \In{c}{hostname}}{nat}
   [$c$ $\in$ dameHostnames(computadoras(red($d$)))]
   {$res$ =$_{obs}$ cantidadEnviados($d$, dameCompu($c$))}%
-  [O()]
+  [O(L)]
   [devuelve la cantidad de paquetes enviados por la computadora.]
   []
 
   \InterfazFuncion{EnEspera}{\In{d}{dcnet}, \In{c}{hostname}}{conj(paquete)}
   [$c$ $\in$ dameHostnames(computadoras(red($d$)))]
   {alias($res$ =$_{obs}$ enEspera($d$, dameCompu($c$)))}%
-  [O()]
+  [O(L)]
   [devuelve los paquetes en la cola de la computadora.]
   [res no es modificable.]
   
@@ -326,18 +326,19 @@ caminoRecorrido ($d$, $p$) = $e$.caminos[obtener($e$.computadoras, origen($p$).i
 \Function{iIniciarDCNet}{\In{r}{red}}{$\rightarrow res$: $estr\_dcnet$}
 	\comentario{creo un diccionario lineal}
 	\State diccCompus $\gets$ Vacio()  \Comment{O(1)}
-	\comentario{creo un diccionario trie}
+	\comentario{creo un diccionario universal(trie)}
 	\State diccHostname $\gets$ Vacio()  \Comment{O(1)}
 	\State index $\gets$  0 \Comment{O(1)}
 	\State itHostname $\gets$  CrearIt(Computadoras(r)) \Comment{O(1)}
 	\State masEnvios $\gets$ Siguiente(itHostname) \Comment{O(1)}
-	\While{HaySiguiente(itHostname)} \Comment{O($\#$Computadoras(r))}
+	\comentario{$\#$Computadoras(r)) \'o	O(n)}
+	\While{HaySiguiente(itHostname)} \Comment{O(n) + O(1)}
 		\comentario{no me queda clara la complejidad} 
-		\State X $\gets$ <index, Vacio(), Vacio(), Vacio(), 0> \Comment{O(n) segun el apunte }
+		\State X $\gets$ <index, Vacio(), Vacio(), Vacio(), 0> \Comment{O(1) + O(1) + O(1) + O(1) + O(1)}
 		\comentario{ver complejidad}
-		\State itX $\gets$ DefinirRapido(diccCompus, Siguiente(itHostname), X)  \Comment{O(L) + copy(X))} 
+		\State itX $\gets$ DefinirRapido(diccCompus, Siguiente(itHostname), X)  \Comment{O(copy(hostname)) + O(copy(X))} 
 		\comentario{ver complejidad}
-		\State Definir(diccHostname, Siguiente(itHostname), itX)  \Comment{O(copy(Siguiente(itHostname) + copy(X))} 
+		\State Definir(diccHostname, Siguiente(itHostname), itX)  \Comment{O(L) + O(copy(X))} 
 		\State index $\gets$ index + 1 \Comment{O(1)}
 		\State Avanzar(itHostname) \Comment{O(1)}
 	\EndWhile
@@ -346,24 +347,26 @@ caminoRecorrido ($d$, $p$) = $e$.caminos[obtener($e$.computadoras, origen($p$).i
 	\State n $\gets$ \#Claves(diccCompus) \Comment{O(1)}
 	\State arrayCaminos $\gets$ CrearArreglo(n) \Comment{O(n)}
 	\comentario{voy a crear un arreglo en cada posicion de arrayCaminos, el cual va a tener el minimo camino}
+	\comentario{$\#$Computadoras(r)) \'o	O(n)}
 	\While{HaySiguiente(itPC)} \Comment{O($\#$Computadoras(r))}
 		\State arrayDestinos $\gets$ CrearArreglo(n) \Comment{O(n)}
+		\commentario{\comentario{$\#$Computadoras(r)) \'o	O(n)}}
 		\While{HaySiguiente(itPC2)} \Comment{O($\#$Computadoras(r))}
-			\State ConjCaminos $\gets$ CaminosMinimos(r, SiguienteClave(itPC), SiguienteClave(itPC2)) \Comment{O(???)}
+			\State ConjCaminos $\gets$ CaminosMinimos(r, SiguienteClave(itPC), SiguienteClave(itPC2)) \Comment{O(n*L)}
 			\State itConj $\gets$ CrearIt(ConjCaminos) \Comment{O(1)}
 			\comentario{de todos los caminos minimos me quedo con uno}
-			\If{HaySiguiente(itConj)} \comentario{hay listas vacias??}  \Comment{O(1)}
+			\If{HaySiguiente(itConj)}   \Comment{O(1)}
 				\State arrayDestinos[SiguienteSignificado(itPC2).indice] $\gets$ Siguiente(itConj) \Comment{O(1)}
 			\Else 
 				\comentario{si no hay camino, creo una lista vacia}
-				\State arrayDestinos[SiguienteSignificado(itPC2).indice] $\gets$ Vacia() \Comment{es necesario esto?O(1)}
+				\State arrayDestinos[SiguienteSignificado(itPC2).indice] $\gets$ Vacia() \Comment{O(1)}
 			\EndIf
 			\State Avanzar(itPC2) \Comment{O(1)}
 		\EndWhile
 		\State arrayCaminos[SiguienteSignificado(itPC).indice] $\gets$ arrayDestinos \Comment{O(1)}
 		\State Avanzar(itPC) \Comment{O(1)}
 	\EndWhile	
-	\State res $\gets$ < Copiar(r), diccCompus, diccHostname, masEnvios, arrayCaminos > 
+	\State res $\gets$ < Copiar(r), diccCompus, diccHostname, masEnvios, arrayCaminos > \Comment{O(Copiar(r)) + O(1) + O(1) + O(1) + O(1)}
 
 \EndFunction
 \end{algorithmic}
@@ -374,9 +377,10 @@ caminoRecorrido ($d$, $p$) = $e$.caminos[obtener($e$.computadoras, origen($p$).i
 \begin{algorithmic}[0]
 \Function{iCrearPaquete}{\Inout{d}{estr\_dcnet}, \In{p}{paquete}}
 	\State itPC $\gets$ Significado(d.porHostname, paquete.origen)\Comment{O(L)}
+	\comentario{el paquete se agregar por copia, esto hace que la complejidad pedida no se cumpla??} 
 	\State itPaq $\gets$ AgregarRapido(SiguienteSignificado(itPC).paquetes, p)\Comment{O(copy(p))}
-	\State Encolar(SiguienteSignificado(itPC).cola, p.prioridad ,itPaq)	\Comment{O(log(n)), n cantidad de nodos)}
-	\State Definir(SiguienteSignificado(itPC).paquetesPorID, IDpaquete, itPaq) \Comment{O(log(n)), n cantidad de nodos}
+	\State Encolar(SiguienteSignificado(itPC).cola, p.prioridad ,itPaq)	\Comment{O(log(n)), n cantidad de nodos)O(log(k)}
+	\State Definir(SiguienteSignificado(itPC).paquetesPorID, IDpaquete, itPaq) \Comment{O(log(k))}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
