@@ -97,17 +97,17 @@
 Rep: estr\_heap($\alpha$) $\rightarrow$ bool
 \newline \indent Rep($estr$) $\equiv$ true $\iff \ size = \# arbol(estr.primero) \ \wedge_L
 \newline \indent ((estr.primero).padre = null \wedge
-\newline \indent (\forall e: estr\_heap)( e \in arbol(estr.primero) \wedge \ e \neq (estr.primero) \Rightarrow (e.padre \neq null \wedge_L (((e.padre).izq = e \vee (e.padre).der = e ) \wedge \
-\neg(((e.padre).izq = e \wedge (e.padre).der = e ))))) \wedge
-\newline \indent (\forall e: estr\_heap)( e \in arbol(estr.primero) \Rightarrow ((estr.izq \neq null \Rightarrow estr.prio \geq (estr.izq).prio) \wedge (estr.der \neq null \Rightarrow estr.prio \geq (estr.der).prio))) \wedge
-\newline \indent (\forall e: estr\_heap)( e \in arbol(estr.primero) \Rightarrow caminoHastaRaiz(e,arbol(estr.primero)) \leq \left \lfloor{log_2(size)}\right \rfloor + 1))$
+\newline \indent (\forall n: nodo(\alpha))( n \in arbol(estr.primero) \wedge \ n \neq estr.primero \Rightarrow (n.padre \neq null \wedge_L (((n.padre).izq = n \vee (n.padre).der = n ) \wedge \
+\neg(((n.padre).izq = n \wedge (n.padre).der = n ))))) \wedge
+\newline \indent (\forall n: nodo(\alpha))( n \in arbol(estr.primero) \Rightarrow ((n.izq \neq null \Rightarrow n.prio \geq (n.izq).prio) \wedge (n.der \neq null \Rightarrow n.prio \geq (n.der).prio))) \wedge
+\newline \indent (\forall n: nodo(\alpha))( n \in arbol(estr.primero) \Rightarrow caminoHastaRaiz(n,arbol(estr.primero)) \leq \left \lfloor{log_2(size)}\right \rfloor + 1))$
 
 \textbf{}
 \textbf{}
 
 Abs: estr\_heap($\alpha$) $e \rightarrow$ colaPrio($\alpha$) \{ Rep($e$) \} \newline
-Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $Vacia?(e) = Vacia?(c) \ \wedge_L
-\newline \indent (\neg Vacia?(e) \Rightarrow Proximo(e) = Proximo(c)) \ \wedge
+Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $(Vacia?(c) \iff e.primero == NULO) \wedge_L
+\newline \indent (\neg Vacia?(c) \Rightarrow Proximo(c) = *(estr.primero)) \ \wedge
 \newline \indent (\neg Vacia?(e) \Rightarrow Desencolar(e) = Desencolar(c))$
 
 \textbf{}
@@ -118,10 +118,10 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $Vacia?(e) = Vacia?(c) \ \wedge_L
 \tadOperacion{caminoHastaRaiz}{nodo($\alpha$)}{nat}{}
 \tadAxioma{arbol(n)}{
 \IF {$n.izq \neq null \wedge n.der \neq null$}
-THEN {Ag($n.valor,arbol(n.izq)\cup arbol(n.der)$)}
+THEN {Ag($n,arbol(n.izq)\cup arbol(n.der)$)}
 ELSE { \IF {$n.izq \neq null$}
-		THEN {Ag($n.valor,arbol(n.izq)$)}
-		ELSE { \LIF\ $n.der \neq null$ \LTHEN\ Ag($n.valor,arbol(n.der)$) \LELSE\ Ag($n.valor,\emptyset$) \LFI}
+		THEN {Ag($n,arbol(n.izq)$)}
+		ELSE { \LIF\ $n.der \neq null$ \LTHEN\ Ag($n,arbol(n.der)$) \LELSE\ Ag($n,\emptyset$) \LFI}
 		FI}
 FI}
 
