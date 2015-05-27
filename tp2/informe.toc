@@ -1,6 +1,6 @@
 \select@language {spanish}
 \contentsline {section}{\numberline {1}M\'odulo Red}{3}{section.1}
 \contentsline {section}{\numberline {2}M\'odulo DCNet}{15}{section.2}
-\contentsline {section}{\numberline {3}M\'odulo Cola de Prioridad Logaritmica ($\alpha $) }{27}{section.3}
-\contentsline {section}{\numberline {4}M\'odulo Diccionario Universal ($\sigma $) }{33}{section.4}
-\contentsline {section}{\numberline {5}M\'odulo Diccionario Logaritmico ($\kappa $, $\sigma $) }{34}{section.5}
+\contentsline {section}{\numberline {3}M\'odulo Cola de Prioridad Logaritmica ($\alpha $) }{26}{section.3}
+\contentsline {section}{\numberline {4}M\'odulo Diccionario Universal ($\sigma $) }{32}{section.4}
+\contentsline {section}{\numberline {5}M\'odulo Diccionario Logaritmico ($\kappa $, $\sigma $) }{33}{section.5}

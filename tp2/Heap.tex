@@ -81,7 +81,7 @@
 
 \begin{Tupla}[estr\_heap($\alpha$)]
 	\tupItem{size}{nat} \newline \nomoreitems
-	\tupItem{primero}{nodo($\alpha$)} \newline \nomoreitems
+	\tupItem{primero}{puntero(nodo($\alpha$))} \newline \nomoreitems
 \end{Tupla}
 
 \begin{Tupla}[nodo($\alpha$)]
@@ -107,7 +107,7 @@ Rep: estr\_heap($\alpha$) $\rightarrow$ bool
 
 Abs: estr\_heap($\alpha$) $e \rightarrow$ colaPrio($\alpha$) \{ Rep($e$) \} \newline
 Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $(Vacia?(c) \iff e.primero == NULO) \wedge_L
-\newline \indent (\neg Vacia?(c) \Rightarrow Proximo(c) = *(estr.primero)) \ \wedge
+\newline \indent (\neg Vacia?(c) \Rightarrow Proximo(c) = <*(estr.primero)).prioridad, *(estr.primero)).valor> \ \wedge
 \newline \indent (\neg Vacia?(e) \Rightarrow Desencolar(e) = Desencolar(c))$
 
 \textbf{}
