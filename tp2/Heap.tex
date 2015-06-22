@@ -81,52 +81,41 @@
 
 \begin{Tupla}[estr\_heap($\alpha$)]
 	\tupItem{size}{nat} \newline \nomoreitems
-	\tupItem{primero}{puntero(nodo($\alpha$))} \newline \nomoreitems
+	\tupItem{arb}{AB(tupla(nat, tupla($padre$: puntero(nodo($\alpha$)), $valor$: $\alpha$))} \newline \nomoreitems
 \end{Tupla}
 
-\begin{Tupla}[nodo($\alpha$)]
-	\tupItem{padre}{puntero(nodo($\alpha$))} \newline \nomoreitems
-	\tupItem{izq}{puntero(nodo($\alpha$))} \newline \nomoreitems
-	\tupItem{der}{puntero(nodo($\alpha$))} \newline \nomoreitems
-	\tupItem{prio}{nat} \newline \nomoreitems
-	\tupItem{valor}{$\alpha$} \newline \nomoreitems
-\end{Tupla} 
+\comentario{De aqu\'i en adelante, por cuestiones de brevedad y legibilidad, se referir\'a a estr.arb.primero simplemente como estr.primero; al padre de cada nodo (nodo.valor.padre) simplemente como nodo.padre; a el valor propiamente dicho (nodo.valor.valor) como nodo.valor; a cada nodo(tupla(nat, tupla(puntero(nodo$\alpha$), $\alpha$))) como nodo($\alpha$).}
 
 \end{Estructura}
 
+\comentario{Rep en castellano:}
+\comentario{El invariante del \'arbol binario se sigue cumpliendo para arb}
+\comentario{1: El tama\~no del \'arbol (size) debe ser igual a la cantidad de nodos en el \'arbol}
+\comentario{2: El primer elemento no tiene padre}
+\comentario{3: Todos los nodos, con la excepci\'on del primero, deben tener padre, y deben ser el hijo izquierdo o (exclusivo) derecho de su padre (el invariante del \'arbol binario garantiza que ning\'un nodo pueda ser tanto el hijo izquierdo como el derecho de su padre)}
+\comentario{4: La prioridad del padre es menor o igual a la de los hijos}
+\comentario{5: La altura del \'arbol es igual a uno m\'as la parte entera del logaritmo de su tama\~no (es decir que la altura del \'arbol es O(log(n))}
+
 Rep: estr\_heap($\alpha$) $\rightarrow$ bool
-\newline \indent Rep($estr$) $\equiv$ true $\iff \ size = \# arbol(estr.primero) \ \wedge_L
-\newline \indent ((estr.primero).padre = null \wedge
-\newline \indent (\forall n: nodo(\alpha))( n \in arbol(estr.primero) \wedge \ n \neq estr.primero \Rightarrow (n.padre \neq null \wedge_L (((n.padre).izq = n \vee (n.padre).der = n ) \wedge \
-\neg(((n.padre).izq = n \wedge (n.padre).der = n ))))) \wedge
-\newline \indent (\forall n: nodo(\alpha))( n \in arbol(estr.primero) \Rightarrow ((n.izq \neq null \Rightarrow n.prio \geq (n.izq).prio) \wedge (n.der \neq null \Rightarrow n.prio \geq (n.der).prio))) \wedge
-\newline \indent (\forall n: nodo(\alpha))( n \in arbol(estr.primero) \Rightarrow caminoHastaRaiz(n,arbol(estr.primero)) \leq \left \lfloor{log_2(size)}\right \rfloor + 1))$
+\newline \indent Rep($estr$) $\equiv$ true $\iff$
+\comentario{1} $size = \# arbol(estr.primero) \ \wedge_L$
+\comentario{2} $((estr.primero).padre = null \wedge$
+\comentario{3} $(\forall n: nodo(\alpha))( n \in arbol(estr.primero) \wedge \ n \neq estr.primero \Rightarrow (n.padre \neq null \wedge_L (((n.padre).izq = n \vee (n.padre).der = n ) ))) \wedge$
+\comentario{4} $(\forall n: nodo(\alpha))( n \in arbol(estr.primero) \Rightarrow ((n.izq \neq null \Rightarrow n.prio \leq (n.izq).prio) \wedge (n.der \neq null \Rightarrow n.prio \leq (n.der).prio))) \wedge$
+\comentario{5} $(\forall n: nodo(\alpha))( n \in arbol(estr.primero) \Rightarrow caminoHastaRaiz(n,arbol(estr.primero)) \leq \left \lfloor{log_2(size)}\right \rfloor + 1))$
 
 \textbf{}
 \textbf{}
 
 Abs: estr\_heap($\alpha$) $e \rightarrow$ colaPrio($\alpha$) \{ Rep($e$) \} \newline
 Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $(Vacia?(c) \iff e.primero == NULO) \wedge_L
-\newline \indent (\neg Vacia?(c) \Rightarrow Proximo(c) = <*(estr.primero)).prioridad, *(estr.primero)).valor> \ \wedge
+\newline \indent (\neg Vacia?(c) \Rightarrow Proximo(c) =\ <*(estr.primero)).prioridad, *(estr.primero)).valor> \ \wedge
 \newline \indent (\neg Vacia?(e) \Rightarrow Desencolar(e) = Desencolar(c))$
 
 \textbf{}
 \textbf{}
 
-\textbf{Especificaci\'on de las operaciones auxiliares utilizadas para Rep y Abs}
-\tadOperacion{arbol}{nodo($\alpha$)}{conj(nodo($\alpha$))}{}
-\tadOperacion{caminoHastaRaiz}{nodo($\alpha$)}{nat}{}
-\tadAxioma{arbol(n)}{
-\IF {$n.izq \neq null \wedge n.der \neq null$}
-THEN {Ag($n,arbol(n.izq)\cup arbol(n.der)$)}
-ELSE { \IF {$n.izq \neq null$}
-		THEN {Ag($n,arbol(n.izq)$)}
-		ELSE { \LIF\ $n.der \neq null$ \LTHEN\ Ag($n,arbol(n.der)$) \LELSE\ Ag($n,\emptyset$) \LFI}
-		FI}
-FI}
-
-\tadAxioma{caminoHastaRaiz(n)}{\textbf{if} $n.padre = null$ \textbf{then} $0$ \textbf{else} $caminoHastaRaiz(n.padre)+1$ \textbf{fi}}
-		
+\comentario{Las operaciones auxiliares utilizadas en la especificaci\'on del Rep y el Abs est\'an detalladas en la Estructura del Arbol Binario}	
 %\textbf{if} $n.izq \neq null \wedge n.der \neq null$ \textbf{then} Ag($n.valor,arbol(n.izq)\cup arbol(n.der)$) \textbf{else}
 %\textbf{if} $n.izq \neq null$ \textbf{then} Ag($n.valor,arbol(n.izq)$) \textbf{else} \textbf{if} $n.der \neq null$ \textbf{then} Ag($n.valor,arbol(n.der)$) \textbf{else} Ag($n.valor,\emptyset$)}
 
@@ -196,7 +185,7 @@ FI}
 		\Else
 			\State $z.der\gets \ w$ \Comment{O(1)}
 		\EndIf
-		\While{w $\neq \ estr.primero \ \wedge_L \ w.prio > (w.padre).prio$} \Comment{La cantidad de veces que se ejecuta el ciclo es a lo sumo la altura del heap, que es O(log(n))}
+		\While{w $\neq \ estr.primero \ \wedge_L \ w.prio < (w.padre).prio$} \Comment{La cantidad de veces que se ejecuta el ciclo es a lo sumo la altura del heap, que es O(log(n))}
 			\State $aux\gets \ w.valor$ \Comment{O(copiar($\alpha$))}
 			\State $w.valor\gets \ (w.padre).valor$ \Comment{O(copiar($\alpha$))}
 			\State $(w.padre).valor\gets \ aux$ \Comment{O(copiar($\alpha$))}
@@ -242,9 +231,9 @@ FI}
 	\State borrar($z$) \Comment{O(borrar($\alpha$))}
 	\State $z\gets\ estr.primero$ \Comment{O(1)}
 	\State $size--$ \Comment{O(1)}
-	\While{$(z.izq \neq null \ \vee z.der \neq null) \ \wedge_L \ z.prio < \ maxPrio(z.izq, z.der)$} \Comment{La cantidad de veces que se ejecuta el ciclo es a lo sumo la altura del heap, que es O(log(n))}
+	\While{$(z.izq \neq null \ \vee z.der \neq null) \ \wedge_L \ z.prio > \ minPrio(z.izq, z.der)$} \Comment{La cantidad de veces que se ejecuta el ciclo es a lo sumo la altura del heap, que es O(log(n))}
 
-	\State \comentario{maxPrio devuelve la maxima prioridad si ambos punteros son validos, o la prioridad apuntada por
+	\State \comentario{minPrio devuelve la m\'inima prioridad entre los nodos si ambos punteros son validos, o la prioridad apuntada por
 	el puntero no nulo en caso de que alguno no lo sea}
 	\If{$z.der == null \ \vee_L \ (z.izq).prio \geq (z.der).prio$} \Comment{O(1)}
 		\State $aux\gets \ z.valor$ \Comment{O(copiar($\alpha$))}

@@ -1,0 +1,36 @@
+AB es \textit{primero}{: puntero(nodo($\alpha, \sigma$))}
+
+\begin{Tupla}[nodo($\alpha$)]
+	\tupItem{izq}{puntero(nodo($\alpha, \sigma$))} \newline \nomoreitems
+	\tupItem{der}{puntero(nodo($\alpha, \sigma$))} \newline \nomoreitems
+	\tupItem{prio}{$\alpha$} \newline \nomoreitems
+	\tupItem{valor}{$\sigma$} \newline \nomoreitems
+\end{Tupla} 
+
+\comentario{Rep en castellano:}
+\comentario{1: Si un elemento es el hijo (izquierdo o derecho) de otro, entonces no es el hijo de ning\'un otro}
+\comentario{2: Si un elemento es hijo izquierdo de cierto elemento, no puede ser tambi\'en el derecho}
+
+Rep: AB($\alpha, \sigma$) $\rightarrow$ bool
+Rep($estr$) $\equiv$ true $\iff$
+\comentario{1} $((\forall n_1, n_2, n_3 : nodo(\alpha, \sigma)) ((n_1 \in arbol(estr.primero) \wedge\ n_2 \in arbol(estr.primero) \wedge\ n_3 \in arbol(estr.primero) \wedge\ (n_1 = n_2\rightarrow izq \vee\ n_1 = n_2\rightarrow der) \wedge\ n_2 \neq n_3) \Rightarrow_L\ (n_1 \neq n_3\rightarrow izq \wedge n_1 \neq n_3\rightarrow der))\ \wedge$
+\comentario{2} $((\forall n_1, n_2 : nodo(\alpha, \sigma)) ((n_1 \in arbol(estr.primero) \wedge\ n_2 \in arbol(estr.primero) \wedge n_1 = n_2\rightarrow izq) \Rightarrow_L\ n_1 \neq n_2\rightarrow der)$
+
+
+\textbf{}
+\textbf{}
+
+\textbf{Especificaci\'on de las operaciones auxiliares utilizadas para Rep y Abs}
+\tadOperacion{arbol}{nodo($\alpha$, $\sigma$)}{conj(nodo($\alpha$, $\sigma$))}{}
+\tadOperacion{caminoHastaRaiz}{nodo($\alpha$, $\sigma$)}{nat}{}
+\tadAxioma{arbol(n)}{
+\IF {$n.izq \neq null \wedge n.der \neq null$}
+THEN {Ag($n,arbol(n.izq)\cup arbol(n.der)$)}
+ELSE { \IF {$n.izq \neq null$}
+		THEN {Ag($n,arbol(n.izq)$)}
+		ELSE { \LIF\ $n.der \neq null$ \LTHEN\ Ag($n,arbol(n.der)$) \LELSE\ Ag($n,\emptyset$) \LFI}
+		FI}
+FI}
+
+\tadAxioma{caminoHastaRaiz(n)}{\textbf{if} $n.padre = null$ \textbf{then} $0$ \textbf{else} $caminoHastaRaiz(n.padre)+1$ \textbf{fi}}
+	
