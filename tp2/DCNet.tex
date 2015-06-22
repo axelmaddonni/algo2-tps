@@ -172,6 +172,16 @@ FI}
 
 \end{Estructura}
 
+\Comment{El dicc$_{UNIV}$ (basado en un TRIE) nos permite acceder a un significado en O(L) con L el largo del hostname mas largo (utilizando como clave a los hostnames).}\newline
+\Comment{Al guardar un iterador a la computadora con mas env\'ios podemos devolverla por aliasing en O(1), cumpliendo as\'i la complejidad pedida.}\newline
+\Comment{Al utilizar una cola$_{LOG}$ (basada en un HEAP) podemos acceder al paquete con prioridad mas alta (el que se tiene que enviar) en O(1) y desencolarlo en O(log(n)) con n = cantidad de paquetes en la cola. Esto nos sirve para poder cumplir avanzarSegundo y nos mantiene dentro de lo pedido en crearPaquete.}\newline
+\Comment{Al utilizar un dicc$_{LOG}$ (basado en AA-TREE) podemos acceder a un paquete por medio de su ID en O(log(n)) con n = cantidad de paquetes en la computadora (pudiendo borrarlo o modificarlo dentro de la misma complejidad). Esto nos sirve para cumplir caminoRecorrido, ya que podemos buscar un paquete en O(log(n)) dentro de cada computadora, adem\'as nos mantiene dentro de la complejidad pedida en crearPaquete y avanzarSegundo.}\newline
+\Comment{Al tener cantEnvios nos permite obtener en O(1) la cantidad de env\'ios de cada computadora, lo que nos sirve para (en avanzarSegundo) poder calcular la computadora con m\'as env\'ios dentro de la complejidad y almacenarlo en conMasEnvios}\newline
+\Comment{El \'indice nos sirve para (como comentamos antes) utilizarlo como posici\'on en el arreglo caminos y poder averiguar su camino m\'inimo en la complejidad pedida.}\newline
+\Comment{Guardamos los paquetes en el conjunto paquetes para poder tenerlos en O(1) y cumplir con la complejidad de enEspera.} \newline
+
+
+
 \comentario{REP en Castellano: \newline
 1: Las compus de Red son las compus de DCNet.\newline
 2: PorHostname y computadoras tienen el mismo conjunto de claves. \newline
