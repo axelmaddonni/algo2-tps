@@ -10,38 +10,54 @@
 
   \InterfazFuncion{nil?}{\In{a}{ab($\sigma$)}}{Bool}
   {res $\igobs$ nil?(a)}
-  []
+  [O(1)]
   [Indica si el arbol est\'a vac\'io.]
 
   \InterfazFuncion{raiz}{\In{a}{ab($\sigma$)}}{$\sigma$}
   [$\neg$nil?(a)]
   {res $\igobs$ raiz(a)}
-  []
+  [O(1)]
   [Devulve el valor de la raiz del arbol.]
-  [alias?]
+  [El valor se devuelve por referencia, res es modificable.]
   
   \InterfazFuncion{izq}{\In{a}{ab($\sigma$}}{ab($\sigma$)}
   [$\neg$nil?(a)]  
   {res $\igobs$ vacio()}
+  [O(1)]
+  [Devulve el subárbol izquierdo.]
+  [El subárbol se devuelve por referencia, res es modificable.]
+  
+  \InterfazFuncion{setearIzq}{\Inout{a}{ab($\sigma$}, \In{i}{ab($\sigma$}}{}
+  [$\neg$nil?(a)]  
+  {res $\igobs$ bin(i, raiz(a), der(a))}
+  [O(1)]
+  [Asigna i como nuevo subárbol izquierdo.]
   []
-  [Devulve un puntero apuntando al hijo izquierdo.]
   
   \InterfazFuncion{der}{\In{a}{ab($\sigma$}}{ab($\sigma$)}
   [$\neg$nil?(a)]  
   {res $\igobs$ vacio()}
+  [O(1)]
+  [Devulve el subárbol derecho.]
+  [El subárbol se devuelve por referencia, res es modificable.]
+  
+  \InterfazFuncion{setearDer}{\Inout{a}{ab($\sigma$}, \In{d}{ab($\sigma$}}{}
+  [$\neg$nil?(a)]  
+  {res $\igobs$ bin(izq(a), raiz(a), d)}
+  [O(1)]
+  [Asigna d como nuevo subárbol derecho.]
   []
-  [Devuelve un puntero apuntando al hijo derecho.]
   
   \InterfazFuncion{nil}{}{ab($\sigma$)}
   []
   {res $\igobs$ nil()}
-  []
+  [O(1)]
   [Devuelve un \'arbol binario vacio.]
   
   \InterfazFuncion{bin}{\In{i}{ab($\sigma$)}, \In{a}{$\sigma$}, \In{d}{ab($\sigma$)}}{ab($\sigma$)}
   []
   {res $\igobs$ bin(i,a,d)}
-  []
+  [O(1)]
   [Crea un \'arbol binario con raiz a, hijo derecho d e hijo izquierdo i.]
 
 \end{Interfaz}
@@ -50,9 +66,41 @@
 
 \begin{Representacion}
 
-\begin{Estructura}{AB}[$arbol_{AB}$: tupla(raiz: $\sigma$, izq: $arbol_{AB}$, der: $arbol_{AB}$)]
+\begin{Estructura}{ab($\sigma$)}[puntero(nodo($\sigma$))]
    
+\begin{Tupla}[nodo($\alpha$)]
+	\tupItem{izq}{ab($\sigma$)} \newline \nomoreitems
+	\tupItem{der}{ab($\sigma$)} \newline \nomoreitems
+	\tupItem{valor}{$\sigma$} \newline \nomoreitems
+\end{Tupla} 
+
 \end{Estructura}
+
+\comentario{Rep en castellano:}
+\comentario{1: Si un elemento es el hijo (izquierdo o derecho) de otro, entonces no es el hijo de ning\'un otro}
+\comentario{2: Si un elemento es hijo izquierdo de cierto elemento, no puede ser tambi\'en el derecho}
+
+Rep: AB($\alpha, \sigma$) $\rightarrow$ bool
+Rep($estr$) $\equiv$ true $\iff$
+\comentario{1} $((\forall n_1, n_2, n_3 : nodo(\alpha, \sigma)) ((n_1 \in arbol(estr.primero) \wedge\ n_2 \in arbol(estr.primero) \wedge\ n_3 \in arbol(estr.primero) \wedge\ (n_1 = n_2\rightarrow izq \vee\ n_1 = n_2\rightarrow der) \wedge\ n_2 \neq n_3) \Rightarrow_L\ (n_1 \neq n_3\rightarrow izq \wedge n_1 \neq n_3\rightarrow der))\ \wedge$
+\comentario{2} $((\forall n_1, n_2 : nodo(\alpha, \sigma)) ((n_1 \in arbol(estr.primero) \wedge\ n_2 \in arbol(estr.primero) \wedge n_1 = n_2\rightarrow izq) \Rightarrow_L\ n_1 \neq n_2\rightarrow der)$
+
+\textbf{}
+\textbf{}
+
+\textbf{Especificaci\'on de las operaciones auxiliares utilizadas para Rep y Abs}
+\tadOperacion{arbol}{nodo($\alpha$, $\sigma$)}{conj(nodo($\alpha$, $\sigma$))}{}
+\tadOperacion{caminoHastaRaiz}{nodo($\alpha$, $\sigma$)}{nat}{}
+\tadAxioma{arbol(n)}{
+\IF {$n.izq \neq null \wedge n.der \neq null$}
+THEN {Ag($n,arbol(n.izq)\cup arbol(n.der)$)}
+ELSE { \IF {$n.izq \neq null$}
+		THEN {Ag($n,arbol(n.izq)$)}
+		ELSE { \LIF\ $n.der \neq null$ \LTHEN\ Ag($n,arbol(n.der)$) \LELSE\ Ag($n,\emptyset$) \LFI}
+		FI}
+FI}
+
+\tadAxioma{caminoHastaRaiz(n)}{\textbf{if} $n.padre = null$ \textbf{then} $0$ \textbf{else} $caminoHastaRaiz(n.padre)+1$ \textbf{fi}}
 
 \end{Representacion}
 
@@ -61,8 +109,8 @@
 \begin{algorithm}
 \caption{Implementaci\'on de nil?}
 \begin{algorithmic}[0]
-\Function{iNil?}{in a: $arbol_{AB}$}{$\rightarrow$ res: bool}
-	\State res $\gets$ (a.izq == NULO $\wedge$ a.der == NULO)
+\Function{iNil?}{in a: ab($\sigma$)}{$\rightarrow$ res: bool}
+	\State res $\gets$ (a->izq == NULO $\wedge$ a->der == NULO)
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -70,8 +118,8 @@
 \begin{algorithm}
 \caption{Implementaci\'on de raiz}
 \begin{algorithmic}[0]
-\Function{iRaiz}{in a: $arbol_{AB}$}{$\rightarrow$ res: $\sigma$}
-	\State res $\gets$ a.raiz
+\Function{iRaiz}{in a: ab($\sigma$)}{$\rightarrow$ res: $\sigma$}
+	\State res $\gets$ a->raiz
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -79,8 +127,17 @@
 \begin{algorithm}
 \caption{Implementaci\'on de izq}
 \begin{algorithmic}[0]
-\Function{iIzq}{in a: $arbol_{AB}$}{$\rightarrow$ res: $arbol_{AB}$}
-	\State res $\gets$ a.izq
+\Function{iIzq}{in a: ab($\sigma$)}{$\rightarrow$ res: ab($\sigma$)}
+	\State res $\gets$ a->izq
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de setearIzq}
+\begin{algorithmic}[0]
+\Function{iSetearIzq}{inout a: ab($\sigma$), in i:ab($\sigma$)}{}
+	\State a->izq $\gets$ i
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -88,8 +145,17 @@
 \begin{algorithm}
 \caption{Implementaci\'on de der}
 \begin{algorithmic}[0]
-\Function{iDer}{in a: $arbol_{AB}$}{$\rightarrow$ res: $arbol_{AB}$}
-	\State res $\gets$ a.der
+\Function{iDer}{in a: ab($\sigma$)}{$\rightarrow$ res: ab($\sigma$)}
+	\State res $\gets$ a->der
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de setearDer}
+\begin{algorithmic}[0]
+\Function{iSetearDer}{inout a: ab($\sigma$), in d:ab($\sigma$)}{}
+	\State a->der $\gets$ d
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -97,8 +163,8 @@
 \begin{algorithm}
 \caption{Implementaci\'on de nil}
 \begin{algorithmic}[0]
-\Function{iNil}{}{$\rightarrow$ res: $arbol_{AB}$}
-	\State res $\gets$ <NULO,NULO,NULO>
+\Function{iNil}{}{$\rightarrow$ res: ab($\sigma$)}
+	\State res $\gets$ NULL
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -106,11 +172,10 @@
 \begin{algorithm}
 \caption{Implementaci\'on de bin}
 \begin{algorithmic}[0]
-\Function{iIzq}{in i: $arbol_{AB}$, in a: $\sigma$, in d: $arbol_{AB}$}{$\rightarrow$ res: $arbol_{AB}$}
-	\State res $\gets$ nil()
-	\State res.izq $\gets$ i
-	\State res.der $\gets$ d
-	\State res.raiz $\gets$ a
+\Function{iIzq}{in i: ab($\sigma$), in a: $\sigma$, in d: ab($\sigma$)}{$\rightarrow$ res: ab($\sigma$)}
+	\State res->izq $\gets$ i
+	\State res->der $\gets$ d
+	\State res->raiz $\gets$ a
 \EndFunction
 \end{algorithmic}
 \end{algorithm}

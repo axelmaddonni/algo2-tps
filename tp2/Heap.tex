@@ -81,10 +81,10 @@
 
 \begin{Tupla}[estr\_heap($\alpha$)]
 	\tupItem{size}{nat} \newline \nomoreitems
-	\tupItem{arb}{$argol_{AB}$(tupla(nat, $valor$: $\alpha$))} \newline \nomoreitems
+	\tupItem{arb}{$ab$(tupla($prio$: nat, $valor$: $\alpha$, $padre$: ab($\alpha$)))} \newline \nomoreitems
 \end{Tupla}
 
-\comentario{De aqu\'i en adelante, por cuestiones de brevedad y legibilidad, se referir\'a a estr.arb.primero simplemente como estr.primero; al padre de cada nodo (nodo.valor.padre) simplemente como nodo.padre; a el valor propiamente dicho (nodo.valor.valor) como nodo.valor; a cada nodo(tupla(nat, tupla(puntero(nodo$\alpha$), $\alpha$))) como nodo($\alpha$).}
+\comentario{De aqu\'i en adelante, por cuestiones de brevedad y legibilidad, se referir\'a a estr\_heap.arb.primero simplemente como estr.primero; al padre de cada nodo (nodo.valor.padre) simplemente como nodo.padre; a el valor propiamente dicho (nodo.valor.valor) como nodo.valor; a cada nodo(tupla(nat, tupla(puntero(nodo$\alpha$), $\alpha$))) como nodo($\alpha$).}
 
 \end{Estructura}
 
