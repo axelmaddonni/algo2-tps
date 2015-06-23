@@ -1,7 +1,8 @@
+\select@language {spanish}
 \contentsline {section}{\numberline {1}M\'odulo Red}{3}{section.1}
 \contentsline {section}{\numberline {2}M\'odulo DCNet}{16}{section.2}
 \contentsline {section}{\numberline {3}M\'odulo AB}{28}{section.3}
-\contentsline {section}{\numberline {4}Estructura Arbol Binario ($\alpha , \sigma $) }{32}{section.4}
-\contentsline {section}{\numberline {5}M\'odulo Cola de Prioridad Logaritmica ($\alpha $) }{33}{section.5}
-\contentsline {section}{\numberline {6}M\'odulo Diccionario Universal ($\sigma $) }{39}{section.6}
-\contentsline {section}{\numberline {7}M\'odulo Diccionario Logaritmico ($\kappa $, $\sigma $) }{40}{section.7}
+\contentsline {section}{\numberline {4}Estructura Arbol Binario ($\alpha , \sigma $) }{31}{section.4}
+\contentsline {section}{\numberline {5}M\'odulo Cola de Prioridad Logaritmica ($\alpha $) }{32}{section.5}
+\contentsline {section}{\numberline {6}M\'odulo Diccionario Universal ($\sigma $) }{38}{section.6}
+\contentsline {section}{\numberline {7}M\'odulo Diccionario Logaritmico ($\kappa $, $\sigma $) }{39}{section.7}
