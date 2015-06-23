@@ -130,7 +130,7 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $(Vacia?(c) \iff e.primero == NULO) \w
 \caption{Implementaci\'on de Vacia}
 \begin{algorithmic}[0]
 \Function{iVacia}{}{$\rightarrow$ res: colaLog($\alpha$)}
-\State res $\gets$ nil() \Comment{O(1)}
+\State res $\gets$ <0, nil()> \Comment{O(1)}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -140,7 +140,7 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $(Vacia?(c) \iff e.primero == NULO) \w
 \caption{Implementaci\'on de Vacia?}
 \begin{algorithmic}[0]
 \Function{iVacia?}{\In{estr}{estr\_heap($\alpha$)}}{$\rightarrow res$: bool}
-\State res $\gets$ nil?(estr) \Comment{O(1)}
+\State res $\gets$ nil?(estr.arb) \Comment{O(1)}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
