@@ -81,7 +81,7 @@
 
 \begin{Tupla}[estr\_heap($\alpha$)]
 	\tupItem{size}{nat} \newline \nomoreitems
-	\tupItem{arb}{AB(tupla(nat, tupla($padre$: puntero(nodo($\alpha$)), $valor$: $\alpha$))} \newline \nomoreitems
+	\tupItem{arb}{$argol_{AB}$(tupla(nat, $valor$: $\alpha$))} \newline \nomoreitems
 \end{Tupla}
 
 \comentario{De aqu\'i en adelante, por cuestiones de brevedad y legibilidad, se referir\'a a estr.arb.primero simplemente como estr.primero; al padre de cada nodo (nodo.valor.padre) simplemente como nodo.padre; a el valor propiamente dicho (nodo.valor.valor) como nodo.valor; a cada nodo(tupla(nat, tupla(puntero(nodo$\alpha$), $\alpha$))) como nodo($\alpha$).}
@@ -129,8 +129,8 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $(Vacia?(c) \iff e.primero == NULO) \w
 \begin{algorithm}
 \caption{Implementaci\'on de Vacia}
 \begin{algorithmic}[0]
-\Function{iVacia}{}{$\rightarrow res$: colaLog($\alpha$)}
-\State $res\gets $ <$0, null$> \Comment{O(1)}
+\Function{iVacia}{}{$\rightarrow$ res: colaLog($\alpha$)}
+\State res $\gets$ nil() \Comment{O(1)}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -140,7 +140,7 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $(Vacia?(c) \iff e.primero == NULO) \w
 \caption{Implementaci\'on de Vacia?}
 \begin{algorithmic}[0]
 \Function{iVacia?}{\In{estr}{estr\_heap($\alpha$)}}{$\rightarrow res$: bool}
-\State $res\gets \ (estr.primero == null)$ \Comment{O(1)}
+\State res $\gets$ nil?(estr) \Comment{O(1)}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -149,7 +149,7 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $(Vacia?(c) \iff e.primero == NULO) \w
 \caption{Implementaci\'on de Pr\'oximo}
 \begin{algorithmic}[0]
 \Function{Pr\'oximo}{\In{estr}{estr\_heap($\alpha$)}}{$\rightarrow res$: tupla($nat, \alpha$)}
-\State $res\gets \ <(estr.primero).prioridad, (estr.primero).valor>$ \Comment{O(copiar($\alpha$))}
+\State res $\gets$ raiz(estr) \Comment{O(copiar($\alpha$))}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -160,30 +160,40 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $(Vacia?(c) \iff e.primero == NULO) \w
 \caption{Implementaci\'on de Encolar}
 \begin{algorithmic}[0]
 \Function{iEncolar}{\Inout{estr}{estr\_heap($\alpha$)}, \In{prio}{nat}, \In{valor}{$\alpha$}}{$\rightarrow res$: bool}
-	\State $res\gets $ $true$	 \Comment{O(1)}
-	\If{estr.size == 0} \Comment{O(1)}
+	\State res $\gets$ true	 \Comment{O(1)}
+	\If{nil?(estr)} \Comment{O(1)}
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 		\State $estr.primero\gets$ puntero(<$null, null, null, prio, valor$>) \Comment{O(copiar($\alpha$))}
+\comentario{---------------------------------------------------}
 	\Else
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 		\State $size++$ \Comment{O(1)}
 		\State $x\gets \ sizer$ \Comment{O(1)}
+\comentario{---------------------------------------------------}
 		\State $y\gets$ <> \Comment{O(1)}
 		\While{x $\neq$ 0} \Comment{La cantidad de veces que se ejecuta el ciclo es igual a la altura del heap. Al ser un arbol binario completo, la altura siempre ser\'a O(log(n))}
 			\State $y\gets$ $(x \% 2) \bullet y$ \Comment{O(1)}
 			\State $x\gets$ $x / 2$ \Comment{O(1)}
 		\EndWhile
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 		\State $y\gets$ com($y$) \Comment{O(log(n))}
 		\State $z\gets$ $estr.primero$ \Comment{O(1)}
 		\State $y\gets$ fin($y$) \Comment{O(1)}
+\comentario{---------------------------------------------------}
 		\While{long($y$)$>1$} \Comment{El ciclo se ejecuta O(log(n)) veces}
-			\State $z\gets$ \textbf{if} prim($y$) $==$ 0 \textbf{then} $z.izq$ \textbf{else} $z.der$ \Comment{O(1)}
+			\State $z\gets$ \textbf{if} prim($y$) $==$ 0 \textbf{then} izq(z) \textbf{else} der(z) \Comment{O(1)}
 			\State $y\gets$ fin($y$) \Comment{O(1)}
 		\EndWhile
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 		\State $w\gets$ <$null,null,null,prio,valor$> \Comment{O(copiar($\alpha$))}
 		\State $w.padre\gets$ $z$ \Comment{O(1)}
+\comentario{---------------------------------------------------}
 		\If{prim($y$) $==$ 0} \Comment{O(1)}
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 			\State $z.izq\gets \ w$ \Comment{O(1)}
 		\Else
 			\State $z.der\gets \ w$ \Comment{O(1)}
+\comentario{---------------------------------------------------}
 		\EndIf
 		\While{w $\neq \ estr.primero \ \wedge_L \ w.prio < (w.padre).prio$} \Comment{La cantidad de veces que se ejecuta el ciclo es a lo sumo la altura del heap, que es O(log(n))}
 			\State $aux\gets \ w.valor$ \Comment{O(copiar($\alpha$))}
