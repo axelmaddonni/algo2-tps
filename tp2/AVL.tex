@@ -205,7 +205,7 @@ FI}
 			\State nodoAux $\gets$ der(d) \Comment{O(1)}
 			\State setearDer(d, izq(nodoAux)) \Comment{O(1)}
 			\State setearIzq(nodoAux, d) \Comment{O(1)}
-			\State setearVal(nodoAux, <$\pi_1$(raiz(nodoAux)), $\pi_2$(raiz(nodoAux))++, $\pi_3$(raiz(nodoAux))> \Comment{O(1)}
+			\State $\pi_2$(raiz(nodoAux)) $\gets$ $\pi_2$(raiz(nodoAux))++ \Comment{O(1)}
 			\State res $\gets$ nodoAux \Comment{O(1)}
 		\Else
 			\State res $\gets$ d \Comment{O(1)}
@@ -233,10 +233,8 @@ FI}
 		del arbol, que es O(log(n)).}
 	\comentario{Si el elemento a borrar es una hoja, simplemente se lo borra.}
 	\ElsIf{nil?(izq(d)) $\wedge$ nil?(der(d))} \Comment{O(1)}
-\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 		\State $borrar(d)$ \Comment{O(max(borrar($\kappa$), borrar($\sigma$)))}
 		\State $d\gets\ NULO$ \Comment{O(1)}
-\comentario{---------------------------------------------------}
 	\comentario{Si el elemento a borrar no es una hoja, se reduce al caso hoja.}
 	\ElsIf{nil?(izq(d))} \Comment{O(1)}
 	\comentario{Se busca el sucesor del elemento (bajando una vez por la rama izquierda y luego por la derecha hasta encontrar una hoja).}
@@ -246,8 +244,8 @@ FI}
 		\EndWhile
 		\comentario{Se hace un swap y se elimina el elemento.}
 		\State setearDer(d, iBorrar($\pi_1$(raiz(aux)), der(d)))
-		\State setearVal(d, <$\pi_1$(raiz(aux)), $\pi_2$(raiz(d)), $\pi_3$(raiz(d))>) \Comment{O(copiar($\kappa$))}
-		\State setearVal(d, <$\pi_1$(raiz(d)), $\pi_2$(raiz(d)), $\pi_3$(raiz(aux))>) \Comment{O(copiar($\sigma$))}
+		\State $\pi_1$(raiz(d)) $\gets$ $\pi_1$(raiz(aux)) \Comment{O(copiar($\kappa$))}
+		\State $\pi_3$(raiz(d)) $\gets$ $\pi_3$(raiz(aux)) \Comment{O(copiar($\sigma$))}
 	\Else
 	\comentario{Se busca el predecesor del elemento (bajando una vez por la rama derecha y luego por la izquierda hasta encontrar una hoja).}
 		\State aux $\gets$ izq(d) \Comment{O(1)}
@@ -256,8 +254,8 @@ FI}
 		\EndWhile
 		\comentario{Se hace un swap y se elimina el elemento.}
 		\State setearIzq(d, iBorrar($\pi_1$(raiz(aux)), izq(d)))
-		\State setearVal(d, <$\pi_1$(raiz(aux)), $\pi_2$(raiz(d)), $\pi_3$(raiz(d))>) \Comment{O(copiar($\kappa$))}
-		\State setearVal(d, <$\pi_1$(raiz(d)), $\pi_2$(raiz(d)), $\pi_3$(raiz(aux))>) \Comment{O(copiar($\sigma$))}
+		\State $\pi_1$(raiz(d)) $\gets$ $\pi_1$(raiz(aux)) \Comment{O(copiar($\kappa$))}
+		\State $\pi_3$(raiz(d)) $\gets$ $\pi_3$(raiz(aux)) \Comment{O(copiar($\sigma$))}
 	\EndIf
 	\comentario{Se nivela, divide y tuerce para restaurar el invariante.}
 	\State d $\gets$ Nivelar(T) \Comment{O(1)}
@@ -272,9 +270,9 @@ FI}
 \Procedure{Nivelar}{inout d: estr}{}
 	\State nivel\_correcto $\gets$ min($\pi_2$(raiz(izq(d))), $\pi_2$(raiz(der(d))))+1 \Comment{O(1)}
 	\If{nivel\_correcto < $\pi_2$(raiz(d))} \Comment{O(1)}
-		\State setearVal(d, <$\pi_1$(raiz(d)), nivel\_correcto, $\pi_3$(raiz(d))>) \Comment{O(1)}
+		\State $\pi_2$(raiz(d)) $\gets$ nivel\_correcto \Comment{O(1)}
 		\If{nivel\_correcto < $\pi_2$(raiz(der(d)))} \Comment{O(1)}
-			\State setearVal(der(d), <$\pi_1$(raiz(der(d))), nivel\_correcto, $\pi_3$(raiz(der(d)))>) \Comment{O(1)}
+			\State $\pi_2$(raiz(der(d))) $\gets$ nivel\_correcto \Comment{O(1)}
 		\EndIf
 	\EndIf
 \EndProcedure

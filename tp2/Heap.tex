@@ -162,47 +162,36 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $(Vacia?(c) \iff e.primero == NULO) \w
 \Function{iEncolar}{\Inout{estr}{estr\_heap($\alpha$)}, \In{prio}{nat}, \In{valor}{$\alpha$}}{$\rightarrow res$: bool}
 	\State res $\gets$ true	 \Comment{O(1)}
 	\If{nil?(estr)} \Comment{O(1)}
-\comentario{-------------VER ESTA LINEAAAAAA-------------------}
-		\State $estr.primero\gets$ puntero(<$null, null, null, prio, valor$>) \Comment{O(copiar($\alpha$))}
-\comentario{---------------------------------------------------}
+		\State estr.arb $\gets$ puntero(bin(null, null,<prio, valor, null>) \Comment{O(copiar($\alpha$))}
 	\Else
-\comentario{-------------VER ESTA LINEAAAAAA-------------------}
-		\State $size++$ \Comment{O(1)}
-		\State $x\gets \ sizer$ \Comment{O(1)}
-\comentario{---------------------------------------------------}
-		\State $y\gets$ <> \Comment{O(1)}
+		\State size++ \Comment{O(1)}
+		\State x $\gets$ size \Comment{O(1)}
+		\State y $\gets$ <> \Comment{O(1)}
 		\While{x $\neq$ 0} \Comment{La cantidad de veces que se ejecuta el ciclo es igual a la altura del heap. Al ser un arbol binario completo, la altura siempre ser\'a O(log(n))}
-			\State $y\gets$ $(x \% 2) \bullet y$ \Comment{O(1)}
-			\State $x\gets$ $x / 2$ \Comment{O(1)}
+			\State y $\gets$ (x \% 2) $\bullet$ y \Comment{O(1)}
+			\State x $\gets$ x \/ 2 \Comment{O(1)}
 		\EndWhile
-\comentario{-------------VER ESTA LINEAAAAAA-------------------}
-		\State $y\gets$ com($y$) \Comment{O(log(n))}
-		\State $z\gets$ $estr.primero$ \Comment{O(1)}
-		\State $y\gets$ fin($y$) \Comment{O(1)}
-\comentario{---------------------------------------------------}
-		\While{long($y$)$>1$} \Comment{El ciclo se ejecuta O(log(n)) veces}
-			\State $z\gets$ \textbf{if} prim($y$) $==$ 0 \textbf{then} izq(z) \textbf{else} der(z) \Comment{O(1)}
-			\State $y\gets$ fin($y$) \Comment{O(1)}
+		\State y $\gets$ com(y) \Comment{O(log(n))}
+		\State z $\gets$ estr.arb \Comment{O(1)}
+		\State y $\gets$ fin(y) \Comment{O(1)}
+		\While{long(y)>1} \Comment{El ciclo se ejecuta O(log(n)) veces}
+			\State z $\gets$ \textbf{if} prim(y) $==$ 0 \textbf{then} izq(z) \textbf{else} der(z) \Comment{O(1)}
+			\State y $\gets$ fin(y) \Comment{O(1)}
 		\EndWhile
-\comentario{-------------VER ESTA LINEAAAAAA-------------------}
-		\State $w\gets$ <$null,null,null,prio,valor$> \Comment{O(copiar($\alpha$))}
-		\State $w.padre\gets$ $z$ \Comment{O(1)}
-\comentario{---------------------------------------------------}
+		\State w $\gets$ bin(null, null, <prio,valor, z> \Comment{O(copiar($\alpha$))}
 		\If{prim($y$) $==$ 0} \Comment{O(1)}
-\comentario{-------------VER ESTA LINEAAAAAA-------------------}
-			\State $z.izq\gets \ w$ \Comment{O(1)}
+			\State setearIzq(z, w) \Comment{O(1)}
 		\Else
-			\State $z.der\gets \ w$ \Comment{O(1)}
-\comentario{---------------------------------------------------}
+			\State setearDer(z, w) \Comment{O(1)}
 		\EndIf
-		\While{w $\neq \ estr.primero \ \wedge_L \ w.prio < (w.padre).prio$} \Comment{La cantidad de veces que se ejecuta el ciclo es a lo sumo la altura del heap, que es O(log(n))}
-			\State $aux\gets \ w.valor$ \Comment{O(copiar($\alpha$))}
-			\State $w.valor\gets \ (w.padre).valor$ \Comment{O(copiar($\alpha$))}
-			\State $(w.padre).valor\gets \ aux$ \Comment{O(copiar($\alpha$))}
-			\State $aux2\gets \ w.prio$ \Comment{O(1)}
-			\State $w.prio\gets \ (w.padre).prio$ \Comment{O(1)}
-			\State $(w.padre).prio\gets \ aux2$ \Comment{O(1)}
-			\State $w\gets \ w.padre$ \Comment{O(1)}
+		\While{w $\neq$ estr.abs $\wedge_L$ $\pi_1$(raiz(w)) < $\pi_1$(raiz($\pi_3$(raiz(w))))} \Comment{La cantidad de veces que se ejecuta el ciclo es a lo sumo la altura del heap, que es O(log(n))}
+			\State aux $\gets$ $\pi_1$(raiz(w)) \Comment{O(copiar($\alpha$))}
+			\State $\pi_2$(raiz(w)) $\gets$ $\pi_2$(raiz($\pi_3$(raiz(w)))) \Comment{O(copiar($\alpha$))}
+			\State $\pi_2$(raiz($\pi_3$(raiz(w)))) $\gets$ aux \Comment{O(copiar($\alpha$))}
+			\State aux2 $\gets$ $\pi_1$(raiz(w)) \Comment{O(1)}
+			\State $\pi_1$(raiz(w)) $\gets$ $\pi_1$(raiz($\pi_3$(raiz(w)))) \Comment{O(1)}
+			\State $\pi_1$(raiz($\pi_3$(raiz(w)))) $\gets$ aux2 \Comment{O(1)}
+			\State w $\gets$ $\pi_3$(raiz(w)) \Comment{O(1)}
 		\EndWhile
 	\EndIf
 

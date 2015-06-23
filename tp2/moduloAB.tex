@@ -54,10 +54,10 @@
   [O(1)]
   [Devuelve un \'arbol binario vacio.]
   
-  \InterfazFuncion{bin}{\In{i}{ab($\sigma$)}, \In{a}{$\sigma$}, \In{d}{ab($\sigma$)}}{ab($\sigma$)}
+  \InterfazFuncion{bin}{\In{i}{ab($\sigma$)}, \In{d}{ab($\sigma$)}, \In{a}{$\sigma$}}{ab($\sigma$)}
   []
-  {res $\igobs$ bin(i,a,d)}
-  [O(1)]
+  {res $\igobs$ bin(i,d,a)}
+  [O(copiar($\sigma$))]
   [Crea un \'arbol binario con raiz a, hijo derecho d e hijo izquierdo i.]
 
 \end{Interfaz}
@@ -110,7 +110,7 @@ FI}
 \caption{Implementaci\'on de nil?}
 \begin{algorithmic}[0]
 \Function{iNil?}{in a: ab($\sigma$)}{$\rightarrow$ res: bool}
-	\State res $\gets$ a == NULO)
+	\State res $\gets$ a == NULO) \Comment{O(1)}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -119,7 +119,7 @@ FI}
 \caption{Implementaci\'on de raiz}
 \begin{algorithmic}[0]
 \Function{iRaiz}{in a: ab($\sigma$)}{$\rightarrow$ res: $\sigma$}
-	\State res $\gets$ a->raiz
+	\State res $\gets$ a$\rightarrow$raiz \Comment{O(1)}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -128,7 +128,7 @@ FI}
 \caption{Implementaci\'on de izq}
 \begin{algorithmic}[0]
 \Function{iIzq}{in a: ab($\sigma$)}{$\rightarrow$ res: ab($\sigma$)}
-	\State res $\gets$ a->izq
+	\State res $\gets$ a$\rightarrow$izq \Comment{O(1)}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -137,7 +137,7 @@ FI}
 \caption{Implementaci\'on de setearIzq}
 \begin{algorithmic}[0]
 \Function{iSetearIzq}{inout a: ab($\sigma$), in i:ab($\sigma$)}{}
-	\State a->izq $\gets$ i
+	\State a$\rightarrow$izq $\gets$ i \Comment{O(1)}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -146,7 +146,7 @@ FI}
 \caption{Implementaci\'on de der}
 \begin{algorithmic}[0]
 \Function{iDer}{in a: ab($\sigma$)}{$\rightarrow$ res: ab($\sigma$)}
-	\State res $\gets$ a->der
+	\State res $\gets$ a$\rightarrow$der \Comment{O(1)}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -155,7 +155,7 @@ FI}
 \caption{Implementaci\'on de setearDer}
 \begin{algorithmic}[0]
 \Function{iSetearDer}{inout a: ab($\sigma$), in d:ab($\sigma$)}{}
-	\State a->der $\gets$ d
+	\State a$\rightarrow$der $\gets$ d \Comment{O(1)}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -164,7 +164,7 @@ FI}
 \caption{Implementaci\'on de nil}
 \begin{algorithmic}[0]
 \Function{iNil}{}{$\rightarrow$ res: ab($\sigma$)}
-	\State res $\gets$ NULL
+	\State res $\gets$ NULL \Comment{O(1)}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -172,10 +172,10 @@ FI}
 \begin{algorithm}
 \caption{Implementaci\'on de bin}
 \begin{algorithmic}[0]
-\Function{iIzq}{in i: ab($\sigma$), in a: $\sigma$, in d: ab($\sigma$)}{$\rightarrow$ res: ab($\sigma$)}
-	\State res->izq $\gets$ i
-	\State res->der $\gets$ d
-	\State res->raiz $\gets$ a
+\Function{iBin}{in i: ab($\sigma$), in a: $\sigma$, in d: ab($\sigma$)}{$\rightarrow$ res: ab($\sigma$)}
+	\State res$\rightarrow$izq $\gets$ i \Comment{O(1)}
+	\State res$\rightarrow$der $\gets$ d \Comment{O(1)}
+	\State res$\rightarrow$raiz $\gets$ a \Comment{O(copiar($\sigma$))}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
