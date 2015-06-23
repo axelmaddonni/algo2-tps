@@ -46,7 +46,7 @@
   [$d$ = $d_0$ $\wedge$ $\neg$( ($\exists$ $p\sp{\prime}$: paquete) (paqueteEnTransito?($d$, $p\sp{\prime}$) $\wedge$ id($p\sp{\prime}$) = id($p$) ) $\wedge$ \newline
   origen($p$) $\in$ computadoras(red($d$)) $\wedge_L$ destino($p$) $\in$ computadoras(red($d$)) $\wedge_L$ hayCamino?(red($d$), origen($p$), destino($p$))]
   {$d$ $=_{obs}$ crearPaquete($d_0$, $p$)}%
-  [O(L * log(k))]
+  [O(L + log(k))]
   [agrega un paquete a la red.]
   [el paquete se agrega por copia.]
 
@@ -338,15 +338,12 @@ caminoRecorrido ($d$, $p$) = $e$.caminos[obtener($e$.computadoras, origen($p$).i
 	\State listaComp $\gets$ Vacia() \Comment{O(1)}
 	\State itHostname $\gets$  CrearIt(Computadoras(r)) \Comment{O(1)}
 	\State masEnvios $\gets$ Siguiente(itHostname) \Comment{O(1)}
-	\comentario{$\#$Computadoras(r)) \'o	O(n)}
 	\While{HaySiguiente(itHostname)} \Comment{O(n) + O(1)}
 \comentario{agrego el hostname a la lista de computadoras}
 		\State AgregarAtras(listaComp, Siguiente(itHostname)) \Comment{O(L)}
-		\comentario{Inicia el índice como cero, mas adelante les pondremos valor} 
+		\comentario{Inicia el \'indice como cero, mas adelante les pondremos valor} 
 		\State X $\gets$ <0, Vacio(), Vacio(), Vacio(), 0> \Comment{O(1) + O(1) + O(1) + O(1) + O(1)}
-		\comentario{ver complejidad}
 		\State itX $\gets$ DefinirRapido(diccCompus, Siguiente(itHostname), X)  \Comment{O(copy(hostname)) + O(copy(X))} 
-		\comentario{ver complejidad}
 		\State Definir(diccHostname, Siguiente(itHostname), itX)  \Comment{O(L) + O(copy(X))}
 		\State Avanzar(itHostname) \Comment{O(1)}
 	\EndWhile
@@ -355,10 +352,8 @@ caminoRecorrido ($d$, $p$) = $e$.caminos[obtener($e$.computadoras, origen($p$).i
 	\State n $\gets$ \#Claves(diccCompus) \Comment{O(1)}
 	\State arrayCaminos $\gets$ CrearArreglo(n) \Comment{O(n)}
 	\comentario{voy a crear un arreglo en cada posicion de arrayCaminos, el cual va a tener el minimo camino}
-	\comentario{$\#$Computadoras(r)) \'o	O(n)}
 	\While{HaySiguiente(itPC)} \Comment{O($\#$Computadoras(r))}
 		\State arrayDestinos $\gets$ CrearArreglo(n) \Comment{O(n)}
-		\comentario{\comentario{$\#$Computadoras(r)) \'o	O(n)}}
 		\While{HaySiguiente(itPC2)} \Comment{O($\#$Computadoras(r))}
 			\State ConjCaminos $\gets$ CaminosMinimos(r, SiguienteClave(itPC), SiguienteClave(itPC2)) \Comment{O(n*L)}
 			\State itConj $\gets$ CrearIt(ConjCaminos) \Comment{O(1)}
@@ -402,7 +397,7 @@ caminoRecorrido ($d$, $p$) = $e$.caminos[obtener($e$.computadoras, origen($p$).i
 		\State Significado(diccCompus, min).indice = indice \Comment{O(n)}
 \comentario{creo un iterador de la lista para eliminar el minimo que ya use}
 		\State itHostnames $\gets$ CrearIt(listaComp) \Comment{O(1)}
-		\State noElimine $\gets$ TRUE
+		\State noElimine $\gets$ TRUE \Comment{O(1)}
 		\While{HaySiguiente(itHostnames) $\&\&$ noElimine} \Comment{se ejecuta a lo sumo n veces} \Comment{O(n)}
 			\If{Siguiente(itHostnames) == min} \Comment{O(L)}
 				\State EliminarSiguiente(itHostnames) \Comment{O(1)}
@@ -547,7 +542,7 @@ caminoRecorrido ($d$, $p$) = $e$.caminos[obtener($e$.computadoras, origen($p$).i
 \caption{Implementaci\'on de LaQueMasEnvi\'o}
 \begin{algorithmic}[0]
 \Function{iLaQueMasEnvi\'o}{in d: estr\_dcnet}{$\rightarrow$ res: hostname}
-	\State res $\gets$ SiguienteClave(d.conMasEnvios)	
+	\State res $\gets$ SiguienteClave(d.conMasEnvios)	 \Comment{O(1)}
 \EndFunction \Comment{O(1)}
 \end{algorithmic}
 \end{algorithm}
