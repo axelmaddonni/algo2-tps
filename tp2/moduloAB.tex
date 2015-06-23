@@ -45,3 +45,76 @@
   [Crea un \'arbol binario con raiz a y hijo derecho d e hijo izquierdo i.]
 
 \end{Interfaz}
+
+\newpage 
+
+\begin{Representacion}
+
+\begin{Estructura}{AB}[$arbol_{AB}$: tupla(raiz: $\sigma$, izq: $arbol_{AB}$, der: $arbol_{AB}$)]
+   
+\end{Estructura}
+
+\end{Representacion}
+
+\newpage
+
+\begin{Algoritmos}
+
+\begin{algorithm}
+\caption{Implementaci\'on de nil?}
+\begin{algorithmic}[0]
+\Function{iNil?}{in a: $arbol_{AB}$}{$\rightarrow$ res: bool}
+	\State res $\gets$ (a.izq == NULO $\wedge$ a.der == NULO)
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de raiz}
+\begin{algorithmic}[0]
+\Function{iRaiz}{in a: $arbol_{AB}$}{$\rightarrow$ res: $\sigma$}
+	\State res $\gets$ a.raiz
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de izq}
+\begin{algorithmic}[0]
+\Function{iIzq}{in a: $arbol_{AB}$}{$\rightarrow$ res: $arbol_{AB}$}
+	\State res $\gets$ a.izq
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de der}
+\begin{algorithmic}[0]
+\Function{iDer}{in a: $arbol_{AB}$}{$\rightarrow$ res: $arbol_{AB}$}
+	\State res $\gets$ a.der
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de nil}
+\begin{algorithmic}[0]
+\Function{iNil}{}{$\rightarrow$ res: $arbol_{AB}$}
+	\State res $\gets$ <NULO,NULO,NULO>
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Implementaci\'on de bin}
+\begin{algorithmic}[0]
+\Function{iIzq}{in i: $arbol_{AB}$, in a: $\sigma$, in d: $arbol_{AB}$}{$\rightarrow$ res: $arbol_{AB}$}
+	\State res $\gets$ nil()
+	\State res.izq $\gets$ i
+	\State res.der $\gets$ d
+	\State res.raiz $\gets$ a
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\end{Algoritmos}
