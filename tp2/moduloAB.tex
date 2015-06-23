@@ -1,0 +1,47 @@
+\begin{Interfaz}
+  
+  %\textbf{usa}: \tadNombre{}.
+  
+  \textbf{se explica con}: \tadNombre{AB($\sigma$)}.
+  
+  \textbf{g\'eneros}: \TipoVariable{ab($\sigma$)}.
+
+  \Titulos{Operaciones}
+
+  \InterfazFuncion{nil?}{\In{a}{ab($\sigma$)}}{Bool}
+  {res $\igobs$ nil?(a)}
+  []
+  [Indica si el arbol est\'a vac\'io.]
+
+  \InterfazFuncion{raiz}{\In{a}{ab($\sigma$)}}{$\sigma$}
+  [$\neg$nil?(a)]
+  {res $\igobs$ raiz(a)}
+  []
+  [Devulve el valor de la raiz del arbol.]
+  [alias?]
+  
+  \InterfazFuncion{izq}{\In{a}{ab($\sigma$}}{ab($\sigma$)}
+  [$\neg$nil?(a)]  
+  {res $\igobs$ vacio()}
+  []
+  [Devulve un puntero apuntando al hijo izquierdo.]
+  
+  \InterfazFuncion{der}{\In{a}{ab($\sigma$}}{ab($\sigma$)}
+  [$\neg$nil?(a)]  
+  {res $\igobs$ vacio()}
+  []
+  [Devulve un puntero apuntando al hijo derecho.]
+  
+  \InterfazFuncion{nil}{}{ab($\sigma$)}
+  []
+  {res $\igobs$ nil()}
+  []
+  [Devuelve un \'arbol binario vacio.]
+  
+  \InterfazFuncion{bin}{\In{i}{ab($\sigma$)}, \In{a}{$\sigma$}, \In{d}{ab($\sigma$)}}{ab($\sigma$)}
+  []
+  {res $\igobs$ bin(i,a,d)}
+  []
+  [Crea un \'arbol binario con raiz a y hijo derecho d e hijo izquierdo i.]
+
+\end{Interfaz}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2015.5.1)  21 JUN 2015 21:29
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2015.5.1)  22 JUN 2015 22:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1010,20 +1010,7 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[27])
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 224.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\alpha' on input line 224.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 224.
-
-(./Heap.tex
+[27]) (./moduloAB.tex)
 
 Package Fancyhdr Warning: \headheight is too small (11.0pt): 
  Make it at least 12.0pt.
@@ -1034,6 +1021,64 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
 
 
 ]
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 229.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\alpha' on input line 229.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\sigma' on input line 229.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 229.
+
+(./AB.tex
+Overfull \hbox (14.99998pt too wide) in paragraph at lines 33--33
+[]\T1/cmr/m/n/10 arbol(n)| $\OMS/cmsy/m/n/10 ^^Q$| [] 
+ []
+
+
+Overfull \hbox (14.99998pt too wide) in paragraph at lines 35--35
+[]\T1/cmr/m/n/10 caminoHastaRaiz(n)| $\OMS/cmsy/m/n/10 ^^Q$| [] 
+ []
+
+)
+
+Package Fancyhdr Warning: \headheight is too small (11.0pt): 
+ Make it at least 12.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[29
+
+]
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 234.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\alpha' on input line 234.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 234.
+
+(./Heap.tex
+
+Package Fancyhdr Warning: \headheight is too small (11.0pt): 
+ Make it at least 12.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[30
+
+]
 Underfull \hbox (badness 10000) in paragraph at lines 72--72
 []\T1/cmr/bx/n/10 if \T1/cmr/m/n/10 vacía?($\OML/cmm/m/it/10 c$\T1/cmr/m/n/10 )
  $\OMS/cmsy/m/n/10 _[]$ $\OT1/cmr/m/n/10 ^^E[](\OML/cmm/m/it/10 proximo\OT1/cmr
@@ -1041,29 +1086,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 72--72
 n/10 then $\OML/cmm/m/it/10 c$ \T1/cmr/bx/n/10 else if
  []
 
-
-Package Fancyhdr Warning: \headheight is too small (11.0pt): 
- Make it at least 12.0pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[29]
-Overfull \hbox (14.99998pt too wide) in paragraph at lines 126--126
-[]\T1/cmr/m/n/10 arbol(n)| $\OMS/cmsy/m/n/10 ^^Q$| [] 
- []
-
-
-Overfull \hbox (14.99998pt too wide) in paragraph at lines 128--128
-[]\T1/cmr/m/n/10 caminoHastaRaiz(n)| $\OMS/cmsy/m/n/10 ^^Q$| [] 
- []
-
-
-Package Fancyhdr Warning: \headheight is too small (11.0pt): 
- Make it at least 12.0pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[30]
 
 Package Fancyhdr Warning: \headheight is too small (11.0pt): 
  Make it at least 12.0pt.
@@ -1084,18 +1106,32 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[33])
+[33]
+
+Package Fancyhdr Warning: \headheight is too small (11.0pt): 
+ Make it at least 12.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[34]
+
+Package Fancyhdr Warning: \headheight is too small (11.0pt): 
+ Make it at least 12.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[35])
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 229.
+(hyperref)                removing `math shift' on input line 239.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\sigma' on input line 229.
+(hyperref)                removing `\sigma' on input line 239.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 229.
+(hyperref)                removing `math shift' on input line 239.
 
 (./Trie.tex)
 
@@ -1104,32 +1140,32 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[34
+[36
 
 ]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 234.
+(hyperref)                removing `math shift' on input line 244.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\kappa' on input line 234.
+(hyperref)                removing `\kappa' on input line 244.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 234.
+(hyperref)                removing `math shift' on input line 244.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 234.
+(hyperref)                removing `math shift' on input line 244.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\sigma' on input line 234.
+(hyperref)                removing `\sigma' on input line 244.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 234.
+(hyperref)                removing `math shift' on input line 244.
 
 (./AVL.tex
 
@@ -1138,47 +1174,23 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[35
+[37
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 57--77
+Underfull \hbox (badness 10000) in paragraph at lines 62--63
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 57--77
+Underfull \hbox (badness 10000) in paragraph at lines 73--74
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 57--77
+Underfull \hbox (badness 10000) in paragraph at lines 79--82
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 78--81
-
- []
-
-
-Overfull \hbox (14.99998pt too wide) in paragraph at lines 90--90
-[]\T1/cmr/m/n/10 arbol(n)| $\OMS/cmsy/m/n/10 ^^Q$| [] 
- []
-
-
-Package Fancyhdr Warning: \headheight is too small (11.0pt): 
- Make it at least 12.0pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[36]
-
-Package Fancyhdr Warning: \headheight is too small (11.0pt): 
- Make it at least 12.0pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[37]
 
 Package Fancyhdr Warning: \headheight is too small (11.0pt): 
  Make it at least 12.0pt.
@@ -1186,11 +1198,10 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [38]
+Overfull \hbox (14.99998pt too wide) in paragraph at lines 91--91
+[]\T1/cmr/m/n/10 arbol(n)| $\OMS/cmsy/m/n/10 ^^Q$| [] 
+ []
 
-LaTeX Warning: Float too large for page by 35.5232pt on input line 279.
-
-) 
-AED: lastpage setting LastPage
 
 Package Fancyhdr Warning: \headheight is too small (11.0pt): 
  Make it at least 12.0pt.
@@ -1205,23 +1216,59 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [40]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 237.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 237.
+
+Package Fancyhdr Warning: \headheight is too small (11.0pt): 
+ Make it at least 12.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[41]
+
+LaTeX Warning: Float too large for page by 35.5232pt on input line 280.
+
+) 
+AED: lastpage setting LastPage
+
+Package Fancyhdr Warning: \headheight is too small (11.0pt): 
+ Make it at least 12.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[42]
+
+Package Fancyhdr Warning: \headheight is too small (11.0pt): 
+ Make it at least 12.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[43]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 247.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 247.
  (./informe.aux
 LaTeX Info: Redefining \. on input line 21.
 LaTeX Info: Redefining \% on input line 21.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 237.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 237.
-Package rerunfilecheck Info: File `informe.out' has not changed.
-(rerunfilecheck)             Checksum: D04C4A2FFBA14B04D3C4B792F531E9AB;326.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 237.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 247.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 247.
+
+
+Package rerunfilecheck Warning: File `informe.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `informe.out':
+(rerunfilecheck)             Before: 288CA93527F961FC3319A442540AD85B;393
+(rerunfilecheck)             After:  256B4A5CCD36AAECE4C7EBD863EABC20;440.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 247.
  ) 
 Here is how much of TeX's memory you used:
- 8653 strings out of 495059
- 122637 string characters out of 3182031
- 261501 words of memory out of 3000000
- 11581 multiletter control sequences out of 15000+200000
+ 8665 strings out of 495059
+ 122737 string characters out of 3182031
+ 262501 words of memory out of 3000000
+ 11582 multiletter control sequences out of 15000+200000
  21644 words of font info for 66 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  34i,13n,43p,503b,423s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1242,10 +1289,10 @@ blic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
 sfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on informe.pdf (40 pages, 299459 bytes).
+Output written on informe.pdf (43 pages, 307877 bytes).
 PDF statistics:
- 801 PDF objects out of 1000 (max. 8388607)
- 321 compressed objects within 4 object streams
- 83 named destinations out of 1000 (max. 500000)
- 41 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 831 PDF objects out of 1000 (max. 8388607)
+ 341 compressed objects within 4 object streams
+ 88 named destinations out of 1000 (max. 500000)
+ 49 words of extra memory for PDF output out of 10000 (max. 10000000)
 
