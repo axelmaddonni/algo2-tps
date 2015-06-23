@@ -37,7 +37,7 @@
 
 \begin{Representacion}
 
-\begin{Estructura}{diccLog}[$arb$: AB(tupla($clave$: $\kappa$, $nivel$: nat), $significado$: $\sigma$)]
+\begin{Estructura}{diccLog}[$arb$: $argol_{AB}$($clave$: $\kappa$, $nivel$: nat, $significado$: $\sigma$)]
  
 \comentario{De aqu\'i en adelante por cuestiones de brevedad y legibilidad se referir\'a al primer elemento del \'arbol binario (arb.primero) simplemente como primero; al nivel de cada nodo (nodo.prio.nivel) como nodo.nivel; a la clave de cada nodo (nodo.prio.clave) como nodo.clave; al significado de cada nodo (nodo.valor) como nodo.significado; a cada nodo(tupla($\kappa$, nat), $\sigma$) como nodo($\kappa$, $\sigma$.}
 
@@ -103,14 +103,14 @@ FI}
 	\comentario{B\'usqueda est\'andar en un ABB}
 	\State nodoActual $\gets$ d \Comment{O(1)}
 	\State res $\gets$ FALSE \Comment{O(1)}
-	\While{$\neg$(nodoActual == NULO) $\&\&$ $\neg$res} \Comment{El ciclo se ejecuta en el peor caso una cantidad de veces igual a la altura del arbol. Al ser auto-balanceado, su altura siempre sera O(log(n))}
-		\If{nodoActual.clave == c} \Comment{O(comparar($\kappa$))}
+	\While{$\neg$nil?(nodoActual) $\&\&$ $\neg$res} \Comment{El ciclo se ejecuta en el peor caso una cantidad de veces igual a la altura del arbol. Al ser auto-balanceado, su altura siempre sera O(log(n))}
+		\If{$\pi_1$(raiz(nodoActual)) == c} \Comment{O(comparar($\kappa$))}
 			\State res $\gets$ TRUE \Comment{O(1)}
 		\Else
-			\If{c < nodoActual.clave} \Comment{O(comparar($\kappa$))}
-				\State nodoActual $\gets$ nodoActual.izquierdo \Comment{O(1)}
+			\If{c < $\pi_1$(raiz(nodoActual))} \Comment{O(comparar($\kappa$))}
+				\State nodoActual $\gets$ izq(nodoActual) \Comment{O(1)}
 			\Else
-				\State nodoActual $\gets$ nodoActual.derecho \Comment{O(1)}
+				\State nodoActual $\gets$ der(nodoActual) \Comment{O(1)}
 			\EndIf
 		\EndIf
 	\EndWhile
@@ -124,14 +124,14 @@ FI}
 \Function{iSignificado}{in d: estr , in c: $\kappa$}{$\rightarrow$ res: $\sigma$}
 	\comentario{B\'usqueda est\'andar en un ABB}
 	\State nodoActual $\gets$ d \Comment{O(1)}
-	\While{$\neg$(nodoActual == NULO) $\&\&$ $\neg$res} \Comment{El ciclo se ejecuta en el peor caso O(log(n)) veces.}
-		\If{nodoActual.clave == c} \Comment{O(comparar($\kappa$))}
-			\State res $\gets$ nodoActual.significado \Comment{O(copiar($\sigma$)). Esta operacion solo se ejecuta una vez (implica $\neg$guarda del ciclo que la contiene).}
+	\While{$\neg$nil?(nodoActual) $\&\&$ $\neg$res} \Comment{El ciclo se ejecuta en el peor caso O(log(n)) veces.}
+		\If{$\pi_1$(raiz(nodoActual)) == c} \Comment{O(comparar($\kappa$))}
+			\State res $\gets$ $\pi_3$(raiz(nodoActual)) \Comment{O(copiar($\sigma$)). Esta operacion solo se ejecuta una vez (implica $\neg$guarda del ciclo que la contiene).}
 		\Else
-			\If{c < nodoActual.clave} \Comment{O(comparar($\kappa$))}
-				\State nodoActual $\gets$ nodoActual.izquierdo \Comment{O(1)}
+			\If{c < $\pi_1$(raiz(nodoActual))} \Comment{O(comparar($\kappa$))}
+				\State nodoActual $\gets$ izq(nodoActual) \Comment{O(1)}
 			\Else
-				\State nodoActual $\gets$ nodoActual.derecho \Comment{O(1)}
+				\State nodoActual $\gets$ der(nodoActual) \Comment{O(1)}
 			\EndIf
 		\EndIf
 	\EndWhile
@@ -143,7 +143,7 @@ FI}
 \caption{Implementaci\'on de Vacio}
 \begin{algorithmic}[0]
 \Function{iVacio}{}{$\rightarrow$ res: estr}
-	\State res $\gets$ NULO \Comment{O(1)}
+	\State res $\gets$ nil() \Comment{O(1)}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -153,19 +153,23 @@ FI}
 \begin{algorithmic}[0]
 \Function{iDefinir}{inout d: estr , in c: $\kappa$, in s: $\sigma$}{}
 	\comentario{Si ya se llego a una hoja, se inserta el nuevo elemento}
-	\If{d == NULO} \Comment{O(1)}
+	\If{nil?(d)} \Comment{O(1)}
 		\State $res\gets \ <c, NULO, NULO, s, 1>$ \Comment{O(max(copiar($\kappa$), copiar($\sigma$))}
 	\comentario{Se busca la posicion correspondiente al nuevo nodo (antes de rebalancear el arbol).}
-	\ElsIf{$c < d.clave$} \Comment{O(comparar($\kappa$)}
+	\ElsIf{c < $\pi_1$(raiz(d))} \Comment{O(comparar($\kappa$)}
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 		\State $d.izquierdo\gets \ iDefinir(d.izquierdo,c,s)$ \Comment{En el peor caso se llama recursivamente a la funcion una cantidad de veces igual a la altura
 		del arbol, que es O(log(n)).}
-	\ElsIf{$c > d.clave$} \Comment{O(comparar($\kappa$))}
+\comentario{---------------------------------------------------}
+	\ElsIf{c > $\pi_1$(raiz(d))} \Comment{O(comparar($\kappa$))}
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 		\State $d.derecho\gets \ iDefinir(d.derecho,c,s)$ \Comment{En el peor caso se llama recursivamente a la funcion una cantidad de veces igual a la altura
 		del arbol, que es O(log(n)).}
+\comentario{---------------------------------------------------}
 	\EndIf
 	\comentario{Se tuerce y divide el arbol en cada nivel, rebalanceandolo.}
-	\State $d \gets\ Torsion(d)$ \Comment{O(1)}
-	\State $d \gets\ Division(d)$ \Comment{O(1)}
+	\State d $\gets$ Torsion(d) \Comment{O(1)}
+	\State d $\gets$ Division(d) \Comment{O(1)}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -175,14 +179,16 @@ FI}
 \begin{algorithmic}[0]
 \Function{iTorsion}{in d: estr}{$\rightarrow$ res: estr}
 	\comentario{Si el nodo tiene un hijo izquierdo del mismo nivel se debe realizar una rotacion para restaurar el invariante.}
-	\If{d == NULO $\|$ d.izquierdo == NULO} \Comment{O(1)}
+	\If{nil?(d) $\|$ nil?(izq(d))} \Comment{O(1)}
 		\State res $\gets$ d \Comment{O(1)}
 	\Else
 	\comentario{El hijo izquierdo de mismo nivel pasa a ser el padre del nodo derecho. El hijo derecho del nodo izquierdo pasa a ser el hijo izquierdo del nodo derecho.}
-		\If{(d.izquierdo).nivel == d.nivel} \Comment{O(1)}
-			\State nodoAux $\gets$ d.izquierdo \Comment{O(1)}
+		\If{$\pi_2$(raiz(izq(d))) == $\pi_2$(d)} \Comment{O(1)}
+			\State nodoAux $\gets$ izq(d) \Comment{O(1)}
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 			\State d.izquierdo $\gets$ nodoAux.derecho \Comment{O(1)}
 			\State nodo.derecho $\gets$ d \Comment{O(1)}
+\comentario{---------------------------------------------------}
 			\State res $\gets$ nodoAux \Comment{O(1)}
 		\Else
 			\State res $\gets$ d \Comment{O(1)}
@@ -197,15 +203,17 @@ FI}
 \begin{algorithmic}[0]
 \Function{iDivision}{in d: estr}{$\rightarrow$ res: estr}
 	\comentario{Si hay dos hijos derechos del mismo nivel que el padre se debe realizar una rotacion para restaurar el invariante.}
-	\If{d == NULO $\|$ d.derecho == NULO $\|$ d.derecho.derecho == NULO} \Comment{O(1)}
+	\If{nil?(d) $\|$ nil?(der(d)) $\|$ nil?(der(der(d)))} \Comment{O(1)}
 		\State res $\gets$ d \Comment{O(1)}
 	\Else
 	\comentario{El primero hijo derecho pasa a ser el padre, con un nivel mas. Su hijo izquierdo pasa a ser el hijo derecho de su padre original.}
 		\If{(d.derecho.derecho).nivel == d.nivel} \Comment{O(1)}
-			\State nodoAux $\gets$ d.derecho \Comment{O(1)}
+			\State nodoAux $\gets$ der(d) \Comment{O(1)}
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 			\State d.derecho $\gets$ nodoAux.izquierdo \Comment{O(1)}
 			\State nodoAux.izquierdo $\gets$ d \Comment{O(1)}
 			\State nodoAux.nivel$++$ \Comment{O(1)}
+\comentario{---------------------------------------------------}
 			\State res $\gets$ nodoAux \Comment{O(1)}
 		\Else
 			\State res $\gets$ d \Comment{O(1)}
@@ -222,57 +230,77 @@ FI}
 \caption{Implementaci\'on de Borrar}
 \begin{algorithmic}[0]
 \Function{iBorrar}{inout d: estr, in c: $\kappa$}{}
-	\If{$d == NULO$} \Comment{O(1)}
+	\If{nil?(d)} \Comment{O(1)}
 		\State $endFunction$
 	\comentario{Se busca recursivamente la posicion del elemento a borrar mediante una busqueda estandar en ABB.}
-	\ElsIf{$c > d.clave$} \Comment{O(comparar($\kappa$))}
+	\ElsIf{c > $\pi_1$(raiz(d))} \Comment{O(comparar($\kappa$))}
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 		\State $d.derecho\gets \ iBorrar(d.derecho, c)$ \Comment{En el peor caso se llama recursivamente a la funcion una cantidad de veces igual a la altura
 		del arbol, que es O(log(n)).}
-	\ElsIf{$c < d.clave$} \Comment{O(comparar($\kappa$))}
+\comentario{---------------------------------------------------}
+	\ElsIf{c < $\pi_1$(raiz(d))} \Comment{O(comparar($\kappa$))}
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 		\State $d.izquierdo\gets \ iBorrar(d.izquierdo, c)$ \Comment{En el peor caso se llama recursivamente a la funcion una cantidad de veces igual a la altura
 		del arbol, que es O(log(n)).}
+\comentario{---------------------------------------------------}
 	\comentario{Si el elemento a borrar es una hoja, simplemente se lo borra.}
-	\ElsIf{$d.izquierdo == NULO \wedge\ d.derecho == NULO$} \Comment{O(1)}
+	\ElsIf{nil?(izq(d)) $\wedge$ nil?(der(d))} \Comment{O(1)}
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 		\State $borrar(d)$ \Comment{O(max(borrar($\kappa$), borrar($\sigma$)))}
 		\State $d\gets\ NULO$ \Comment{O(1)}
+\comentario{---------------------------------------------------}
 	\comentario{Si el elemento a borrar no es una hoja, se reduce al caso hoja.}
-	\ElsIf{$d.izquierdo == NULO$} \Comment{O(1)}
+	\ElsIf{nil?(izq(d))} \Comment{O(1)}
 	\comentario{Se busca el sucesor del elemento (bajando una vez por la rama izquierda y luego por la derecha hasta encontrar una hoja).}
-		\State $aux\gets\ d.derecho$ \Comment{O(1)}
-		\While{$aux.izquierdo \neq NULO$} \Comment{En el peor caso el ciclo se ejecuta O(log(n)) veces.}
-			\State $aux\gets\ aux.izquierdo$ \Comment{O(1)}
+		\State aux $\gets$ der(d) \Comment{O(1)}
+		\While{$\neg$nil?(izq(aux))} \Comment{En el peor caso el ciclo se ejecuta O(log(n)) veces.}
+			\State aux $\gets$ izq(aux) \Comment{O(1)}
 		\EndWhile
 		\comentario{Se hace un swap y se elimina el elemento.}
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 		\State $d.derecho\gets\ iBorrar(aux.clave, d.derecho)$
 		\State $d.clave\gets\ aux.clave$ \Comment{O(copiar($\kappa$))}
 		\State $d.significado\gets\ aux.significado$ \Comment{O(copiar($\sigma$))}
+\comentario{---------------------------------------------------}
 	\Else
 	\comentario{Se busca el predecesor del elemento (bajando una vez por la rama derecha y luego por la izquierda hasta encontrar una hoja).}
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 		\State $aux\gets\ d.izquierdo$ \Comment{O(1)}
 		\While{$aux.derecho \neq NULO$} \Comment{En el peor caso el ciclo se ejecuta O(log(n)) veces.}
 			\State $aux\gets\ aux.derecho$ \Comment{O(1)}
+\comentario{---------------------------------------------------}
 		\EndWhile
 		\comentario{Se hace un swap y se elimina el elemento.}
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 		\State $d.izquierdo\gets\ iBorrar(aux.clave, d.izquierdo)$
 		\State $d.clave\gets\ aux.clave$ \Comment{O(copiar($\kappa$))}
 		\State $d.significado\gets\ aux.significado$ \Comment{O(copiar($\sigma$))}
+\comentario{---------------------------------------------------}
 	\EndIf
 	\comentario{Se nivela, divide y tuerce para restaurar el invariante.}
-	\State $d\gets\ Nivelar(T)$ \Comment{O(1)}
-	\State $d\gets\ Torsion(T)$ \Comment{O(1)}
-	\If{$d.derecho \neq NULO$} \Comment{O(1)}
+	\State d $\gets$ Nivelar(T) \Comment{O(1)}
+	\State d $\gets$ Torsion(T) \Comment{O(1)}
+	\If{$\neg$nil?(der(d))} \Comment{O(1)}
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 		\State $(d.derecho).derecho\gets\ Torsion((d.derecho).derecho)$ \Comment{O(1)}
+\comentario{---------------------------------------------------}
 	\EndIf
-	\State $d\gets\ Division(T)$ \Comment{O(1)}
+	\State d $\gets$ Division(T) \Comment{O(1)}
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 	\State $d.derecho\gets\ Division(d.derecho)$ \Comment{O(1)}
-	\State $res\gets\ d$ \Comment{O(1)}
+\comentario{---------------------------------------------------}
+	\State res $\gets$ d \Comment{O(1)}
 \EndFunction
 \Procedure{Nivelar}{inout d: estr}{}
-	\State $nivel\_correcto\gets\ min((d.izquierdo).nivel, (d.derecho).nivel)+1$ \Comment{O(1)}
-	\If{$nivel\_correcto < d.nivel$} \Comment{O(1)}
+	\State nivel\_correcto $\gets$ min($\pi_2$(raiz(izq(d))), $\pi_2$(raiz(der(d))))+1 \Comment{O(1)}
+	\If{nivel\_correcto < $\pi_2$(raiz(d))} \Comment{O(1)}
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 		\State $d.nivel\gets\ nivel\_correcto$	 \Comment{O(1)}
-		\If{$nivel\_correcto < (d.derecho).nivel$} \Comment{O(1)}
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
+		\If{nivel\_correcto < $\pi_2$(raiz(der(d)))} \Comment{O(1)}
+\comentario{-------------VER ESTA LINEAAAAAA-------------------}
 			\State $(d.derecho)nivel\gets\ nivel\_correcto$ \Comment{O(1)}
+\comentario{---------------------------------------------------}
 		\EndIf
 	\EndIf
 \EndProcedure

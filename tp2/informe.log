@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2015.5.1)  22 JUN 2015 22:36
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2015.5.1)  22 JUN 2015 23:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1020,14 +1020,14 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
 [28
 
 
-]
+])
 
 Package Fancyhdr Warning: \headheight is too small (11.0pt): 
  Make it at least 12.0pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[29])
+[29]
 
 Package Fancyhdr Warning: \headheight is too small (11.0pt): 
  Make it at least 12.0pt.
@@ -1238,7 +1238,7 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
 
 [43]
 
-LaTeX Warning: Float too large for page by 35.5232pt on input line 280.
+LaTeX Warning: Float too large for page by 275.5232pt on input line 308.
 
 ) 
 AED: lastpage setting LastPage
@@ -1266,17 +1266,13 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 247.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 247.
 Package rerunfilecheck Info: File `informe.out' has not changed.
 (rerunfilecheck)             Checksum: 256B4A5CCD36AAECE4C7EBD863EABC20;440.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 247.
  ) 
 Here is how much of TeX's memory you used:
- 8669 strings out of 495059
- 122774 string characters out of 3182031
+ 8676 strings out of 495059
+ 122875 string characters out of 3182031
  262501 words of memory out of 3000000
- 11583 multiletter control sequences out of 15000+200000
+ 11585 multiletter control sequences out of 15000+200000
  21644 words of font info for 66 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  34i,13n,43p,503b,423s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1297,10 +1293,10 @@ blic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
 sfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on informe.pdf (45 pages, 309835 bytes).
+Output written on informe.pdf (45 pages, 311165 bytes).
 PDF statistics:
- 847 PDF objects out of 1000 (max. 8388607)
- 355 compressed objects within 4 object streams
- 91 named destinations out of 1000 (max. 500000)
+ 853 PDF objects out of 1000 (max. 8388607)
+ 360 compressed objects within 4 object streams
+ 96 named destinations out of 1000 (max. 500000)
  57 words of extra memory for PDF output out of 10000 (max. 10000000)
 
