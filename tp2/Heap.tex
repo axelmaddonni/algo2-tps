@@ -84,7 +84,7 @@
 	\tupItem{arb}{$ab$(tupla($prio$: nat, $valor$: $\alpha$, $padre$: ab($\alpha$)))} \newline \nomoreitems
 \end{Tupla}
 
-\comentario{De aqu\'i en adelante, por cuestiones de brevedad y legibilidad, se referir\'a a estr\_heap.arb.primero simplemente como estr.primero; al padre de cada nodo (nodo.valor.padre) simplemente como nodo.padre; a el valor propiamente dicho (nodo.valor.valor) como nodo.valor; a cada nodo(tupla(nat, tupla(puntero(nodo$\alpha$), $\alpha$))) como nodo($\alpha$).}
+\comentario{De aqu\'i en adelante, para el rep y abs, por cuestiones de brevedad y legibilidad, se referir\'a al primer nodo del arbol como estr.primero; al padre de cada nodo simplemente como nodo.padre; a el valor propiamente dicho como nodo.valor y a cada nodo(tupla(nat, tupla(puntero(nodo$\alpha$), $\alpha$))) como nodo($\alpha$).}
 
 \end{Estructura}
 
@@ -135,7 +135,6 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $(Vacia?(c) \iff e.primero == NULO) \w
 \end{algorithmic}
 \end{algorithm}
 
-
 \begin{algorithm}
 \caption{Implementaci\'on de Vacia?}
 \begin{algorithmic}[0]
@@ -149,25 +148,17 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $(Vacia?(c) \iff e.primero == NULO) \w
 \caption{Implementaci\'on de Pr\'oximo}
 \begin{algorithmic}[0]
 \Function{Pr\'oximo}{\In{estr}{estr\_heap($\alpha$)}}{$\rightarrow res$: tupla($nat, \alpha$)}
-\State res $\gets$ raiz(estr) \Comment{O(copiar($\alpha$))}
-\comentario{abajo es version nueva, arriba version vieja}
 \State res $\gets$ <(raiz(estr.arb)).prio, (raiz(estr.arb)).valor> \Comment{O(copiar($\alpha$))}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
-
-
 
 \begin{algorithm}
 \caption{Implementaci\'on de Encolar}
 \begin{algorithmic}[0]
 \Function{iEncolar}{\Inout{estr}{estr\_heap($\alpha$)}, \In{prio}{nat}, \In{valor}{$\alpha$}}{$\rightarrow res$: bool}
 	\State res $\gets$ true	 \Comment{O(1)}
-	\If{nil?(estr)} \Comment{O(1)}
-	\comentario{abajo es version nueva, arriba version vieja}
 	\If{nil?(estr.arb)} \Comment{O(1)}
-		\State estr.arb $\gets$ puntero(bin(null, null,<prio, valor, null>) \Comment{O(copiar($\alpha$))}
-		\comentario{abajo es version nueva, arriba version vieja}
 		\State $estr.ab \gets$ bin(nil(), <prio, valor, nil()>, nil()) \Comment{O(copiar($\alpha$))}
 	\Else
 		\State size++ \Comment{O(1)}
@@ -184,8 +175,6 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $(Vacia?(c) \iff e.primero == NULO) \w
 			\State z $\gets$ \textbf{if} prim(y) $==$ 0 \textbf{then} izq(z) \textbf{else} der(z) \Comment{O(1)}
 			\State y $\gets$ fin(y) \Comment{O(1)}
 		\EndWhile
-		\State w $\gets$ bin(null, null, <prio,valor, z>) \Comment{O(copiar($\alpha$))}
-		\comentario{abajo es version nueva, arriba version vieja}
 		\State w $\gets$ bin(nil(), <prio,valor, z>, nil()) \Comment{O(copiar($\alpha$))}
 		\If{prim($y$) $==$ 0} \Comment{O(1)}
 			\State setearIzq(z, w) \Comment{O(1)}
@@ -193,7 +182,6 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $(Vacia?(c) \iff e.primero == NULO) \w
 			\State setearDer(z, w) \Comment{O(1)}
 		\EndIf
 		\While{w $\neq$ estr.abs $\wedge_L$ $\pi_1$(raiz(w)) > $\pi_1$(raiz($\pi_3$(raiz(w))))} \Comment{La cantidad de veces que se ejecuta el ciclo es a lo sumo la altura del heap, que es O(log(n))}
-		\comentario{abajo es version nueva, arriba version vieja}
 			\State aux $\gets$ $\pi_1$(raiz(w)) \Comment{O(copiar($\alpha$))}
 			\State $\pi_2$(raiz(w)) $\gets$ $\pi_2$(raiz($\pi_3$(raiz(w)))) \Comment{O(copiar($\alpha$))}
 			\State $\pi_2$(raiz($\pi_3$(raiz(w)))) $\gets$ aux \Comment{O(copiar($\alpha$))}
@@ -203,7 +191,6 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $(Vacia?(c) \iff e.primero == NULO) \w
 			\State w $\gets$ $\pi_3$(raiz(w)) \Comment{O(1)}
 		\EndWhile
 	\EndIf
-
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -236,7 +223,6 @@ Abs($e$) $\equiv$ c: colaPrio($\alpha$) | $(Vacia?(c) \iff e.primero == NULO) \w
 	\EndIf
 	\State (raiz(estr.arb)).valor $\gets$ raiz(z).valor \Comment{O(copiar($\alpha$))}
 	\State (raiz(estr.arb)).prio $\gets$ raiz(z).prio \Comment{O(1)}
-	\comentario{ borrar(z)?}
 	\State borrar(z) \Comment{O(borrar($\alpha$))}
 	\State z $\gets$ estr.arb \Comment{O(1)}
 	\State size-- \Comment{O(1)}

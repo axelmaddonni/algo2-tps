@@ -49,24 +49,22 @@
   []
   
   \InterfazFuncion{nil}{}{ab($\sigma$)}
-  []
+  [true]
   {res $\igobs$ nil()}
   [O(1)]
   [Devuelve un \'arbol binario vacio.]
   
   \InterfazFuncion{bin}{\In{i}{ab($\sigma$)}, \In{d}{ab($\sigma$)}, \In{a}{$\sigma$}}{ab($\sigma$)}
-  []
+  [true]
   {res $\igobs$ bin(i,d,a)}
   [O(copiar($\sigma$))]
   [Crea un \'arbol binario con raiz a, hijo derecho d e hijo izquierdo i.]
 
 \end{Interfaz}
 
-\newpage 
-
 \begin{Representacion}
 
-\begin{Estructura}{ab($\sigma$)}[puntero(nodo($\sigma$))]
+\begin{Estructura}{estr}[puntero(nodo($\sigma$))]
    
 \begin{Tupla}[nodo($\alpha$)]
 	\tupItem{izq}{ab($\sigma$)} \newline \nomoreitems
@@ -80,13 +78,18 @@
 \comentario{1: Si un elemento es el hijo (izquierdo o derecho) de otro, entonces no es el hijo de ning\'un otro}
 \comentario{2: Si un elemento es hijo izquierdo de cierto elemento, no puede ser tambi\'en el derecho}
 
-Rep: AB($\alpha, \sigma$) $\rightarrow$ bool
+\comentario{Nos referimos a estr.primero al primer nodo del arbol.}
+
+Rep: estr $\rightarrow$ bool
 Rep($estr$) $\equiv$ true $\iff$
 \comentario{1} $((\forall n_1, n_2, n_3 : nodo(\alpha, \sigma)) ((n_1 \in arbol(estr.primero) \wedge\ n_2 \in arbol(estr.primero) \wedge\ n_3 \in arbol(estr.primero) \wedge\ (n_1 = n_2\rightarrow izq \vee\ n_1 = n_2\rightarrow der) \wedge\ n_2 \neq n_3) \Rightarrow_L\ (n_1 \neq n_3\rightarrow izq \wedge n_1 \neq n_3\rightarrow der))\ \wedge$
 \comentario{2} $((\forall n_1, n_2 : nodo(\alpha, \sigma)) ((n_1 \in arbol(estr.primero) \wedge\ n_2 \in arbol(estr.primero) \wedge n_1 = n_2\rightarrow izq) \Rightarrow_L\ n_1 \neq n_2\rightarrow der)$
 
-\textbf{}
-\textbf{}
+\AbsFc[estr]{ab($\sigma$)}[e]{$a$ $|$ 
+nil?($a$) = (e == NULL) \newline
+raiz($a$) = e-> valor \newline
+izq($a$) = e->izq \newline
+der($a$) e->der}
 
 \textbf{Especificaci\'on de las operaciones auxiliares utilizadas para Rep y Abs}
 \tadOperacion{arbol}{nodo($\alpha$, $\sigma$)}{conj(nodo($\alpha$, $\sigma$))}{}

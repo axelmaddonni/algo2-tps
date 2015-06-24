@@ -203,8 +203,6 @@ Para todos los paquetes de una computadora:\newline
 17: Son accesibles por el dicc usando su ID.\newline
 }
 
-\newpage
-
 \tadAlinearFunciones{REP}{estr\_dcnet /d}
 
 \Rep[estr\_dcnet]{
@@ -243,8 +241,8 @@ destino($p$).ip $\in$ claves ($e$.computadoras) $\wedge$
 	definido?(obtener($e$.computadoras, $c$).paquetesPorID, $p$.id) $\wedge_L$ \newline
 	Siguiente(obtener(obtener($e$.computadoras, $c$).paquetesPorID,  $p$.id)) = $p$
 }
+\newpage
 
-\textbf{}
 
 \textbf{Especificaci\'on de las funciones auxiliares utilizadas en Rep}
 
@@ -318,7 +316,7 @@ caminoRecorrido ($d$, $p$) = $e$.caminos[obtener($e$.computadoras, origen($p$).i
 \begin{algorithm}
 \caption{Implementaci\'on EnEspera}
 \begin{algorithmic}[0]
-\Function{iEnEspera}{\In{d}{estr\_dcnet}, \In{c}{hostname}}{$\rightarrow res: estr$}
+\Function{iEnEspera}{\In{d}{estr\_dcnet}, \In{c}{hostname}}{$\rightarrow$ res: conj(paquete)}
 	\State it $\gets$ Significado(d.porHostname, c) \Comment{O(L)}
 	\State res $\gets$ SiguienteSignificado(it).paquetes \Comment{O(1)}
 \EndFunction \Comment{O(L)}

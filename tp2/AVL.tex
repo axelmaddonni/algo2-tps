@@ -37,9 +37,9 @@
 
 \begin{Representacion}
 
-\begin{Estructura}{diccLog}[$arb$: $ab$($clave$: $\kappa$, $nivel$: nat, $significado$: $\sigma$)]
+\begin{Estructura}{diccLog}[$estr$: $ab$($clave$: $\kappa$, $nivel$: nat, $significado$: $\sigma$)]
  
-\comentario{De aqu\'i en adelante por cuestiones de brevedad y legibilidad se referir\'a al primer elemento del \'arbol binario (arb.primero) simplemente como primero; al nivel de cada nodo (nodo.prio.nivel) como nodo.nivel; a la clave de cada nodo (nodo.prio.clave) como nodo.clave; al significado de cada nodo (nodo.valor) como nodo.significado; a cada nodo(tupla($\kappa$, nat), $\sigma$) como nodo($\kappa$, $\sigma$.}
+\comentario{De aqu\'i en adelante, para el rep y abs, por cuestiones de brevedad y legibilidad se referir\'a al primer elemento del \'arbol binario (arb.primero) simplemente como primero; al nivel de cada nodo (nodo.prio.nivel) como nodo.nivel; a la clave de cada nodo (nodo.prio.clave) como nodo.clave; al significado de cada nodo (nodo.valor) como nodo.significado; a cada nodo(tupla($\kappa$, nat), $\sigma$) como nodo($\kappa$, $\sigma$.}
 
 \comentario{La estructura utilizada para representar al diccionario Logaritmico es un AA tree. Es un tipo de ABB auto-balanceado que provee busqueda, insercion y borrado
 en tiempo logaritmico. Los AA trees son similares a los Red-Black Trees, pero solo pueden tener hijos derechos ``rojos'' (en vez de utilizar un valor booleano de color, usan un valor entero de nivel;
@@ -60,7 +60,7 @@ los hijos ``rojos'' son los que tienen mismo nivel que sus padres), lo que reduc
 
 
 $\ $ \newline $\ $
-\par Rep: arb $\rightarrow$ bool
+\par Rep: estr $\rightarrow$ bool
 \newline \indent Rep($e$) $\equiv$ true $\iff$ 
 \comentario{1} $((\forall n_1, n_2:\ nodo(\kappa, \sigma))(\ n_1 \in\ arbol(e) \wedge \ n_2 \in\ arbol(e) \Rightarrow_L\ (n_1 \in arbol(n_2.izquierdo) \Rightarrow n_1.clave < n_2.clave) \wedge\ (n_1 \in arbol(n_2.derecho) \Rightarrow n_1.clave > n_2.clave) \wedge$
 \comentario{2} $((\forall n:\ nodo(\kappa, \sigma))(\ n \in\ arbol(e) \wedge n.izquierdo = NULO \wedge n.derecho = NULO \Rightarrow\ n.nivel = 1) \wedge$
@@ -71,15 +71,15 @@ $\ $ \newline $\ $
 
 
 $\ $ \newline $\ $
-\par Abs: $diccLog(\kappa, \sigma)\ d \rightarrow\ dicc(\kappa, \sigma)$ \{Rep($d$) \}
+\par Abs: $estr d \rightarrow\ dicc(\kappa, \sigma)$ \{Rep($d$) \}
 $\ $\newline \indent Abs($d$) $\equiv$ c: dicc($\kappa, \sigma$) | $((\forall k:\ \kappa)(\ k \in claves(c) \Rightarrow (\exists n:\ estr(\kappa, \sigma))( n \in arbol(d)\wedge n.clave = k)) \wedge
 \newline \indent ((\forall n:\ nodo(\kappa, \sigma))( n \in arbol(d) \Rightarrow\ n.clave \in claves(c)))) \wedge_L
 \newline \indent (\forall n:\ nodo(\kappa, \sigma))( n \in arbol(d) \Rightarrow\ obtener(c,n.clave) =_{obs} n.significado)$
 
-$\ $\newline$\ $
-\newline \indent \textbf{Especificaci\'on de las operaciones auxiliares utilizadas para Rep y Abs}
-\newline \indent arbol:$\ puntero(nodo(\kappa\, \sigma)) \rightarrow conj(puntero(nodo(\kappa,\sigma)))$
+\newpage
 
+\indent \textbf{Especificaci\'on de las operaciones auxiliares utilizadas para Rep y Abs}
+\newline \indent arbol:$\ puntero(nodo(\kappa\, \sigma)) \rightarrow conj(puntero(nodo(\kappa,\sigma)))$
 
 \tadAxioma{arbol(n)}{
 \IF {$n.izq \neq null \wedge n.der \neq null$}

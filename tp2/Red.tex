@@ -37,13 +37,13 @@
   
   \InterfazFuncion{AgregarCompu}{\Inout{r}{red}, \In{c1}{compu}}{}
   [$r$ = $r_0$ $\wedge$
-  (\paratodo{compu}{c}) $c$ $\in$ computadoras($r_0$) $\Rightarrow$ ip($c$) $\neq$ $c1$]
+  (\paratodo{compu}{c}) $c$ $\in$ computadoras($r_0$) $\Rightarrow$ ip($c$) $\neq$ ip($c1$)]
   {$r$ $=_{obs}$ agregarComputadora($r_0$, $c1$)}
   [O(L+i) i=cantidad de interfaces]
   [agregar una computadora a la Red.]
   [la computadora se agrega por copia.]
 
-  \InterfazFuncion{Conectar}{\In{r}{red}, \In{c_1}{hostname}, \In{i_1}{interfaz} \In{c_2}{hostname}, \In{i_2}{interfaz}}{}
+  \InterfazFuncion{Conectar}{\Inout{r}{red}, \In{c_1}{hostname}, \In{i_1}{interfaz} \In{c_2}{hostname}, \In{i_2}{interfaz}}{}
   [$r$ = $r_0$ $\wedge$ $c_1, c_2$ $\in$ dameHostnames(computadoras($r$)) $\wedge$ $c_1$ $\neq$ $c_2$	$\wedge$ \newline $\neg$conectadas?($r$, dameCompu($c_1$), dameCompu($c_2$)) $\wedge$ $\neg$usaInterfaz?($r$, dameCompu($c_1$), $i_1$) $\wedge$ $\neg$usaInterfaz?($r$, dameCompu($c_2$), $i_2$) $\wedge$ $i_1$ $\in$ dameCompu($c_1$).interfaces $\wedge$ $i_2$ $\in$ dameCompu($c_2$).interfaces]
   {$r$ $=_{obs}$ (conectar($r_0$, dameCompu($c_1$), $i_1$, dameCompu($c_2$), $i_2$)}
   [O(n$^{6}$ + n$^{5}$ * L)]
@@ -168,7 +168,7 @@ FI}
 \comentario{Rep en Castellano: \newline
 Para cada computadora: \newline
 1: Las interfaces usadas pertenecen al conjunto de interfaces de la compu.\newline
-2: Los vecinos perteneces a las computadoras de la red.\newline
+2: Los vecinos pertenecen a las computadoras de la red.\newline
 3: Los vecinos son distintos a la compu actual.\newline
 4: Los vecinos no se repiten.\newline
 5: Las conexiones son bidireccionales.\newline
@@ -180,8 +180,6 @@ Para cada computadora: \newline
 11: Los caminos son m\'inimos.\newline
 12: Est\'an todos los m\'inimos.
 }
-
-\newpage
 
 \tadAlinearFunciones{REP}{estr\_red /e}
 
@@ -241,7 +239,7 @@ Con $esVecino$ ($h1$, $h2$) $\equiv$  ($\exists$ $i$: interfaz) $h2$ == obtener 
 
 \tadAxiomas[\paratodo{dicc(hostname, X)}{e}, \paratodo{dicc(interfaz, hostname)}{d}, \paratodo{conj(hostname)}{cc}, \paratodo{conj(interfaz)}{ci}, \paratodo{hostname}{h}]
 
-\tadAxioma{dameComputadoras($e$)}{auxDameComputadoras($e$, claves($e$)}
+\tadAxioma{dameComputadoras($e$)}{auxDameComputadoras($e$, claves($e$))}
 \tadAxioma{auxDameComputadoras($e$, $cc$)}
 { \IF {$\emptyset$?($cc$)} 
 THEN {$\emptyset$}
@@ -427,7 +425,7 @@ FI}
 \begin{algorithm}
 \caption{Implementaci\'on de funci\'on auxiliar Actualizar Vecinos}
 \begin{algorithmic}[0]
-\Function{iActualizarVecinos}{inout r: estr\_red, in c1: hostname, in conj(hostname) actualizados}{}
+\Function{iActualizarVecinos}{inout r: estr\_red, in c1: hostname, in actualizados: conj(hostname) }{}
 \comentario{Actualiza los caminos de los vecinos de C, y luego hace recursion para los vecinos de los vecinos.}
 \State itVecinos $\gets$ crearIt(Significado(r, c1).conexiones) \Comment{O(n)}
 \While{ ( HaySiguiente(itVecinos) )} \Comment{O(n x)}
