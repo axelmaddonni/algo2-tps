@@ -23,8 +23,8 @@ private:
 
     void borrar(Nodo *aBorrar)
     {
-        if (aBorrar->izquierdo.primero) borrar(aBorrar->izquierdo.primero);
-        if (aBorrar->derecho.primero) borrar(aBorrar->derecho.primero);
+        if (aBorrar->izquierdo) borrar(aBorrar->izquierdo);
+        if (aBorrar->derecho) borrar(aBorrar->derecho);
         delete aBorrar;
     }
 
@@ -45,16 +45,16 @@ public:
 
     void borrarAB() { primero = nullptr; }
     
-    /*
+    ///*
     ~AB()
     {
         if (primero) 
         {
-            cout << "Borrando 0x" << (unsigned long) primero << '\n';
-            delete primero;
+            //cout << "Borrando 0x" << (unsigned long) primero << '\n';
+            borrar(primero);
         }
     }
-    */
+    //*/
  
     class Iterador
     {
@@ -70,8 +70,7 @@ public:
     public:
         
         Iterador() : actual(nullptr) {}
-        Iterador(AB<V> nuevo) : actual(nuevo.primero) {}
-        ~Iterador() { delete this; }
+        Iterador(AB<V>& nuevo) : actual(nuevo.primero) {}
 
         void izq() { actual = actual->izquierdo; }
         void der() { actual = actual->derecho;   }
@@ -94,13 +93,13 @@ public:
         }
 
         operator bool() const  { return (bool)actual; }
+        bool operator==(AB<V>& otro) { return otro.primero == actual; }
 
     };
 
 
-    void operator=(Iterador nuevo) { primero = nuevo->actual; }
+    void operator=(Iterador nuevo) { primero = nuevo.actual; }
     void operator=(V nuevo) { primero = new Nodo(nuevo); }
-    //void asignar(V nuevo) { cout << "LA RECONCHA DE LA LORA MALPARIDA" << '\n'; primero = (Nodo *&&) new Nodo(nuevo); }
     Iterador crearIt() { return Iterador(primero); }
 };
 

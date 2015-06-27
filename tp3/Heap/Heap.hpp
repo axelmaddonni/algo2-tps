@@ -21,6 +21,7 @@ private:
         V valor;
 
         tupla(P prioridad, V val) : padre(typename AB<tupla>::Iterador()), prio(prioridad), valor(val) {}
+        void operator=(tupla otro) { /*padre = otro.padre*/; prio = otro.prio; valor = otro.valor; }
     };
 
     int minHijos(AB<tupla> pad)
@@ -50,7 +51,7 @@ public:
 
     void encolar(P, V); 
     void desencolar();
-    V& proximo();
+    const V& proximo();
     //void mostrar();
     bool vacia();
 
@@ -63,6 +64,11 @@ template<typename P, typename V>
 void Heap<P, V>::encolar (P prioridad, V valor)
 {
     size++;
+    if (size == 1) 
+    {
+        arb = tupla(prioridad, valor); 
+        return;
+    }
     Vector<bool> sizeVec = Vector<bool>();
     int sz = size;
     while (sz > 0)
@@ -71,11 +77,6 @@ void Heap<P, V>::encolar (P prioridad, V valor)
         sz = sz >> 1;
     }
     typename AB<tupla>::Iterador puntero = arb.crearIt();
-    if (size == 1) 
-    {
-        arb = tupla(prioridad, valor); 
-        return;
-    }
     typename AB<tupla>::Iterador nuevo;
     for (int i = sizeVec.Longitud() - 2; i >= 0; i--)
     {
@@ -105,7 +106,8 @@ void Heap<P, V>::encolar (P prioridad, V valor)
     {
         nuevo.swapVal(pad);
         nuevo = pad;
-        pad = pad.val().padre;
+        //pad = pad.val().padre;
+        pad = nuevo.val().padre;
         /*
         V valAux = nuevo->raiz().valor;
         nuevo->raiz().valor = nuevo->raiz().padre->raiz().valor;
@@ -186,7 +188,7 @@ void Heap<P, V>::mostrar()
 }*/
 
 template<typename P, typename V>
-V& Heap<P, V>::proximo()
+const V& Heap<P, V>::proximo()
 {
     typename AB<tupla>::Iterador it = typename AB<tupla>::Iterador(arb);
     return it.val().valor;
