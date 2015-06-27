@@ -101,9 +101,17 @@ public:
     };
 
 
-    void operator=(Iterador& nuevo) { primero = nuevo.actual; }
+    void operator=(const Iterador& nuevo) { primero = nuevo.actual; }
     void operator=(V nuevo) { primero = new Nodo(nuevo); }
     Iterador crearIt() { return Iterador(primero); }
+
+    void reset()
+    {
+        Nodo *aux = primero;
+        if (aux) borrar(aux);
+        primero = nullptr;
+    }
+
 };
 
 
