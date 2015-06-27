@@ -2,8 +2,7 @@
 #define HEAP_HPP_
 
 #include <iostream>
-#include "AB.hpp"
-#include "Vector.h"
+#include "../AB/AB.hpp"
 
 using std::cout;
 using aed2::Vector;
