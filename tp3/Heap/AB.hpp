@@ -76,11 +76,14 @@ public:
         void der() { actual = actual->derecho;   }
         AB<V>* act() { return (AB<V>*) &actual; }
         V& val() { return actual->val; }
-        void setearIzq(AB nuevo) { actual->izquierdo = nuevo; }
-        void setearDer(AB nuevo) { actual->derecho = nuevo; }
+        void setearIzq(AB& nuevo) { actual->izquierdo = nuevo; }
+        void setearDer(AB& nuevo) { actual->derecho = nuevo; }
         void setearIzq(V nuevo) { actual->izquierdo = new Nodo(nuevo); }
         void setearDer(V nuevo) { actual->derecho = new Nodo(nuevo); }       
         void asignar(V nuevo) { actual->val = nuevo; }
+        void borrar() { delete actual; }
+        void borrarIzq() { actual->izquierdo = nullptr; }
+        void borrarDer() { actual->derecho = nullptr; }
 
         Iterador itIzq() { return Iterador(actual->izquierdo); }
         Iterador itDer() { return Iterador(actual->derecho); }
@@ -98,7 +101,7 @@ public:
     };
 
 
-    void operator=(Iterador nuevo) { primero = nuevo.actual; }
+    void operator=(Iterador& nuevo) { primero = nuevo.actual; }
     void operator=(V nuevo) { primero = new Nodo(nuevo); }
     Iterador crearIt() { return Iterador(primero); }
 };

@@ -9,6 +9,7 @@ int main()
     Heap<int, char> test = Heap<int, char>();
     test.encolar(6, '6');
     cout << test.proximo() << endl;
+    test.desencolar();
     test.encolar(9, '9');
     cout << test.proximo() << endl;
     test.encolar(4, '4');
@@ -25,6 +26,19 @@ int main()
     cout << test.proximo() << endl; 
     test.encolar(2, '2');
     cout << test.proximo() << endl;
-    //test.desencolar();
+    test.desencolar();
+    cout << test.proximo() << endl;
+    test.desencolar();
+    cout << test.proximo() << endl;
+    test.desencolar();
+    cout << test.proximo() << endl;
+    test.desencolar();
+    cout << test.proximo() << endl;
+    test.desencolar();
+    cout << test.proximo() << endl;
+    test.desencolar();
+    cout << test.proximo() << endl;
+    test.desencolar();
+    cout << test.proximo() << endl;
     return 0;
 }

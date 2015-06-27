@@ -21,25 +21,27 @@ private:
         V valor;
 
         tupla(P prioridad, V val) : padre(typename AB<tupla>::Iterador()), prio(prioridad), valor(val) {}
-        void operator=(tupla otro) { /*padre = otro.padre*/; prio = otro.prio; valor = otro.valor; }
+        void operator=(tupla otro) { /*padre = otro.padre;*/ prio = otro.prio; valor = otro.valor; }
     };
 
-    int minHijos(AB<tupla> pad)
+    typename AB<tupla>::Iterador minHijos(typename AB<tupla>::Iterador& it)
     {
-        if ((pad.izq) || (pad.der))
+        typename AB<tupla>::Iterador itI = it.itIzq();
+        typename AB<tupla>::Iterador itD = it.itDer();
+        if (itI || itD)
         {
-            if (pad.izq)
+            if (itI)
             {
-                if (pad.der) 
+                if (itD) 
                 {
-                    if (pad.izq->val.prio < pad.der->val.prio) return 0; 
-                    else return 1; 
+                    if (itI.val().prio < itD.val().prio) return itI; 
+                    else return itD; 
                 }
-                else return 0;
+                else return itI;
             }
-            else return 1;
+            else return itD;
         }
-        else return 2;
+        else return itI; //podria ser cualquier, total ambos son nulos...
     }
     
     AB<tupla> arb;
@@ -52,7 +54,6 @@ public:
     void encolar(P, V); 
     void desencolar();
     const V& proximo();
-    //void mostrar();
     bool vacia();
 
 };
@@ -106,21 +107,10 @@ void Heap<P, V>::encolar (P prioridad, V valor)
     {
         nuevo.swapVal(pad);
         nuevo = pad;
-        //pad = pad.val().padre;
         pad = nuevo.val().padre;
-        /*
-        V valAux = nuevo->raiz().valor;
-        nuevo->raiz().valor = nuevo->raiz().padre->raiz().valor;
-        nuevo->raiz().padre->raiz().valor = valAux;
-        P prioAux = nuevo->raiz().prio;
-        nuevo->raiz().prio = nuevo->raiz().padre->raiz().prio;
-        nuevo->raiz().padre->raiz().prio = prioAux;
-        nuevo = nuevo->raiz().padre;
-        */
     }
 }
 
-/*
 template<typename P, typename V>
 void Heap<P, V>::desencolar ()
 {
@@ -131,67 +121,59 @@ void Heap<P, V>::desencolar ()
         sizeVec.AgregarAtras(sz % 2);
         sz = sz >> 1;
     }
-    if (size == 0) {return;}
+    if (size == 0) return;
+    typename AB<tupla>::Iterador puntero = typename AB<tupla>::Iterador(arb);
     if (size == 1)
     {
-        delete &arb;
+        puntero.borrar();
         size--;
+        return;
     }
-    AB<tupla> *puntero = &arb;
+    typename AB<tupla>::Iterador it = typename AB<tupla>::Iterador(arb);
+    typename AB<tupla>::Iterador itHijo = typename AB<tupla>::Iterador(arb);
     for (int i = sizeVec.Longitud() - 2; i >= 0; i--)
     {
         if (i > 0)
         {
-            if (!sizeVec[i]) puntero = puntero->izq();
-            else puntero = puntero->der();
+            if (!sizeVec[i]) puntero.izq();
+            else puntero.der();
         }
         else
         {
             if (!sizeVec[i]) 
             {
-                puntero = puntero->izq();
-                (puntero->raiz().padre)->setearIzq(nullptr);
+                puntero.izq();
+                puntero.val().padre.borrarIzq();
             }
             else
             {
-                puntero = puntero->der();
-                (puntero->raiz().padre)->setearDer(nullptr);
+                puntero.der();
+                puntero.val().padre.borrarDer();
             }
-            puntero->nodoSwap(arb.primero);
+            it.swapVal(puntero);
             size--;
-            delete puntero;
+            puntero.borrar();
         }
     }
-    AB<tupla> *it = &arb;
-    int min = minHijos(*it);
-    while (min < 2)
+    itHijo = minHijos(it);    
+    while (itHijo)
     {
-        if (min == 0 && (it->izq)->prio < it->prio) 
+        if (itHijo.val().prio > it.val().prio) break;
+        else
         {
-            it->nodoSwap(it->izq);
-            it = it->izq;
+            it.swapVal(itHijo);
+            if (itHijo == it.itIzq()) it.izq();
+            else it.der();
         }
-        else if (min == 1 && (it->der)->prio < it->prio)
-        {
-            it->nodoSwap(it->der);
-            it = it->der;
-        }
-        else break;
-        min = it->nodoMin();
+        itHijo = minHijos(it);
     }
-}*/
-
-/*template<class P, class V>
-void Heap<P, V>::mostrar()
-{
-    if (arb.primero) (arb.primero)->mostrarNodo();
-}*/
+}
 
 template<typename P, typename V>
 const V& Heap<P, V>::proximo()
 {
     typename AB<tupla>::Iterador it = typename AB<tupla>::Iterador(arb);
-    return it.val().valor;
+    if (it) return it.val().valor;
 }
 
 
