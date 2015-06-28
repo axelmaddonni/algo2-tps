@@ -71,9 +71,9 @@ public:
 
 	const Lista<hostname>& caminoRecorrido(Nat idpaquete) const; //devolvemos por referencia
 
-	Nat cantidadEnviados(hostname c) ; //DEBERIA SER CONST, PERO EXPLOTA AL USAR OBTENER
+	Nat cantidadEnviados(hostname c) const ; 
 
-	Conj<Paquete>& enEspera(hostname c) ; //DEBERIA SER CONST, PERO EXPLOTA AL USAR OBTENER
+	Conj<Paquete>& enEspera(hostname c) const ; 
 
 	Dcnet(const Red& r); //inicar dcnet
 
@@ -87,7 +87,7 @@ public:
 
 	hostname laQueMasEnvio() const;
 
-	bool operator==(Dcnet& d) ;  //DEBERIA SER CONST, PERO EXPLOTA AL USAR cantEnviados y enEspera
+	bool operator==(Dcnet& d) const; 
 
 };
 
@@ -115,12 +115,12 @@ const Lista<hostname>& Dcnet::caminoRecorrido(Nat idpaquete) const{
 }
 
 //Paquetes enviados
-Nat Dcnet::cantidadEnviados(hostname c)  { //DEBERIA SER CONST, PERO EXPLOTA AL USAR OBTENER
+Nat Dcnet::cantidadEnviados(hostname c)  const{ //DEBERIA SER CONST, PERO EXPLOTA AL USAR OBTENER
 	return (porHostname.obtener(c))->SiguienteSignificado().cantEnvios;
 }
 
 //En Espera
-Conj<Paquete>& Dcnet::enEspera(hostname c)  { //DEBERIA SER CONST, PERO EXPLOTA AL USAR OBTENER
+Conj<Paquete>& Dcnet::enEspera(hostname c)  const{ //DEBERIA SER CONST, PERO EXPLOTA AL USAR OBTENER
 	return (porHostname.obtener(c))->SiguienteSignificado().paquetes;
 }
 
@@ -333,7 +333,7 @@ hostname Dcnet::laQueMasEnvio() const{
 }
 
 //operador == (igualdad de dcnet)
-bool Dcnet::operator==(Dcnet& d) {
+bool Dcnet::operator==(Dcnet& d) const {
 	//comparo redes usando == de red
 	bool res;
 	res = (this->dameRed() == d.dameRed());
