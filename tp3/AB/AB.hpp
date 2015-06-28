@@ -13,11 +13,11 @@ private:
 
     struct Nodo
     {
-        Nodo* izquierdo;
-        Nodo* derecho;
+        AB izquierdo;
+        AB derecho;
         V val;
         
-        Nodo(V valor) : izquierdo(nullptr), derecho(nullptr), val(valor) {}
+        Nodo(V valor) : izquierdo(AB<V>()), derecho(AB<V>()), val(valor) {}
        
     };
 
@@ -30,6 +30,8 @@ private:
 
     
     Nodo* primero;
+
+    operator Nodo*() const { return primero; }
 
 public:
 

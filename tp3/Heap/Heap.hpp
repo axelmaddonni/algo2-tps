@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include <cassert>
-#include "AB.hpp"
-#include "../../aed2/Vector.h"
+#include "../AB/AB.hpp"
+#include "../aed2/Vector.h"
 
 using std::cout;
 using aed2::Vector;
