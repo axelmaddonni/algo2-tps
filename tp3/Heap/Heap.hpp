@@ -44,6 +44,8 @@ private:
         }
         else return itI; //podria ser cualquiera, total ambos son nulos...
     }
+
+    
     
     AB<tupla> arb;
     int size;
@@ -57,6 +59,21 @@ public:
     V proximo();
     bool vacia();
 
+    bool inv ()
+    {
+        auto it = typename AB<tupla>::Iterador(arb);
+        if (it) return invNodo(it);
+    }
+
+    bool invNodo(typename AB<tupla>::Iterador it)
+    {
+        if (!it) return true;
+        auto itI = it.itIzq();
+        auto itD = it.itDer();
+        if (itI && itI.val().prio < it.val().prio) return false;
+        else if (itD && itD.val().prio < it.val().prio) return false;
+        else return invNodo(itI) && invNodo(itD);
+    }
 };
 
 
@@ -115,7 +132,7 @@ void ColaLog<V>::encolar (int prioridad, V valor)
 template<typename V>
 V ColaLog<V>::desencolar ()
 {
-    Vector<bool> sizeVec = Vector<bool>();
+    auto sizeVec = Vector<bool>();
     int sz = size;
     while (sz > 0)
     {
@@ -130,8 +147,8 @@ V ColaLog<V>::desencolar ()
         size--;
         return ret;
     }
-    typename AB<tupla>::Iterador puntero = typename AB<tupla>::Iterador(arb);
-    typename AB<tupla>::Iterador it = typename AB<tupla>::Iterador(arb);
+    auto puntero = typename AB<tupla>::Iterador(arb);
+    auto it = typename AB<tupla>::Iterador(arb);
     for (int i = sizeVec.Longitud() - 2; i >= 0; i--)
     {
         if (i > 0)
@@ -156,7 +173,7 @@ V ColaLog<V>::desencolar ()
             puntero.borrar();
         }
     }
-    typename AB<tupla>::Iterador itHijo = typename AB<tupla>::Iterador(arb);
+    auto itHijo = typename AB<tupla>::Iterador(arb);
     itHijo = minHijos(it);    
     while (itHijo)
     {
@@ -164,8 +181,7 @@ V ColaLog<V>::desencolar ()
         else
         {
             it.swapVal(itHijo);
-            if (itHijo == it.itIzq()) it.izq();
-            else it.der();
+            it = itHijo;
         }
         itHijo = minHijos(it);
     }
