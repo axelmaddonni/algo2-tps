@@ -1,3 +1,4 @@
+#include "../aed2.h"
 #include "diccLog.h"
 #include <iostream>
 
@@ -33,6 +34,19 @@ int main()
     if (test.Definido(clave)) cout << "Su significado es: " << test.Significado(clave);
     cout << endl;
 
+    cout << "Hacia la derecha" << endl;
+    test.printD();
+    cout << endl;
+    cout << "Hacia la izquierda" << endl;
+    test.printI();
+    cout << endl;
+    cout << "Hacia la derecha izquierda" << endl;
+    test.printDI();
+    cout << endl;
+    cout << "Hacia la izquierda derecha" << endl;
+    test.printID();
+    cout << endl;
+
     //Hasta aca corre bien, pero con memory leaks
 
     cout << endl << "Borrando: 2, 5." << endl;
@@ -41,8 +55,8 @@ int main()
 
     clave = 2;
     test.Borrar(clave);
-    clave = 5;
-    test.Borrar(clave);
+    //clave = 5;
+    //test.Borrar(clave);
     clave = 1;
     cout  << "La clave " << clave << (test.Definido(clave)? " " : " no ") << "esta definida.";
     if (test.Definido(clave)) cout << "Su significado es: " << test.Significado(clave);

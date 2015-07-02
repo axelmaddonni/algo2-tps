@@ -22,6 +22,18 @@ class diccLog {
 			}
 		};
 
+		struct tuplaAB {
+			diccLog<C,S>::tupla val;
+			tuplaAB izq;
+			tuplaAB der;
+
+			tuplaAB(diccLog<C,S>::tupla valor, tuplaAB izquierdo, tuplaAB derecho) {
+				val = valor;
+				izq = izquierdo;
+				der = derecho;
+			}
+		};
+
 		AB<tupla> nodo_ab;
 		bool nil;
 
@@ -31,6 +43,8 @@ class diccLog {
 		void DefinirNodo(C cla, S sig, typename AB<tupla>::Iterador nodoActual);
 		void BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual);
 	public:
+		void postorderA();
+		void postorder(typename AB<tupla>::Iterador it);
 
 		//Vacio() -> res : diccLog(C, S)
 		//Pre = {true}
@@ -183,7 +197,7 @@ void diccLog<C,S>::BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual) {
 			nodoActual.borrarIzq();
 		} else {
 			//sigo hacia la izquierda con recursion
-			BorrarNodo(cla, nodoActual.itDer());
+			BorrarNodo(cla, nodoActual.itIzq());
 		}
 	} else if (!nodoActual.itIzq()) {
 		//si estoy parado en el nodo que quiero borrar y no tiene hijo izquierdo
@@ -373,9 +387,41 @@ void diccLog<C,S>::printDI() {
 }
 
 
+template<typename C, typename S>
+void diccLog<C,S>::postorderA() {
+	typename AB<tupla>::Iterador it;
+	it = nodo_ab.crearIt();
+	postorder(it);
+}
+
+template<typename C, typename S>
+void diccLog<C,S>::postorder(typename AB<tupla>::Iterador it) {
+	std::cout << "(" << it.val().nivel << "," << it.val().clave << "," << it.val().significado << ")";
+	std::cout << "[";
+	if (it.itIzq()) {
+		postorder(it.itIzq());
+	}
+	std::cout << ",";
+	if (it.itDer()) {
+		postorder(it.itDer());
+	}
+	std::cout << "]";
+}
+
+/*template<typename C, typename S>
+void diccLog<C,S>::armarMatriz(typename AB<tupla>::Iterador it, char[][] &matriz) {
+	return NULL;
+}
+
+template<typename C, typename S>
+void diccLog<C,S>::mostrarAB() {
+	typename AB<tupla>::Iterador it = nodo_ab.crearIt();
+	diccLog<C,S>::tuplaAB arb;
+	char matriz[it.val().nivel+1][it.val().nivel*4];
+	armarMatriz(it, matriz);
 
 
-
+}*/
 
 
 
