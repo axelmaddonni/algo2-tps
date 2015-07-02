@@ -176,7 +176,12 @@ void diccLog<C,S>::DefinirNodo(C cla, S sig, typename AB<tupla>::Iterador nodoAc
 template<typename C, typename S>
 void diccLog<C,S>::Borrar(C cla) {
 	typename AB<tupla>::Iterador nodoActual = nodo_ab.crearIt();
-	BorrarNodo(cla, nodoActual);
+	//si es la raiz
+	if (nodoActual.val().clave==cla && !nodoActual.itDer() && !nodoActual.itIzq()) {
+		nil=true;
+	} else {
+		BorrarNodo(cla, nodoActual);
+	}
 }
 
 template<typename C, typename S>
@@ -202,23 +207,39 @@ void diccLog<C,S>::BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual) {
 	} else if (!nodoActual.itIzq()) {
 		//si estoy parado en el nodo que quiero borrar y no tiene hijo izquierdo
 		typename AB<tupla>::Iterador nodoAux = nodoActual.itDer();
+		//voy guardando el padre
+		typename AB<tupla>::Iterador nodoPadre = nodoActual;
 		//voy uno hacia la derecha y todo hacia la izquierda // busco el sucesor
 		while (nodoAux.itIzq()) {
+			nodoPadre = nodoAux;
 			nodoAux.izq();
 		}
 		//hago un swap del izquierdo del aux (el último hacia la izquierda) y del que voy a borrar
 		nodoActual.swapVal(nodoAux.itIzq());
-		BorrarNodo(cla,nodoAux.itIzq());
+		//borro el hijo correspondiente del padre
+		if (nodoPadre.itIzq()) {
+			nodoPadre.borrarIzq();
+		} else {
+			nodoPadre.borrarDer();
+		}
 	} else {
 		//si estoy parado en el nodo que quiero borrar
 		typename AB<tupla>::Iterador nodoAux = nodoActual.itIzq();
+		//voy guardando el padre
+		typename AB<tupla>::Iterador nodoPadre = nodoActual;
 		//voy uno hacia la izquierda y todo hacia la derecha // busco el predecesor
 		while (nodoAux.itDer()) {
+			nodoPadre = nodoAux;
 			nodoAux.der();
 		}
 		//hago un swap del derecho del aux (el último hacia la derecha) y del que voy a borrar
-		nodoActual.swapVal(nodoAux.itDer());
-		BorrarNodo(cla,nodoAux.itDer());
+		nodoActual.swapVal(nodoAux);
+		//borro el hijo correspondiente del padre
+		if (nodoPadre.itDer()) {
+			nodoPadre.borrarDer();
+		} else {
+			nodoPadre.borrarIzq();
+		}
 	}
 
 	Nivelar(nodoActual);
