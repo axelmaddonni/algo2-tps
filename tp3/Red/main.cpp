@@ -41,7 +41,7 @@ int main(){
 
 	//red.ImprimirRed(cout);
 
-	computadora compu4 = computadora("compu4", i);
+	/*computadora compu4 = computadora("compu4", i);
 	computadora compu5 = computadora("compu5", i);
 	computadora compu6 = computadora("compu6", i);
 
@@ -65,7 +65,72 @@ int main(){
 	cout << "Caminos minimos entre 6 y 1: " << endl;
 	Mostrar(cout, red.CaminosMinimos("compu6", "compu1"), '[', ']');
 	cout << endl << endl;
+*/
+	Red red2 = Red();
+	computadora c1 = computadora("c1", i);
+	computadora c2 = computadora("c2", i);
+	computadora c3 = computadora("c3", i);
+	computadora c4 = computadora("c4", i);
+	computadora c5 = computadora("c5", i);
+	computadora c6 = computadora("c6", i);
+	computadora c7 = computadora("c7", i);
+	computadora c8 = computadora("c8", i);
+	computadora c9 = computadora("c9", i);
+	//computadora c10 = computadora("c10", i);
+	
+	red2.AgregarCompu(c1);
+	red2.AgregarCompu(c2);
+	red2.AgregarCompu(c3);
+	red2.AgregarCompu(c4);
+	red2.AgregarCompu(c5);
+	red2.AgregarCompu(c6);
+	red2.AgregarCompu(c7);
+	red2.AgregarCompu(c8);
+	red2.AgregarCompu(c9);
 
+	c1 = computadora("c10", i);
+
+	red2.AgregarCompu(c1);
+
+	red2.Conectar("c1",1,"c2", 1);
+	red2.Conectar("c1",2,"c3", 1);
+	red2.Conectar("c1",3,"c5", 1);
+	red2.Conectar("c1",4,"c6", 1);
+	red2.Conectar("c1",5,"c4", 1);
+	red2.Conectar("c2",2,"c4", 2);
+	red2.Conectar("c2",3,"c3", 2);
+	red2.Conectar("c3",3,"c4", 3);
+	red2.Conectar("c7",1,"c8", 1);
+	red2.Conectar("c8",2,"c9", 1);
+	red2.Conectar("c9",2,"c10", 1);
+	red2.Conectar("c10",2,"c8", 3);
+	red2.Conectar("c7",2,"c10", 3);
+	
+	red2.ImprimirRed(cout);
+
+	Red red3 = Red(red2);
+
+	cout << endl << "Red2 == Red3?: " << ImprimirBool(red2==red3) << endl;
+
+	red3.Conectar("c10", 5, "c2", 5);
+	red3.Conectar("c7", 5, "c4", 5);
+	red3.ImprimirRed(cout);
+
+	cout << endl << "Red2 == Red3?: " << ImprimirBool(red2==red3) << endl;
+
+	/*prueba para ==
+	Red redprueba1 = Red();
+	Red redprueba2 = Red();
+
+	redprueba1.AgregarCompu(c1);
+	redprueba1.AgregarCompu(c2);
+	redprueba1.Conectar("c10", 2, "c2", 1);
+
+	redprueba2.AgregarCompu(c2);
+	redprueba2.AgregarCompu(c1);
+	redprueba2.Conectar("c2", 1, "c10", 2);
+	cout << endl << "prueba == : " << ImprimirBool(redprueba1==redprueba2) << endl;
+	*/
 
     return 0;
 }

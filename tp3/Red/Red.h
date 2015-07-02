@@ -22,33 +22,38 @@ class Red{
 			Dicc<interfaz, hostname> conexiones;
 			Dicc<hostname, Conj< Lista<hostname> > > alcanzables;
 
-			Datos(Conj<interfaz> is, Dicc<interfaz, hostname> cs, Dicc<hostname, Conj< Lista<hostname> > > as){
+			Datos(const Conj<interfaz>& is, const Dicc<interfaz, hostname>& cs, const Dicc<hostname, Conj< Lista<hostname> > >& as){
+				//copia las estructuras usando constructores por copia definidos
 				interfaces = is;
 				conexiones = cs;
 				alcanzables = as;
 			}
+
+			bool operator==(const Datos& otrosDatos) const{
+				return (interfaces == otrosDatos.interfaces) and (conexiones == otrosDatos.conexiones) and (alcanzables == otrosDatos.alcanzables);
+				}
 		};
 		
 		Dicc<hostname, Datos> red_;
 
-		void ActualizarCaminos(const hostname c1, const hostname c2);
-		void ActualizarVecinos(const hostname c1, Conj<hostname>& actualizados);
+		void ActualizarCaminos(const hostname& c1, const hostname& c2);
+		void ActualizarVecinos(const hostname& c1, Conj<hostname>& actualizados);
 
 	public:
 		
 
 		Conj<hostname> Computadoras() const;
-		bool Conectadas(const hostname c1, const hostname c2) const;
-		interfaz InterfazUsada(const hostname c1, const hostname c2) const;
+		bool Conectadas(const hostname& c1, const hostname& c2) const;
+		interfaz InterfazUsada(const hostname& c1, const hostname& c2) const;
 		Red(); //iniciar Red
 		Red(const Red& r); //copiar Red
-		//~Red(); //destructor
+		//~Red(); //uso destructor por defecto
 		void AgregarCompu(const computadora& compu);
-		void Conectar(const hostname c1, interfaz i1, const hostname c2, const interfaz i2);
-		Conj<hostname> Vecinos(const hostname compu) const;
-		bool UsaInterfaz(const hostname c, const interfaz i) const;
-		Conj< Lista<hostname> > CaminosMinimos(const hostname c1, const hostname c2) const;
-		bool HayCamino(const hostname c1, const hostname c2) const;
+		void Conectar(const hostname& c1, interfaz i1, const hostname& c2, interfaz i2);
+		Conj<hostname> Vecinos(const hostname& compu) const;
+		bool UsaInterfaz(const hostname& c, interfaz i) const;
+		Conj< Lista<hostname> > CaminosMinimos(const hostname& c1, const hostname& c2) const;
+		bool HayCamino(const hostname& c1, const hostname& c2) const;
 		bool operator == (const Red& otrared) const;
 
 		//IMPRIMIR RED (para testear)
@@ -66,7 +71,7 @@ Conj<hostname> Red::Computadoras() const{
 	return conjcompus;
 }
 
-bool Red::Conectadas(const hostname c1, const hostname c2) const{
+bool Red::Conectadas(const hostname& c1, const hostname& c2) const{
 	typename Dicc<interfaz, hostname>::const_Iterador it = red_.Significado(c1).conexiones.CrearIt();
 	bool res = false;
 	while(it.HaySiguiente() && (!res)){
@@ -79,7 +84,7 @@ bool Red::Conectadas(const hostname c1, const hostname c2) const{
 }
 
 
-interfaz Red::InterfazUsada(const hostname c1, const hostname c2) const{
+interfaz Red::InterfazUsada(const hostname& c1, const hostname& c2) const{
 	typename Dicc<interfaz, hostname>::const_Iterador it = red_.Significado(c1).conexiones.CrearIt();
 	while(it.HaySiguiente()){
 		if(it.SiguienteSignificado() == c2){
@@ -97,24 +102,26 @@ Red::Red(){
 }
 
 //Copiar Red
-Red::Red(const Red& r){}
-
-//Destructor
-/*
-~Red() {
+Red::Red(const Red& r){
+	red_ = Dicc<hostname, Datos>();
+	//Creo una red vacía.
+	typename Dicc<hostname, Datos>::const_Iterador itRed = r.red_.CrearIt();
+	while (itRed.HaySiguiente()){
+		String copiaHostname = String(itRed.SiguienteClave());
+		Datos data = Datos(itRed.SiguienteSignificado().interfaces, itRed.SiguienteSignificado().conexiones, itRed.SiguienteSignificado().alcanzables);
+		red_.DefinirRapido(copiaHostname, data);
+		itRed.Avanzar();
+	}
 }
-*/
+
 
 void Red::AgregarCompu(const computadora& compu){
-	Conj<interfaz> interfaces = Conj<interfaz>(compu.cinterfaces);
-	Dicc<interfaz, hostname> pcconexiones = Dicc<interfaz, hostname>();
-	Dicc<hostname, Conj< Lista<hostname> > > cjalcanzables = Dicc<hostname, Conj< Lista<hostname> > >();
-	//la ip(string) se copia sola??
-	Datos datospc = Datos(interfaces, pcconexiones, cjalcanzables);
-	red_.DefinirRapido(compu.ip, datospc);
+	Datos datospc = Datos(compu.cinterfaces, Dicc<interfaz, hostname>(), Dicc<hostname, Conj< Lista<hostname> > >());
+	String copiaID = String(compu.ip);
+	red_.Definir(copiaID, datospc);
 }
 
-void Red::Conectar(const hostname c1, interfaz i1, const hostname c2, const interfaz i2){
+void Red::Conectar(const hostname& c1, interfaz i1, const hostname& c2, interfaz i2){
 	//actualizo conexiones de ambas
 	red_.Significado(c1).conexiones.DefinirRapido(i1, c2);
 	red_.Significado(c2).conexiones.DefinirRapido(i2, c1);
@@ -170,7 +177,7 @@ void Red::Conectar(const hostname c1, interfaz i1, const hostname c2, const inte
 }
 
 //funcion private
-void Red::ActualizarVecinos(const hostname c1, Conj<hostname>& actualizados){
+void Red::ActualizarVecinos(const hostname& c1, Conj<hostname>& actualizados){
 	
 	typename Dicc<interfaz, hostname>::Iterador itVecinos = red_.Significado(c1).conexiones.CrearIt();
 	while(itVecinos.HaySiguiente()){
@@ -216,7 +223,7 @@ void Red::ActualizarVecinos(const hostname c1, Conj<hostname>& actualizadosGloba
 */
 
 //funcion private
-void Red::ActualizarCaminos(const hostname c1, const hostname c2){
+void Red::ActualizarCaminos(const hostname& c1, const hostname& c2){
 
 	typename Conj< Lista<hostname> >::Iterador itCaminos;
 	Conj< Lista<hostname> > caminos;
@@ -288,7 +295,7 @@ void Red::ActualizarCaminos(const hostname c1, const hostname c2){
 
 
 
-Conj<hostname> Red::Vecinos(const hostname compu) const{
+Conj<hostname> Red::Vecinos(const hostname& compu) const{
 	typename Dicc<interfaz, hostname>::const_Iterador it = red_.Significado(compu).conexiones.CrearIt();
 	Conj<hostname> res = Conj<hostname>();
 	while(it.HaySiguiente()){
@@ -299,11 +306,11 @@ Conj<hostname> Red::Vecinos(const hostname compu) const{
 }
 
 
-bool Red::UsaInterfaz(const hostname c, const interfaz i) const{
+bool Red::UsaInterfaz(const hostname& c, interfaz i) const{
 	return red_.Significado(c).conexiones.Definido(i);
 }	
 
-Conj< Lista<hostname> > Red::CaminosMinimos(const hostname c1, const hostname c2) const{
+Conj< Lista<hostname> > Red::CaminosMinimos(const hostname& c1, const hostname& c2) const{
 	typename Conj< Lista<hostname> >::const_Iterador itCaminos = red_.Significado(c1).alcanzables.Significado(c2).CrearIt();
 	Conj< Lista<hostname> > res = Conj< Lista<hostname> >();
 	while(itCaminos.HaySiguiente()){
@@ -314,12 +321,12 @@ Conj< Lista<hostname> > Red::CaminosMinimos(const hostname c1, const hostname c2
 }
 
 
-bool Red::HayCamino(const hostname c1, const hostname c2) const{
+bool Red::HayCamino(const hostname& c1, const hostname& c2) const{
 	return red_.Significado(c1).alcanzables.Definido(c2);
 }
 
 bool Red::operator == (const Red& otrared) const{
-		//+++ COMPLETAR +++
+		return red_ == otrared.red_;
 }
 
 std::ostream& Red::ImprimirRed(std::ostream& os) const{
