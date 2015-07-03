@@ -34,29 +34,13 @@ int main()
     if (test.Definido(clave)) cout << "Su significado es: " << test.Significado(clave);
     cout << endl;
 
-    cout << "Hacia la derecha" << endl;
-    test.printD();
-    cout << endl;
-    cout << "Hacia la izquierda" << endl;
-    test.printI();
-    cout << endl;
-    cout << "Hacia la derecha izquierda" << endl;
-    test.printDI();
-    cout << endl;
-    cout << "Hacia la izquierda derecha" << endl;
-    test.printID();
-    cout << endl;
-
-    //Hasta aca corre bien, pero con memory leaks
-
-    cout << endl << "Borrando: 2, 5." << endl;
-    
-    //Aca se rompe y tira SegFault
-
     clave = 2;
     test.Borrar(clave);
-    //clave = 5;
-    //test.Borrar(clave);
+
+    clave = 3;
+    test.Borrar(clave);
+    
+
     clave = 1;
     cout  << "La clave " << clave << (test.Definido(clave)? " " : " no ") << "esta definida.";
     if (test.Definido(clave)) cout << "Su significado es: " << test.Significado(clave);
@@ -76,5 +60,26 @@ int main()
     cout  << endl << "La clave " << clave << (test.Definido(clave)? " " : " no ") << "esta definida.";
     if (test.Definido(clave)) cout << "Su significado es: " << test.Significado(clave);
     cout << endl;
+
+    test.Definir(15, 2);
+    test.Definir(34, 8);
+    //test.Definir(20, 23);
+    //test.Definir(6, 53);
+    //test.Definir(29, 4);
+    //test.Definir(21, 40);
+
+    cout << "Hacia la derecha" << endl;
+    test.printD();
+    cout << endl;
+    cout << "Hacia la izquierda" << endl;
+    test.printI();
+    cout << endl;
+    cout << "Hacia la derecha izquierda" << endl;
+    test.printDI();
+    cout << endl;
+    cout << "Hacia la izquierda derecha" << endl;
+    test.printID();
+    cout << endl;
+
     return 0;
 }

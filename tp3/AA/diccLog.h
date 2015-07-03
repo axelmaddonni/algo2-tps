@@ -195,14 +195,16 @@ void diccLog<C,S>::BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual) {
 		//voy guardando el padre
 		typename AB<tupla>::Iterador nodoPadre = nodoActual;
 		//voy uno hacia la derecha y todo hacia la izquierda // busco el sucesor
+		bool hayDer = false;
 		while (nodoAux.itIzq()) {
 			nodoPadre = nodoAux;
 			nodoAux.izq();
+			hayDer = true;
 		}
 		//hago un swap del izquierdo del aux (el último hacia la izquierda) y del que voy a borrar
 		nodoActual.swapVal(nodoAux.itIzq());
 		//borro el hijo correspondiente del padre
-		if (nodoPadre.itIzq()) {
+		if (hayDer) {
 			nodoPadre.itIzq().borrar();
 			nodoPadre.borrarIzq();
 		} else {
@@ -215,14 +217,16 @@ void diccLog<C,S>::BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual) {
 		//voy guardando el padre
 		typename AB<tupla>::Iterador nodoPadre = nodoActual;
 		//voy uno hacia la izquierda y todo hacia la derecha // busco el predecesor
+		bool hayIzq = false;
 		while (nodoAux.itDer()) {
 			nodoPadre = nodoAux;
 			nodoAux.der();
+			hayIzq = true;
 		}
 		//hago un swap del derecho del aux (el último hacia la derecha) y del que voy a borrar
 		nodoActual.swapVal(nodoAux);
 		//borro el hijo correspondiente del padre
-		if (nodoPadre.itDer()) {
+		if (hayIzq) {
 			nodoPadre.itDer().borrar();
 			nodoPadre.borrarDer();
 		} else {
@@ -240,11 +244,12 @@ void diccLog<C,S>::BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual) {
 
 template<typename C, typename S>
 diccLog<C,S>::~diccLog() {
-	if (nil==false) {
+	if (!nil) {
 
 		typename AB<tupla>::Iterador itArbol;
 		itArbol = nodo_ab.crearIt();
 		itArbol.borrar();
+		nil = true;
 		nodo_ab.borrarAB();
 	}
 }
