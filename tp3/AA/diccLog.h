@@ -157,18 +157,7 @@ void diccLog<C,S>::DefinirNodo(C cla, S sig, typename AB<tupla>::Iterador nodoAc
 		}
 	}
 	Torsion(nodoActual);
-	//std::cout << "pasa torsion" << std::endl;
 	Division(nodoActual);
-	//std::cout << "pasa division" << std::endl;
-    /*printD();
-    std::cout << std::endl;
-    printI();
-    std::cout << std::endl;
-    printID();
-    std::cout << std::endl;
-    printDI();
-    std::cout << std::endl;
-    std::cout << std::endl;*/
 }
 
 
@@ -190,6 +179,7 @@ void diccLog<C,S>::BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual) {
 		//el nodo que busco está para la derecha
 			//si el nodo de la derecha es el que busco y no tiene hijos lo borro
 		if (nodoActual.itDer().val().clave == cla && !nodoActual.itDer().itDer() && !nodoActual.itDer().itIzq()) {
+			nodoActual.itDer().borrar();
 			nodoActual.borrarDer();
 		} else {
 			//sigo hacia la derecha con recursion
@@ -199,6 +189,7 @@ void diccLog<C,S>::BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual) {
 		//el nodo que busco está para la izquierda
 		if (nodoActual.itIzq().val().clave == cla && !nodoActual.itIzq().itDer() && !nodoActual.itIzq().itIzq()) {
 			//si el nodo de la izquierda es el que busco y no tiene hijos lo borro
+			nodoActual.itIzq().borrar();
 			nodoActual.borrarIzq();
 		} else {
 			//sigo hacia la izquierda con recursion
@@ -218,8 +209,10 @@ void diccLog<C,S>::BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual) {
 		nodoActual.swapVal(nodoAux.itIzq());
 		//borro el hijo correspondiente del padre
 		if (nodoPadre.itIzq()) {
+			nodoPadre.itIzq().borrar();
 			nodoPadre.borrarIzq();
 		} else {
+			nodoPadre.itDer().borrar();
 			nodoPadre.borrarDer();
 		}
 	} else {
@@ -236,8 +229,10 @@ void diccLog<C,S>::BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual) {
 		nodoActual.swapVal(nodoAux);
 		//borro el hijo correspondiente del padre
 		if (nodoPadre.itDer()) {
+			nodoPadre.itDer().borrar();
 			nodoPadre.borrarDer();
 		} else {
+			nodoPadre.itIzq().borrar();
 			nodoPadre.borrarIzq();
 		}
 	}
@@ -252,6 +247,10 @@ void diccLog<C,S>::BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual) {
 template<typename C, typename S>
 diccLog<C,S>::~diccLog() {
 	if (nil==false) {
+
+		typename AB<tupla>::Iterador itArbol;
+		itArbol = nodo_ab.crearIt();
+		itArbol.borrar();
 		nodo_ab.borrarAB();
 	}
 }
@@ -325,11 +324,8 @@ void diccLog<C,S>::Division(typename AB<tupla>::Iterador &itArbol) {
 	if (itArbol.itDer().itDer().val().nivel == itArbol.val().nivel) {
 		typename AB<tupla>::Iterador itAux;
 		itAux = itArbol.itDer();
-		//itArbol -> 6
-		//itAux -> 7
+
 		itArbol.swapVal(itAux);
-		//itArbol -> 7
-		//itAux -> 6
 
 		itArbol.setearDer(*itAux.itDer().act());
 		if (itAux.itIzq()) {
@@ -345,10 +341,6 @@ void diccLog<C,S>::Division(typename AB<tupla>::Iterador &itArbol) {
 		}
 		itArbol.setearIzq(*itAux.act());
 		itArbol.val().nivel ++;
-		
-		/*itArbol.setearDer(*itAux.itIzq().act());
-		itAux.setearIzq(*itArbol.act());
-		itAux.val().nivel ++;*/
 	}
 }
 
