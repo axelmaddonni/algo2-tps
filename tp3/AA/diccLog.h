@@ -43,8 +43,6 @@ class diccLog {
 		void DefinirNodo(C cla, S sig, typename AB<tupla>::Iterador nodoActual);
 		void BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual);
 	public:
-		void postorderA();
-		void postorder(typename AB<tupla>::Iterador it);
 
 		//Vacio() -> res : diccLog(C, S)
 		//Pre = {true}
@@ -141,18 +139,14 @@ template<typename C, typename S>
 void diccLog<C,S>::DefinirNodo(C cla, S sig, typename AB<tupla>::Iterador nodoActual) {
 	if (nodoActual.val().clave < cla) {
 		if (nodoActual.itDer()) {
-			//std::cout << "pasa derecha " << nodoActual.val().clave << " " << nodoActual.val().significado << std::endl;
 			DefinirNodo(cla, sig, nodoActual.itDer());
 		} else {
-			//std::cout << "setea derecho " << nodoActual.val().clave << " " << nodoActual.val().significado << std::endl;
 			nodoActual.setearDer(tupla(cla,1,sig));
 		}
 	} else {
 		if (nodoActual.itIzq()) {
-			//std::cout << "pasa izquierda " << nodoActual.val().clave << " " << nodoActual.val().significado << std::endl;
 			DefinirNodo(cla, sig, nodoActual.itIzq());
 		} else {
-			//std::cout << "setea izquierdo " << nodoActual.val().clave << " " << nodoActual.val().significado << std::endl;
 			nodoActual.setearIzq(tupla(cla,1,sig));
 		}
 	}
@@ -283,11 +277,7 @@ void diccLog<C,S>::Torsion(typename AB<tupla>::Iterador &itArbol) {
 	if (itArbol.itIzq().val().nivel == itArbol.val().nivel) {
 		typename AB<tupla>::Iterador itAux;
 		itAux = itArbol.itIzq();
-		//itArbol -> 9
-		//itAux -> 7
 		itArbol.swapVal(itAux);
-		//itArbol -> 7
-		//itAux -> 9
 		if (itAux.itIzq()) {
 			itArbol.setearIzq(*itAux.itIzq().act());
 		} else {
@@ -304,14 +294,6 @@ void diccLog<C,S>::Torsion(typename AB<tupla>::Iterador &itArbol) {
 			itAux.borrarDer();
 		}
 		itArbol.setearDer(*itAux.act());
-
-
-
-
-		/*itAux = itArbol.itIzq();
-		itArbol.setearIzq(*itAux.itDer().act());
-		itAux.setearDer(*itArbol.act());
-		itArbol = itAux;*/
 	}
 	return;
 }
@@ -399,27 +381,6 @@ void diccLog<C,S>::printDI() {
 	}
 }
 
-
-template<typename C, typename S>
-void diccLog<C,S>::postorderA() {
-	typename AB<tupla>::Iterador it;
-	it = nodo_ab.crearIt();
-	postorder(it);
-}
-
-template<typename C, typename S>
-void diccLog<C,S>::postorder(typename AB<tupla>::Iterador it) {
-	std::cout << "(" << it.val().nivel << "," << it.val().clave << "," << it.val().significado << ")";
-	std::cout << "[";
-	if (it.itIzq()) {
-		postorder(it.itIzq());
-	}
-	std::cout << ",";
-	if (it.itDer()) {
-		postorder(it.itDer());
-	}
-	std::cout << "]";
-}
 
 /*template<typename C, typename S>
 void diccLog<C,S>::armarMatriz(typename AB<tupla>::Iterador it, char[][] &matriz) {
