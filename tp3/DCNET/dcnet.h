@@ -15,6 +15,37 @@
 		Nat prioridad;
 		String origen;
 		String destino;
+
+		Paquete(int id, Nat p, String o, String d){
+			idpaquete = id;
+			prioridad = p;
+			origen = o;
+			destino = d;
+		}
+
+		Paquete(Paquete& otro){
+			idpaquete = otro.idpaquete;
+			prioridad = otro.prioridad;
+			origen = otro.origen;
+			destino = otro.destino;
+		}
+
+		void operator=(Paquete& otro){
+			idpaquete = otro.idpaquete;
+			prioridad = otro.prioridad;
+			origen = otro.origen;
+			destino = otro.destino;
+		}
+
+		bool operator==(const Paquete& otro) const{
+			return (idpaquete == otro.idpaquete) and (prioridad==otro.prioridad) and (origen==otro.origen) and (destino==otro.destino);
+		}
+
+		std::ostream& ImprimirPaquete(std::ostream& os) const{
+			os << "Paquete " << idpaquete << ", prioridad " << prioridad << std::endl;
+			os << "Origen: " << origen << ", Destino: " << destino << std::endl;
+		}
+
 	};
 
 
@@ -57,7 +88,7 @@ private:
 		Paquete paquete;
 		hostname destino;
 
-		TuplaDestinos(bool b, Paquete p, hostname s){
+		TuplaDestinos(bool b, Paquete& p, hostname s){
 			usado = b;
 			paquete = p;
 			destino = s;
@@ -75,9 +106,9 @@ public:
 
 	Conj<Paquete>& enEspera(hostname c) const ; 
 
-	Dcnet(const Red& r); //inicar dcnet
+	Dcnet(const Red& r); //iniciar dcnet
 
-	~Dcnet(); //destructor
+	//~Dcnet(); //destructor
 
 	void crearPaquete(const Paquete p);
 
@@ -88,6 +119,8 @@ public:
 	hostname laQueMasEnvio() const;
 
 	bool operator==(Dcnet& d) const; 
+
+	std::ostream& ImprimirDcnet(std::ostream& os) const;
 
 };
 
@@ -101,7 +134,7 @@ const Lista<hostname>& Dcnet::caminoRecorrido(Nat idpaquete) const{
 	typename Dicc<hostname, Datos>::const_Iterador itCompu = computadoras.CrearIt();
 	
 	bool yaEncontrado = false;
-	Paquete p;
+	Paquete p();
 
 	while (itCompu.HaySiguiente() && !yaEncontrado){
 		if  ( (itCompu.SiguienteSignificado().paqPorid).Definido(idpaquete) ){
@@ -128,6 +161,9 @@ Conj<Paquete>& Dcnet::enEspera(hostname c)  const{ //DEBERIA SER CONST, PERO EXP
 //Iniciar Dcnet
 Dcnet::Dcnet(const Red& r){
 
+	//Copio la red
+	red = Red(r);
+
 	//Completo computadoras y porHostname:
 
 	//creo un diccionario lineal
@@ -137,7 +173,8 @@ Dcnet::Dcnet(const Red& r){
 
 	//creo una lista vacía donde voy a guardar los hostnames y ordenarlos
 	Lista<hostname> listaComp = Lista<hostname>();
-	Conj<hostname>::const_Iterador itCompus = r.Computadoras().CrearIt();
+	Conj<hostname> compus = r.Computadoras();
+	Conj<hostname>::const_Iterador itCompus = compus.CrearIt();
 
 	while (itCompus.HaySiguiente()){
 		//agrego el hostname a la lista de computadoras
@@ -153,32 +190,30 @@ Dcnet::Dcnet(const Red& r){
 
 	//Hago esto para asignar los indices por orden alfabético
 	Nat indice = 0;
-	Nat cant = r.Computadoras().Cardinal();
+	Nat cant = compus.Cardinal();
 	hostname min;
 	Lista<hostname>::Iterador itHostname;
 	while (indice < cant ){
 		//busco el minimo de la lista de hostnames
 		itHostname = listaComp.CrearIt();
 		min = itHostname.Siguiente();
-		itHostname.Avanzar();
 		while (itHostname.HaySiguiente()){
-			if (min < itHostname.Siguiente()){
+			if (min > itHostname.Siguiente()){
 				min = itHostname.Siguiente();
 			}
 			itHostname.Avanzar();
 		}
-		//Inicializo DATOS (inicia el indice como cero, mas adelante les pondremos valor)
-		Dcnet::Datos X = Datos(0, Conj<Paquete>(), ColaLog<typename Conj<Paquete>::Iterador>(), diccLog<Nat,typename Conj<Paquete>::Iterador>(), indice);
-		typename Dicc<hostname, Datos>::Iterador itX = computadoras.DefinirRapido(itHostname.Siguiente(), X);
-		porHostname.definir(itHostname.Siguiente(), itX);
+		//Inicializo DATOS (con cantidad de envios en 0)
+		Dcnet::Datos X = Datos(indice, Conj<Paquete>(), ColaLog<typename Conj<Paquete>::Iterador>(), diccLog<Nat,typename Conj<Paquete>::Iterador>(), 0);
+		typename Dicc<hostname, Datos>::Iterador itX = computadoras.DefinirRapido(min, X);
+		porHostname.definir(min, itX);
 
 		//creo un iterador de la lista para eliminar el minimo que ya use
 		itHostname = listaComp.CrearIt();
-		bool noElimine = true;
-		while (itHostname.HaySiguiente() && noElimine){
+		while (itHostname.HaySiguiente()){
 			if(itHostname.Siguiente() == min){
 				itHostname.EliminarSiguiente();
-				noElimine = false;
+				break;
 			}
 			itHostname.Avanzar();
 		}
@@ -197,17 +232,20 @@ Dcnet::Dcnet(const Red& r){
 	while (itPC.HaySiguiente()){
 		Arreglo<Lista<hostname> > arrayDestinos = Arreglo<Lista<hostname> >(n);
 		while(itPC2.HaySiguiente()){
-			Conj<Lista<hostname> >::Iterador itConj = r.CaminosMinimos(itPC.SiguienteClave(), itPC2.SiguienteClave()).CrearIt();
-			//de todos los caminos me quedo con uno
-			if (itConj.HaySiguiente()){
-				arrayDestinos[itPC2.SiguienteSignificado().indice] = itConj.Siguiente();
+			if (r.HayCamino(itPC.SiguienteClave(), itPC2.SiguienteClave())){
+				Conj<Lista<hostname> > caminosMinimos = r.CaminosMinimos(itPC.SiguienteClave(), itPC2.SiguienteClave());
+				Conj<Lista<hostname> >::Iterador itConj = caminosMinimos.CrearIt();
+				//de todos los caminos me quedo con uno
+				//if (itConj.HaySiguiente()){
+				arrayDestinos.Definir(itPC2.SiguienteSignificado().indice, itConj.Siguiente());
+				//}
 			}else{
 				//si no hay camino, creo una lista vacia
-				arrayDestinos[itPC2.SiguienteSignificado().indice] = Lista<hostname>();
+				arrayDestinos.Definir(itPC2.SiguienteSignificado().indice, Lista<hostname>());
 			}
 			itPC2.Avanzar();
 		}
-		caminos[itPC.SiguienteSignificado().indice] = arrayDestinos;
+		caminos.Definir(itPC.SiguienteSignificado().indice, arrayDestinos);
 		itPC.Avanzar();
 	}
 
@@ -241,7 +279,7 @@ void Dcnet::avanzarSegundo(){
 	//inicializo variables
 	
 	Conj<Paquete>::Iterador itPaquete;
-	Paquete paqueteDesencolado;
+	Paquete paqueteDesencolado();
 	Nat origen;
 	Nat destino;
 	hostname proxDest;
@@ -361,6 +399,29 @@ bool Dcnet::operator==(Dcnet& d) const {
 		}
 	}
 	return res;
+}
+
+
+std::ostream& Dcnet::ImprimirDcnet(std::ostream& os) const{
+	Dicc<hostname, Datos>::const_Iterador itDcnet = computadoras.CrearIt();
+	os << "Información de la Dcnet: " << std::endl;
+
+	while(itDcnet.HaySiguiente()){
+		os << "Hostname: " << itDcnet.SiguienteClave() << std::endl;
+		os << "Indice: " << itDcnet.SiguienteSignificado().indice << std::endl;
+		os << "Paquetes: " ;
+			Conj<Paquete>::const_Iterador itPaq = itDcnet.SiguienteSignificado().paquetes.CrearIt();
+			while (itPaq.HaySiguiente()){
+				itPaq.Siguiente().ImprimirPaquete(os);
+			}
+		os << std::endl;
+		os << "Cantidad de envíos: " << itDcnet.SiguienteSignificado().cantEnvios << std::endl;
+		itDcnet.Avanzar();
+	}
+
+	//os << "caminos: ";
+	//Mostrar(caminos, '[', ']');
+
 }
 
 

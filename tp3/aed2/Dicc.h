@@ -211,8 +211,8 @@ typename Dicc<K,S>::Iterador Dicc<K,S>::DefinirRapido(const K& clave, const S& s
   assert( not Definido(clave) );
   #endif
 
-  claves_.AgregarAdelante(clave);
-  significados_.AgregarAdelante(significado);
+  claves_.AgregarAtras(clave);
+  significados_.AgregarAtras(significado);
 
   return CrearIt();
 }

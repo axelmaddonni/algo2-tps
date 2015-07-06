@@ -54,13 +54,13 @@ class diccLog {
 		//Pre = {true}
 		//Post = {res =obs def?(c,d)}
 		//O(log(n)*comparar(C))
-		bool Definido(const C cla);
+		bool Definido(const C cla) const;
 
 		//Significado(in d: diccLog(C,S), in c: C) -> res : S
 		//Pre = {def?(c,d)}
 		//Post = {res =obs obtener(c,d)}
 		//O(log(n)*comparar(C) + copiar(S))
-		S Significado(const C cla);
+		S Significado(const C cla) const;
 
 		//Definir(in/out) d: diccLog(C,S), in c: C, in s: S)
 		//Pre = {!def?(c,d) AND d=d0}
@@ -92,7 +92,7 @@ diccLog<C,S>::diccLog() {
 }
 
 template<typename C, typename S>
-bool diccLog<C,S>::Definido(const C cla) {
+bool diccLog<C,S>::Definido(const C cla) const {
 	typename AB<tupla>::Iterador nodoActual = nodo_ab.crearIt();
 	int i = 0;
 	while(nodoActual && i<4) {
@@ -109,7 +109,7 @@ bool diccLog<C,S>::Definido(const C cla) {
 }
 
 template<typename C, typename S>
-S diccLog<C,S>::Significado(const C cla) {
+S diccLog<C,S>::Significado(const C cla) const {
 	typename AB<tupla>::Iterador nodoActual = nodo_ab.crearIt();
 	while(nodoActual) {
 		if (nodoActual.val().clave==cla) {

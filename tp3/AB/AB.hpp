@@ -105,7 +105,7 @@ public:
 
     void operator=(const Iterador& nuevo) { primero = nuevo.actual; }
     void operator=(V nuevo) { primero = new Nodo(nuevo); }
-    Iterador crearIt() { return Iterador(primero); }
+    Iterador crearIt() const { return Iterador(primero); }
 
     void reset()
     {
