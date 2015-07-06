@@ -62,7 +62,9 @@ public:
     bool inv ()
     {
         auto it = typename AB<tupla>::Iterador(arb);
-        if (it) return invNodo(it);
+        if (it) {
+            return invNodo(it);
+        }
     }
 
     bool invNodo(typename AB<tupla>::Iterador it)

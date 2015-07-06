@@ -173,8 +173,9 @@ void diccLog<C,S>::BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual) {
 		//el nodo que busco está para la derecha
 			//si el nodo de la derecha es el que busco y no tiene hijos lo borro
 		if (nodoActual.itDer().val().clave == cla && !nodoActual.itDer().itDer() && !nodoActual.itDer().itIzq()) {
-			nodoActual.itDer().borrar();
-			nodoActual.borrarDer();
+			std::cout << "acaa 1" << std::endl;
+			nodoActual.borrarPostaDer();
+			std::cout << "acaa 2" << std::endl;
 		} else {
 			//sigo hacia la derecha con recursion
 			BorrarNodo(cla, nodoActual.itDer());
@@ -183,8 +184,7 @@ void diccLog<C,S>::BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual) {
 		//el nodo que busco está para la izquierda
 		if (nodoActual.itIzq().val().clave == cla && !nodoActual.itIzq().itDer() && !nodoActual.itIzq().itIzq()) {
 			//si el nodo de la izquierda es el que busco y no tiene hijos lo borro
-			nodoActual.itIzq().borrar();
-			nodoActual.borrarIzq();
+			nodoActual.borrarPostaIzq();
 		} else {
 			//sigo hacia la izquierda con recursion
 			BorrarNodo(cla, nodoActual.itIzq());
@@ -205,11 +205,9 @@ void diccLog<C,S>::BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual) {
 		nodoActual.swapVal(nodoAux.itIzq());
 		//borro el hijo correspondiente del padre
 		if (hayDer) {
-			nodoPadre.itIzq().borrar();
-			nodoPadre.borrarIzq();
+			nodoPadre.borrarPostaIzq();
 		} else {
-			nodoPadre.itDer().borrar();
-			nodoPadre.borrarDer();
+			nodoPadre.borrarPostaDer();
 		}
 	} else {
 		//si estoy parado en el nodo que quiero borrar
@@ -227,11 +225,9 @@ void diccLog<C,S>::BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual) {
 		nodoActual.swapVal(nodoAux);
 		//borro el hijo correspondiente del padre
 		if (hayIzq) {
-			nodoPadre.itDer().borrar();
-			nodoPadre.borrarDer();
+			nodoPadre.borrarPostaDer();
 		} else {
-			nodoPadre.itIzq().borrar();
-			nodoPadre.borrarIzq();
+			nodoPadre.borrarPostaIzq();
 		}
 	}
 

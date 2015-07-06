@@ -125,11 +125,5 @@ int main()
     cout << (test.inv()? "S" : "No s") << "e mantiene el invariante." << endl;
     cout << test.desencolar() << endl;
     cout << (test.inv()? "S" : "No s") << "e mantiene el invariante." << endl;
-    cout << test.desencolar() << endl;
-    cout << (test.inv()? "S" : "No s") << "e mantiene el invariante." << endl;
-    cout << test.desencolar() << endl;
-    cout << (test.inv()? "S" : "No s") << "e mantiene el invariante." << endl;
-    cout << test.desencolar() << endl;
-    cout << (test.inv()? "S" : "No s") << "e mantiene el invariante." << endl;
     return 0;
 }

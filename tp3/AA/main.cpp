@@ -34,11 +34,13 @@ int main()
     if (test.Definido(clave)) cout << "Su significado es: " << test.Significado(clave);
     cout << endl;
 
+
     clave = 2;
     test.Borrar(clave);
 
     clave = 3;
     test.Borrar(clave);
+    
     
 
     clave = 1;
@@ -63,10 +65,10 @@ int main()
 
     test.Definir(15, 2);
     test.Definir(34, 8);
-    //test.Definir(20, 23);
-    //test.Definir(6, 53);
-    //test.Definir(29, 4);
-    //test.Definir(21, 40);
+    test.Definir(20, 23);
+    test.Definir(6, 53);
+    test.Definir(29, 4);
+    test.Definir(21, 40);
 
     cout << "Hacia la derecha" << endl;
     test.printD();

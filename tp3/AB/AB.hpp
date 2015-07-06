@@ -23,8 +23,8 @@ private:
 
     void borrar(Nodo *aBorrar)
     {
-        if (aBorrar->izquierdo) borrar(aBorrar->izquierdo);
-        if (aBorrar->derecho) borrar(aBorrar->derecho);
+        //if (aBorrar->izquierdo.crearIt()) borrar(aBorrar->izquierdo);
+        //if (aBorrar->derecho.crearIt()) borrar(aBorrar->derecho);
         delete aBorrar;
     }
 
@@ -50,10 +50,10 @@ public:
     ///*
     ~AB()
     {
-        if (primero) 
+            if (primero) 
         {
-            //cout << "Borrando 0x" << (unsigned long) primero << '\n';
             borrar(primero);
+            borrarAB();
         }
     }
     //*/
@@ -83,10 +83,22 @@ public:
         void setearIzq(V nuevo) { actual->izquierdo = new Nodo(nuevo); }
         void setearDer(V nuevo) { actual->derecho = new Nodo(nuevo); }       
         void asignar(V nuevo) { actual->val = nuevo; }
+        //falso borrar que no borra NO TE CONFIES
+        //borrar solo sirve recursivamente a los hijos, pero no borra el actual
         void borrar() { delete actual; }
+        //borrarIzq y borrarDer solo setean los punteros como nulos,
         void borrarIzq() { actual->izquierdo = nullptr; }
         void borrarDer() { actual->derecho = nullptr; }
-
+        //estos si borran
+        void borrarPostaIzq() { 
+            delete *(AB<V>*) &(actual->izquierdo);
+            borrarIzq();
+        }
+        void borrarPostaDer() { 
+            delete *(AB<V>*) &(actual->derecho);
+            borrarDer();
+        }
+        
         Iterador itIzq() { return Iterador(actual->izquierdo); }
         Iterador itDer() { return Iterador(actual->derecho); }
 
