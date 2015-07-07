@@ -173,9 +173,7 @@ void diccLog<C,S>::BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual) {
 		//el nodo que busco está para la derecha
 			//si el nodo de la derecha es el que busco y no tiene hijos lo borro
 		if (nodoActual.itDer().val().clave == cla && !nodoActual.itDer().itDer() && !nodoActual.itDer().itIzq()) {
-			std::cout << "acaa 1" << std::endl;
 			nodoActual.borrarPostaDer();
-			std::cout << "acaa 2" << std::endl;
 		} else {
 			//sigo hacia la derecha con recursion
 			BorrarNodo(cla, nodoActual.itDer());

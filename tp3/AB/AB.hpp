@@ -23,8 +23,8 @@ private:
 
     void borrar(Nodo *aBorrar)
     {
-        //if (aBorrar->izquierdo.crearIt()) borrar(aBorrar->izquierdo);
-        //if (aBorrar->derecho.crearIt()) borrar(aBorrar->derecho);
+        //if (aBorrar->izquierdo) borrar(aBorrar->izquierdo);
+        //if (aBorrar->derecho) borrar(aBorrar->derecho);
         delete aBorrar;
     }
 

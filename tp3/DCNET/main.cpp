@@ -32,8 +32,14 @@ int main(){
 	
 	d1.ImprimirDcnet(cout);
 
-	Paquete p1(1, 5, "compu1", "compu3");
+	Paquete p1 = Paquete(1, 5, "compu1", "compu3");
 	Paquete p2(2, 1, "compu3", "compu2");
+
+	d1.crearPaquete(p1);
+
+	d1.ImprimirDcnet(cout);
+
+	d1.avanzarSegundo();
 
     return 0;
 }

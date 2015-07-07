@@ -23,14 +23,21 @@
 			destino = d;
 		}
 
-		Paquete(Paquete& otro){
+		Paquete() {
+			idpaquete = 0;
+			prioridad = 0;
+			origen = "";
+			destino = "";
+		}
+
+		Paquete(const Paquete& otro){
 			idpaquete = otro.idpaquete;
 			prioridad = otro.prioridad;
 			origen = otro.origen;
 			destino = otro.destino;
 		}
 
-		void operator=(Paquete& otro){
+		void operator=(const Paquete& otro){
 			idpaquete = otro.idpaquete;
 			prioridad = otro.prioridad;
 			origen = otro.origen;
@@ -43,7 +50,7 @@
 
 		std::ostream& ImprimirPaquete(std::ostream& os) const{
 			os << "Paquete " << idpaquete << ", prioridad " << prioridad << std::endl;
-			os << "Origen: " << origen << ", Destino: " << destino << std::endl;
+			os << "Origen: " << origen << ", Destino: " << destino;
 		}
 
 	};
@@ -110,7 +117,7 @@ public:
 
 	//~Dcnet(); //destructor
 
-	void crearPaquete(const Paquete p);
+	void crearPaquete(Paquete p);
 
 	void avanzarSegundo();
 
@@ -134,7 +141,7 @@ const Lista<hostname>& Dcnet::caminoRecorrido(Nat idpaquete) const{
 	typename Dicc<hostname, Datos>::const_Iterador itCompu = computadoras.CrearIt();
 	
 	bool yaEncontrado = false;
-	Paquete p();
+	Paquete p; //(0, 0, "", "");
 
 	while (itCompu.HaySiguiente() && !yaEncontrado){
 		if  ( (itCompu.SiguienteSignificado().paqPorid).Definido(idpaquete) ){
@@ -258,7 +265,7 @@ Dcnet::Dcnet(const Red& r){
 */
 
 //Crear Paquete
-void Dcnet::crearPaquete(const Paquete p){
+void Dcnet::crearPaquete(Paquete p){
 	typename Dicc<hostname, Datos>::Iterador itPC = *(porHostname.obtener(p.origen));
 	typename Conj<Paquete>::Iterador itPaq = (itPC.SiguienteSignificado().paquetes).AgregarRapido(p);
 	(itPC.SiguienteSignificado().cola).encolar(p.prioridad, itPaq);
@@ -279,7 +286,7 @@ void Dcnet::avanzarSegundo(){
 	//inicializo variables
 	
 	Conj<Paquete>::Iterador itPaquete;
-	Paquete paqueteDesencolado();
+	Paquete paqueteDesencolado;
 	Nat origen;
 	Nat destino;
 	hostname proxDest;
@@ -413,6 +420,7 @@ std::ostream& Dcnet::ImprimirDcnet(std::ostream& os) const{
 			Conj<Paquete>::const_Iterador itPaq = itDcnet.SiguienteSignificado().paquetes.CrearIt();
 			while (itPaq.HaySiguiente()){
 				itPaq.Siguiente().ImprimirPaquete(os);
+				itPaq.Avanzar();
 			}
 		os << std::endl;
 		os << "Cantidad de envíos: " << itDcnet.SiguienteSignificado().cantEnvios << std::endl;
