@@ -49,8 +49,8 @@
 		}
 
 		std::ostream& ImprimirPaquete(std::ostream& os) const{
-			os << "Paquete " << idpaquete << ", prioridad " << prioridad << std::endl;
-			os << "Origen: " << origen << ", Destino: " << destino;
+			os << "Paquete " << idpaquete << ", prioridad " << prioridad ;
+			os << ", Origen: " << origen << ", Destino: " << destino;
 		}
 
 	};
@@ -91,12 +91,10 @@ private:
 	Arreglo<Arreglo<Lista<hostname> > > caminos;
 
 	struct TuplaDestinos{
-		bool usado;
 		Paquete paquete;
 		hostname destino;
 
-		TuplaDestinos(bool b, Paquete& p, hostname s){
-			usado = b;
+		TuplaDestinos(Paquete& p, hostname s){
 			paquete = p;
 			destino = s;
 		}
@@ -105,25 +103,25 @@ private:
 
 public:
 
-	const Red& dameRed() const;
+	const Red& DameRed() const;
 
-	const Lista<hostname>& caminoRecorrido(Nat idpaquete) const; //devolvemos por referencia
+	const Lista<hostname>& CaminoRecorrido(Nat idpaquete) const; //devolvemos por referencia
 
-	Nat cantidadEnviados(hostname c) const ; 
+	Nat CantidadEnviados(hostname c) const ; 
 
-	Conj<Paquete>& enEspera(hostname c) const ; 
+	Conj<Paquete>& EnEspera(hostname c) const ; 
 
 	Dcnet(const Red& r); //iniciar dcnet
 
 	//~Dcnet(); //destructor
 
-	void crearPaquete(Paquete p);
+	void CrearPaquete(Paquete p);
 
-	void avanzarSegundo();
+	void AvanzarSegundo();
 
-	bool paqueteEnTransito(Nat p) const;
+	bool PaqueteEnTransito(Nat p) const;
 
-	hostname laQueMasEnvio() const;
+	hostname LaQueMasEnvio() const;
 
 	bool operator==(Dcnet& d) const; 
 
@@ -132,12 +130,12 @@ public:
 };
 
 //Red
-const Red& Dcnet::dameRed() const{
+const Red& Dcnet::DameRed() const{
 	return red;
 }
 
 //Camino Recorrido
-const Lista<hostname>& Dcnet::caminoRecorrido(Nat idpaquete) const{
+const Lista<hostname>& Dcnet::CaminoRecorrido(Nat idpaquete) const{
 	typename Dicc<hostname, Datos>::const_Iterador itCompu = computadoras.CrearIt();
 	
 	bool yaEncontrado = false;
@@ -155,12 +153,12 @@ const Lista<hostname>& Dcnet::caminoRecorrido(Nat idpaquete) const{
 }
 
 //Paquetes enviados
-Nat Dcnet::cantidadEnviados(hostname c)  const{ //DEBERIA SER CONST, PERO EXPLOTA AL USAR OBTENER
+Nat Dcnet::CantidadEnviados(hostname c)  const{ //DEBERIA SER CONST, PERO EXPLOTA AL USAR OBTENER
 	return (porHostname.obtener(c))->SiguienteSignificado().cantEnvios;
 }
 
 //En Espera
-Conj<Paquete>& Dcnet::enEspera(hostname c)  const{ //DEBERIA SER CONST, PERO EXPLOTA AL USAR OBTENER
+Conj<Paquete>& Dcnet::EnEspera(hostname c)  const{ //DEBERIA SER CONST, PERO EXPLOTA AL USAR OBTENER
 	return (porHostname.obtener(c))->SiguienteSignificado().paquetes;
 }
 
@@ -234,7 +232,8 @@ Dcnet::Dcnet(const Red& r){
 	Dicc<hostname, Datos>::Iterador itPC = computadoras.CrearIt();
 	Dicc<hostname, Datos>::Iterador itPC2 = computadoras.CrearIt();
 	Nat n = computadoras.CantClaves();
-	Arreglo<Arreglo<Lista<hostname> > > caminos = Arreglo<Arreglo<Lista<hostname> > >(n);
+	caminos = Arreglo<Arreglo<Lista<hostname> > >(n);
+
 	//voy a crear un arreglo en cada posición de array caminos, el cual va a tener el mínimo camino
 	while (itPC.HaySiguiente()){
 		Arreglo<Lista<hostname> > arrayDestinos = Arreglo<Lista<hostname> >(n);
@@ -254,6 +253,7 @@ Dcnet::Dcnet(const Red& r){
 		}
 		caminos.Definir(itPC.SiguienteSignificado().indice, arrayDestinos);
 		itPC.Avanzar();
+		itPC2 = computadoras.CrearIt();
 	}
 
 }
@@ -265,23 +265,20 @@ Dcnet::Dcnet(const Red& r){
 */
 
 //Crear Paquete
-void Dcnet::crearPaquete(Paquete p){
+void Dcnet::CrearPaquete(Paquete p){
 	typename Dicc<hostname, Datos>::Iterador itPC = *(porHostname.obtener(p.origen));
 	typename Conj<Paquete>::Iterador itPaq = (itPC.SiguienteSignificado().paquetes).AgregarRapido(p);
 	(itPC.SiguienteSignificado().cola).encolar(p.prioridad, itPaq);
-	(itPC.SiguienteSignificado().paqPorid).Definir(p.idpaquete, itPaq);
+	(itPC.SiguienteSignificado().paqPorid).Definir(p.idpaquete, itPaq); //MEMORY LEAK!!!!!!!!!!!!!!
 }
 
 //Avanzar segundo
-void Dcnet::avanzarSegundo(){
+void Dcnet::AvanzarSegundo(){
 	
 	//inicializo arreglo auxiliar en false
 	Nat cant = computadoras.CantClaves();
 	Nat i;
 	Arreglo<Dcnet::TuplaDestinos> arreglo = Arreglo<Dcnet::TuplaDestinos>(cant);
-	for(i=0; i<cant; i++){
-		arreglo[i].usado = false;
-	}
 
 	//inicializo variables
 	
@@ -313,13 +310,12 @@ void Dcnet::avanzarSegundo(){
 			origen = itCompu.SiguienteSignificado().indice;
 			itdestino = *porHostname.obtener(paqueteDesencolado.destino);
 			destino = itdestino.SiguienteSignificado().indice;
-			//el proximo destino es el segundo de la lista (posicion 1):
+			//el proximo destino es el primero de la lista:
 			itlista = caminos[origen][destino].CrearIt();
-			itlista.Avanzar();
 			proxDest = itlista.Siguiente();
 			//Lo inserto en el arreglo junto con el destino sólo si el destino no era el final
 			if (proxDest != paqueteDesencolado.destino){
-				arreglo[i] = TuplaDestinos(true, paqueteDesencolado, proxDest);				
+				arreglo.Definir(i, TuplaDestinos(paqueteDesencolado, proxDest));				
 			}
 			//Aumento cantidad de envios
 			itCompu.SiguienteSignificado().sumarEnvio();
@@ -337,7 +333,7 @@ void Dcnet::avanzarSegundo(){
 	i = 0;
 
 	while (itCompu.HaySiguiente()){
-		if (arreglo[i].usado){
+		if (arreglo.Definido(i)){
 			//Busco el proxDest guardado en el arreglo por hostname
 			itdestino = *porHostname.obtener(arreglo[i].destino);
 			//agrego el paquete al conjunto de paquetes del prox destino
@@ -347,7 +343,7 @@ void Dcnet::avanzarSegundo(){
 			itdestino.SiguienteSignificado().cola.encolar(prioridad, itPaquete);
 			//lo agrego en el AA
 			IDpaq = arreglo[i].paquete.idpaquete;
-			itdestino.SiguienteSignificado().paqPorid.Definir(IDpaq, itPaquete);			
+			itdestino.SiguienteSignificado().paqPorid.Definir(IDpaq, itPaquete);	// MEMORY LEAK!!!!!!!!!!!		
 		}
 		i++;
 		itCompu.Avanzar();
@@ -356,7 +352,7 @@ void Dcnet::avanzarSegundo(){
 }
 
 //Paquete en transito
-bool Dcnet::paqueteEnTransito(Nat p) const{
+bool Dcnet::PaqueteEnTransito(Nat p) const{
 	bool res = false;
 	typename Dicc<hostname, Dcnet::Datos>::const_Iterador itCompu = computadoras.CrearIt();
 	while(itCompu.HaySiguiente() && !res){
@@ -373,7 +369,7 @@ bool Dcnet::paqueteEnTransito(Nat p) const{
 }
 
 //La que más envió
-hostname Dcnet::laQueMasEnvio() const{
+hostname Dcnet::LaQueMasEnvio() const{
 	return conMasEnvios.SiguienteClave();
 }
 
@@ -381,7 +377,7 @@ hostname Dcnet::laQueMasEnvio() const{
 bool Dcnet::operator==(Dcnet& d) const {
 	//comparo redes usando == de red
 	bool res;
-	res = (this->dameRed() == d.dameRed());
+	res = (this->DameRed() == d.DameRed());
 	if (res){
 		//defino variables
 		typename Dicc<hostname, Datos>::const_Iterador itCompu = computadoras.CrearIt();
@@ -392,14 +388,14 @@ bool Dcnet::operator==(Dcnet& d) const {
 		//recorro las computadoras
 		while (itCompu.HaySiguiente() && res){
 			host = itCompu.SiguienteClave();
-			//comparo enEspera usando == de conjunto lineal y cant. enviados
-			res = (this->enEspera(host) == d.enEspera(host) && this->cantidadEnviados(host) == d.cantidadEnviados(host) );
+			//comparo EnEspera usando == de conjunto lineal y cant. enviados
+			res = (this->EnEspera(host) == d.EnEspera(host) && this->CantidadEnviados(host) == d.CantidadEnviados(host) );
 			itpaq = (itCompu.SiguienteSignificado().paquetes).CrearIt();
 			j = 0;
 			while (itpaq.HaySiguiente() && res){
 				id = itpaq.Siguiente().idpaquete;
 				//comparo caminosRecorridos usando == de listas enlazadas
-				res = (this->caminoRecorrido(id) == d.caminoRecorrido(id));
+				res = (this->CaminoRecorrido(id) == d.CaminoRecorrido(id));
 				itpaq.Avanzar();
 			}
 			itCompu.Avanzar();
@@ -419,11 +415,12 @@ std::ostream& Dcnet::ImprimirDcnet(std::ostream& os) const{
 		os << "Paquetes: " ;
 			Conj<Paquete>::const_Iterador itPaq = itDcnet.SiguienteSignificado().paquetes.CrearIt();
 			while (itPaq.HaySiguiente()){
+				cout << std::endl;
 				itPaq.Siguiente().ImprimirPaquete(os);
 				itPaq.Avanzar();
 			}
 		os << std::endl;
-		os << "Cantidad de envíos: " << itDcnet.SiguienteSignificado().cantEnvios << std::endl;
+		os << "Cantidad de envíos: " << itDcnet.SiguienteSignificado().cantEnvios << std::endl << std::endl;
 		itDcnet.Avanzar();
 	}
 
