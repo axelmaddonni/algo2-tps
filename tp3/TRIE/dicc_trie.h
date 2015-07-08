@@ -180,7 +180,7 @@ public:
 
         void irAlFondo()
         {
-            while(!dicc->siguiente.empty())
+            while(!dicc->siguiente.empty() && dicc->es_final == false)
                 dicc = (*(dicc->siguiente.begin())).second;
         }
 
