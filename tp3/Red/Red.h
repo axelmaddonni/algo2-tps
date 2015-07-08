@@ -1,3 +1,6 @@
+#ifndef RED_H_
+#define RED_H_
+
 #include "../aed2.h"
 
 typedef String hostname;
@@ -56,10 +59,17 @@ class Red{
 		bool HayCamino(const hostname& c1, const hostname& c2) const;
 		bool operator == (const Red& otrared) const;
 
+		Conj<interfaz> Interfaces(const hostname& c) const;
+
 		//IMPRIMIR RED (para testear)
 		std::ostream& ImprimirRed(std::ostream& os) const;
 };
 
+Conj<interfaz> Red::Interfaces(const hostname& c) const{
+
+	return red_.Significado(c).interfaces;
+
+}
 
 Conj<hostname> Red::Computadoras() const{
 	typename  Dicc<hostname, Red::Datos>::const_Iterador it = red_.CrearIt();
@@ -92,6 +102,7 @@ interfaz Red::InterfazUsada(const hostname& c1, const hostname& c2) const{
 		}
 		it.Avanzar();
 	}
+	return 0;
 }
 
 //Constructores
@@ -359,5 +370,7 @@ std::ostream& Red::ImprimirRed(std::ostream& os) const{
 		os << std::endl << std::endl;
 		itRed.Avanzar();
 	}
+	return os;
 }
 
+#endif

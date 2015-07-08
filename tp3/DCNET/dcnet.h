@@ -1,5 +1,5 @@
-#ifndef dcnet
-#define dcnet
+#ifndef DCNET_H_
+#define DCNET_H_
 
 #include "../aed2.h"
 #include "../Heap/Heap.hpp"
@@ -11,12 +11,12 @@
 	typedef String hostname;
 
 	struct Paquete{
-		int idpaquete;
+		Nat idpaquete;
 		Nat prioridad;
 		String origen;
 		String destino;
 
-		Paquete(int id, Nat p, String o, String d){
+		Paquete(Nat id, Nat p, String o, String d){
 			idpaquete = id;
 			prioridad = p;
 			origen = o;
@@ -51,6 +51,7 @@
 		std::ostream& ImprimirPaquete(std::ostream& os) const{
 			os << "Paquete " << idpaquete << ", prioridad " << prioridad ;
 			os << ", Origen: " << origen << ", Destino: " << destino;
+			return os;
 		}
 
 	};
@@ -111,6 +112,8 @@ public:
 
 	Conj<Paquete>& EnEspera(hostname c) const ; 
 
+	Dcnet();
+
 	Dcnet(const Red& r); //iniciar dcnet
 
 	//~Dcnet(); //destructor
@@ -127,7 +130,24 @@ public:
 
 	std::ostream& ImprimirDcnet(std::ostream& os) const;
 
+	const Paquete& damePaquete(Nat idpaquete) const;
+
 };
+
+const Paquete& Dcnet::damePaquete(Nat idpaquete) const{
+
+typename Dicc<hostname, Datos>::const_Iterador itCompu = computadoras.CrearIt();
+	
+	while (itCompu.HaySiguiente()){
+		if  ( (itCompu.SiguienteSignificado().paqPorid).Definido(idpaquete) ){
+			return ((itCompu.SiguienteSignificado()).paqPorid).Significado(idpaquete).Siguiente();
+		}else{
+			itCompu.Avanzar();
+		}
+	}
+ return Paquete();
+}
+
 
 //Red
 const Red& Dcnet::DameRed() const{
@@ -160,6 +180,11 @@ Nat Dcnet::CantidadEnviados(hostname c)  const{ //DEBERIA SER CONST, PERO EXPLOT
 //En Espera
 Conj<Paquete>& Dcnet::EnEspera(hostname c)  const{ //DEBERIA SER CONST, PERO EXPLOTA AL USAR OBTENER
 	return (porHostname.obtener(c))->SiguienteSignificado().paquetes;
+}
+
+
+Dcnet::Dcnet(){
+	Dcnet(Red());
 }
 
 
@@ -384,14 +409,14 @@ bool Dcnet::operator==(Dcnet& d) const {
 		hostname host;
 		typename Conj<Paquete>::const_Iterador itpaq;
 		Nat id;
-		Nat j;
+		
 		//recorro las computadoras
 		while (itCompu.HaySiguiente() && res){
 			host = itCompu.SiguienteClave();
 			//comparo EnEspera usando == de conjunto lineal y cant. enviados
 			res = (this->EnEspera(host) == d.EnEspera(host) && this->CantidadEnviados(host) == d.CantidadEnviados(host) );
 			itpaq = (itCompu.SiguienteSignificado().paquetes).CrearIt();
-			j = 0;
+			
 			while (itpaq.HaySiguiente() && res){
 				id = itpaq.Siguiente().idpaquete;
 				//comparo caminosRecorridos usando == de listas enlazadas
@@ -423,7 +448,7 @@ std::ostream& Dcnet::ImprimirDcnet(std::ostream& os) const{
 		os << "Cantidad de envíos: " << itDcnet.SiguienteSignificado().cantEnvios << std::endl << std::endl;
 		itDcnet.Avanzar();
 	}
-
+return os;
 	//os << "caminos: ";
 	//Mostrar(caminos, '[', ']');
 

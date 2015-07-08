@@ -4,108 +4,167 @@
 namespace aed2 {
 
 Driver::Driver() {
-    // TODO
+    
+    r = Red();
+    d = Dcnet();
+    iniciada = false;
+    proximoid = 1;
+
 }
 
 Driver::~Driver() {
-    // TODO
+
+    //~Red(r);
+    //~Dcnet(d);
+
 }
 
 // TAD RED
+
 Nat Driver::CantidadComputadoras() const {
-    // TODO
-    return 0;
+    
+    return r.Computadoras().Cardinal();
 
 }
 
 const Computadora& Driver::IesimaComputadora(const Nat i) const {
-    // TODO
-	return 0;
+    
+	auto it = r.Computadoras().CrearIt();
+    Nat aux = i;
+    while (it.HaySiguiente() and aux > 0){
+        aux--;
+        it.Avanzar();
+    }
+    return it.Siguiente();
 }
         
 Nat Driver::CantidadInterfacesDe(const Computadora& c) const {
-    // TODO
-    return 0;
+    
+    return r.Interfaces(c).Cardinal();
 
 }
 
-const Interfaz& Driver::IesimaInterfazDe(const Computadora& c, const Nat i) const{
-    // TODO
-    return 0;
+Interfaz Driver::IesimaInterfazDe(const Computadora& c, const Nat i) const{
+    
+    auto it = r.Interfaces(c).CrearIt();
+    Nat aux = i;
+    while (it.HaySiguiente() and aux > 0){
+        aux--;
+        it.Avanzar();
+    }
+    return it.Siguiente();
 
 } 
 
-const Interfaz& Driver::IntefazUsada(const Computadora& c1, const Computadora& c2) const {
-    // TODO
-    return 0;
+Interfaz Driver::IntefazUsada(const Computadora& c1, const Computadora& c2) const {
+    
+    return r.InterfazUsada(c1,c2);
 
 }
 
 bool Driver::conectadas(const Computadora& c1, const Computadora& c2) const {
-    // TODO
-    return 0;
+    
+    return r.Conectadas(c1, c2);
 }
 
 // TAD DCNET
 void Driver::AgregarComputadora(const Computadora& ip, const Conj<Interfaz>& ci) {
-    // TODO
+    
+    #ifdef DEBUG
+    assert( not iniciada );
+    #endif
+
+    computadora c(ip, ci);
+    r.AgregarCompu(c);
+
 }
         
 void Driver::Conectar(const Computadora& c1, const Interfaz& i1, const Computadora& c2, const Interfaz& i2) {
-    // TODO
+    
+    #ifdef DEBUG
+    assert( not iniciada );
+    #endif
+
+    r.Conectar(c1, i1, c2, i2);
 }
 	
 	
-Nat Driver::CantidadNodosRecorridosPor(const Paquete& p) const {
-    // TODO
-    return 0;
+Nat Driver::CantidadNodosRecorridosPor(const idPaquete& p) const {
+    
+    return d.CaminoRecorrido(p).Longitud();
+
 }
 
-const Computadora& Driver::IesimoNodoRecorridoPor(const Paquete& p, const Nat i) const {
-    // TODO
+const Computadora& Driver::IesimoNodoRecorridoPor(const idPaquete& p, const Nat i) const {
+    
+    auto it = d.CaminoRecorrido(p).CrearIt();
+    Nat aux = i;
+    while (it.HaySiguiente() and aux > 0){
+        aux--;
+        it.Avanzar();
+    }
+    return it.Siguiente();
+
 }
 
 Nat Driver::CantidadEnviadosPor(const Computadora& c) const {
-    // TODO
-    return 0;
+    
+    return d.CantidadEnviados(c);
+
 }
 	
 Nat Driver::CantidadEnEsperaEn(const Computadora& c) const {
-    // TODO
-    return 0;
+    
+    return d.EnEspera(c).Cardinal();
 }
 
-const Paquete& Driver::IesimoEnEsperaEn(const Computadora& c, const Nat i) const {
-    // TODO
-    return 0;
+const idPaquete& Driver::IesimoEnEsperaEn(const Computadora& c, const Nat i) const {
+    
+    auto it = d.EnEspera(c).CrearIt();
+    Nat aux = i;
+    while (it.HaySiguiente() and aux > 0){
+        aux--;
+        it.Avanzar();
+    }
+    return it.Siguiente().idpaquete;
 }
 
 void Driver::CrearPaquete(const Computadora& origen, const Computadora& destino, Nat prioridad) {
-    // TODO
+    
+    iniciada = true;
+
+    Paquete p(proximoid, prioridad, origen, destino);
+    d.CrearPaquete(p);
+    proximoid++;
+
 }
 		
 void Driver::AvanzarSegundo() {
-    // TODO
+
+    iniciada = true;
+    
+    d.AvanzarSegundo();
+
 }
 		
 const Computadora& Driver::laQueMasEnvio() const {
-    // TODO	
-    return 0;
+    
+    return d.LaQueMasEnvio();
 }
 
-const Computadora& Driver::origen(const Paquete& p) const {
-    // TODO	
-    return 0;
+const Computadora& Driver::origen(const idPaquete& p) const {
+   
+    return d.damePaquete(p).origen;
 } 
 
-const Computadora& Driver::destino(const Paquete& p) const { 
-    // TODO	
-    return 0;
+const Computadora& Driver::destino(const idPaquete& p) const { 
+    
+    return d.damePaquete(p).destino;
 }
 
-Nat Driver::prioridad(const Paquete& p) const { 
-    // TODO	
-    return 0;
+Nat Driver::prioridad(const idPaquete& p) const { 
+    
+    return d.damePaquete(p).prioridad;
 }
 		
 

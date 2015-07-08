@@ -2,7 +2,6 @@
 #define DRIVER_H_
 
 #include "Tipos.h"
-#include "aed2/TiposBasicos.h"
 
 #include "../DCNET/dcnet.h"
 
@@ -24,9 +23,9 @@ class Driver
         const Computadora& IesimaComputadora(const Nat i) const ;
         
         Nat CantidadInterfacesDe(const Computadora& c) const;
-        const Interfaz& IesimaInterfazDe(const Computadora& c, const Nat i) const ;
+        Interfaz IesimaInterfazDe(const Computadora& c, const Nat i) const ;
 
-        const Interfaz& IntefazUsada(const Computadora& c1, const Computadora& c2) const;
+        Interfaz IntefazUsada(const Computadora& c1, const Computadora& c2) const;
 
         bool conectadas(const Computadora& c1, const Computadora& c2) const;
 
@@ -39,13 +38,13 @@ class Driver
 
        /// Observadores DCNet //////////////////////////////////////////////////////////////
     
-        Nat CantidadNodosRecorridosPor(const Paquete& p) const;
-        const Computadora& IesimoNodoRecorridoPor(const Paquete& p, const Nat i) const;
+        Nat CantidadNodosRecorridosPor(const idPaquete& p) const;
+        const Computadora& IesimoNodoRecorridoPor(const idPaquete& p, const Nat i) const;
 
         Nat CantidadEnviadosPor(const Computadora& c) const;
     
         Nat CantidadEnEsperaEn(const Computadora& c) const;
-        const Paquete& IesimoEnEsperaEn(const Computadora& c, const Nat i) const;
+        const idPaquete& IesimoEnEsperaEn(const Computadora& c, const Nat i) const;
 
         /// Acciones DCNet ////////////////////////////////////////////////////////////
 
@@ -55,10 +54,10 @@ class Driver
         
         const Computadora& laQueMasEnvio() const;
         
-        // Auxiliares para ver los paquetes
-        const Computadora& origen(const Paquete& p) const; 
-        const Computadora& destino(const Paquete& p) const; 
-        Nat prioridad(const Paquete& p) const; 
+        // Auxiliares para ver los Paquetes
+        const Computadora& origen(const idPaquete& p) const; 
+        const Computadora& destino(const idPaquete& p) const; 
+        Nat prioridad(const idPaquete& p) const; 
         
     private:
 
@@ -68,6 +67,12 @@ class Driver
      * funciones auxiliares que les hagan falta.                         *
      *********************************************************************/
 
+     Dcnet d;
+     Red r;
+
+     bool iniciada; // inicio al avanzar el primer segundo o agregar el primer idPaquete, y ya no se puede modificar la red
+
+     Nat proximoid;
    
 }; // class Driver
 

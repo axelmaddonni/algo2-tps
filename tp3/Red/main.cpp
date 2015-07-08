@@ -106,7 +106,7 @@ int main(){
 	red2.Conectar("c10",2,"c8", 3);
 	red2.Conectar("c7",2,"c10", 3);
 	
-	red2.ImprimirRed(cout);
+	//red2.ImprimirRed(cout);
 
 	Red red3 = Red(red2);
 
@@ -114,7 +114,7 @@ int main(){
 
 	red3.Conectar("c10", 5, "c2", 5);
 	red3.Conectar("c7", 5, "c4", 5);
-	red3.ImprimirRed(cout);
+	//red3.ImprimirRed(cout);
 
 	cout << endl << "Red2 == Red3?: " << ImprimirBool(red2==red3) << endl;
 
@@ -131,6 +131,26 @@ int main(){
 	redprueba2.Conectar("c2", 1, "c10", 2);
 	cout << endl << "prueba == : " << ImprimirBool(redprueba1==redprueba2) << endl;
 	*/
+
+
+	auto red4 = Red();
+	red4.AgregarCompu(c2);
+	red4.AgregarCompu(c3);
+	red4.AgregarCompu(c4);
+
+	cout << red4.Computadoras() << endl;	
+
+	Conj<hostname> compus = red4.Computadoras();
+
+	compus.Eliminar("c2");
+
+	cout << compus << endl;
+
+	red4.Interfaces("c2").Eliminar(1);
+	
+	cout << red4.Interfaces("c2") << endl;
+
+
 
     return 0;
 }

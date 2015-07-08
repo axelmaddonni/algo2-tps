@@ -1,8 +1,8 @@
 #ifndef AED2_TIPOS_H_
 #define AED2_TIPOS_H_
 
-#include "aed2/TiposBasicos.h"
-#include "aed2/Conj.h"
+#include "../aed2/TiposBasicos.h"
+#include "../aed2/Conj.h"
 
 namespace aed2{
 
@@ -10,7 +10,7 @@ typedef Nat Prioridad;
 typedef Nat Interfaz;
 typedef Nat ID;
 typedef String Computadora;
-typedef Nat Paquete;
+typedef Nat idPaquete;
 /***
  * Las restricciones son Strings con expresiones conformadas por operadores,
  * paréntesis y nombres de caracteristicas los cuales sólo son LETRAS del alfabeto

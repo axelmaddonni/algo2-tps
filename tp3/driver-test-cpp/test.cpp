@@ -1,8 +1,8 @@
 #include "Driver.h"
 #include "mini_test.h"
-#include "aed2/Lista.h"
-#include "aed2/Conj.h"
-#include "aed2/Dicc.h"
+#include "../aed2/Lista.h"
+#include "../aed2/Conj.h"
+#include "../aed2/Dicc.h"
 
 #include <string>
 #include <iostream>
@@ -127,7 +127,7 @@ void test_dcnet_ejemplo() {
 
 int main(int argc, char **argv)
 {
-    RUN_TEST(test_dcnet_ejemplo);
+    //RUN_TEST(test_dcnet_ejemplo);
 	
 	/******************************************************************
 	 * TODO: escribir casos de test exhaustivos para todas            *

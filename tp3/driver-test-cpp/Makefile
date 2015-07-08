@@ -2,13 +2,13 @@
 CC=g++
 
 # flags de compilación
-CFLAGS=-g -Wall
+CFLAGS=-g -Wall -std=c++11 
 
 # flags de linkeo
 LDFLAGS=
 
 # Agrear acá los directorios a incluir en la compilación
-INCDIR=../../../../../Modulos-CPP
+INCDIR=../../DCNET/dcnet.h
 
 # Agregar acá los archivos .cpp a compilar
 SOURCES=test.cpp Driver.cpp ArbolSintactico.cpp 
