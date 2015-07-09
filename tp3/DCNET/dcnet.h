@@ -114,7 +114,10 @@ public:
 
 	Dcnet();
 
-	Dcnet(const Red& r); //iniciar dcnet
+	//Dcnet(const Red& r); //iniciar dcnet
+	
+	void IniciarDcnet(const Red& r); //iniciar dcnet
+
 
 	//~Dcnet(); //destructor
 
@@ -188,7 +191,9 @@ Dcnet::Dcnet(){
 
 
 //Iniciar Dcnet
-Dcnet::Dcnet(const Red& r){
+//Dcnet::Dcnet(const Red& r){
+
+void Dcnet::IniciarDcnet(const Red& r) {
 
 	//Copio la red
 	red = Red(r);
@@ -251,7 +256,6 @@ Dcnet::Dcnet(const Red& r){
 
 	//Completo conMasEnvios:
 	conMasEnvios = computadoras.CrearIt();
-	std::cout << "define conMasEnvios -> " << conMasEnvios.SiguienteClave() << std::endl;
 
 	//Completo caminos:
 	Dicc<hostname, Datos>::Iterador itPC = computadoras.CrearIt();
@@ -299,7 +303,8 @@ void Dcnet::CrearPaquete(Paquete p){
 
 //Avanzar segundo
 void Dcnet::AvanzarSegundo(){
-	
+
+
 	//inicializo arreglo auxiliar en false
 	Nat cant = computadoras.CantClaves();
 	Nat i;
@@ -320,8 +325,10 @@ void Dcnet::AvanzarSegundo(){
 
 	typename Dicc<hostname, Datos>::Iterador itCompu = computadoras.CrearIt();
 	i = 0;
+	std::cout << "llega" << std::endl;
 
 	while(itCompu.HaySiguiente()){
+		std::cout << "-> " << itCompu.SiguienteClave() << std::endl;
 		if ( !(itCompu.SiguienteSignificado().cola.vacia()) ){
 			//Borro el de mayor prioridad del heap
 			itPaquete = (itCompu.SiguienteSignificado().cola).desencolar();
@@ -354,8 +361,11 @@ void Dcnet::AvanzarSegundo(){
 		i++;
 	}
 
+	std::cout << "pasa" << std::endl;
+
 	itCompu = computadoras.CrearIt();
 	i = 0;
+
 
 	while (itCompu.HaySiguiente()){
 		if (arreglo.Definido(i)){
@@ -368,7 +378,7 @@ void Dcnet::AvanzarSegundo(){
 			itdestino.SiguienteSignificado().cola.encolar(prioridad, itPaquete);
 			//lo agrego en el AA
 			IDpaq = arreglo[i].paquete.idpaquete;
-			itdestino.SiguienteSignificado().paqPorid.Definir(IDpaq, itPaquete);	// MEMORY LEAK!!!!!!!!!!!		
+			itdestino.SiguienteSignificado().paqPorid.Definir(IDpaq, itPaquete);	// MEMORY LEAK!!!!!!!!!!!
 		}
 		i++;
 		itCompu.Avanzar();

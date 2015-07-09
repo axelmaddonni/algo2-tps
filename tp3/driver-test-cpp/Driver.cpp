@@ -132,22 +132,20 @@ const idPaquete& Driver::IesimoEnEsperaEn(const Computadora& c, const Nat i) con
 void Driver::CrearPaquete(const Computadora& origen, const Computadora& destino, Nat prioridad) {
     
     if (!iniciada) {
-        d = Dcnet(r);
+        d.IniciarDcnet(r);
         iniciada = true;
     }
 
-    std::cout << "sale de IniciarDcnet con la que mas envio -> " << d.LaQueMasEnvio() << std::endl;
-
-    //Paquete p(proximoid, prioridad, origen, destino);
-    //d.CrearPaquete(p);
-    //proximoid++;
+    Paquete p(proximoid, prioridad, origen, destino);
+    d.CrearPaquete(p);
+    proximoid++;
 
 }
 		
 void Driver::AvanzarSegundo() {
 
     if (!iniciada) {
-        d = Dcnet(r);
+        d.IniciarDcnet(r);
         iniciada = true;
     }
     
@@ -157,8 +155,9 @@ void Driver::AvanzarSegundo() {
 		
 const Computadora& Driver::laQueMasEnvio() const {
     
-    const Computadora& referenciahostname(d.LaQueMasEnvio());
-    return referenciahostname;
+    //const Computadora& referenciahostname(d.LaQueMasEnvio());
+    //return referenciahostname;
+    return d.LaQueMasEnvio();
 }
 
 const Computadora& Driver::origen(const idPaquete& p) const {
