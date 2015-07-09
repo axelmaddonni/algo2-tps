@@ -193,16 +193,16 @@ void diccLog<C,S>::BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual) {
 		//voy guardando el padre
 		typename AB<tupla>::Iterador nodoPadre = nodoActual;
 		//voy uno hacia la derecha y todo hacia la izquierda // busco el sucesor
-		bool hayDer = false;
+		bool hayIzq = false;
 		while (nodoAux.itIzq()) {
 			nodoPadre = nodoAux;
 			nodoAux.izq();
-			hayDer = true;
+			hayIzq = true;
 		}
 		//hago un swap del izquierdo del aux (el último hacia la izquierda) y del que voy a borrar
-		nodoActual.swapVal(nodoAux.itIzq());
+		nodoActual.swapVal(nodoAux);
 		//borro el hijo correspondiente del padre
-		if (hayDer) {
+		if (hayIzq) {
 			nodoPadre.borrarPostaIzq();
 		} else {
 			nodoPadre.borrarPostaDer();
@@ -213,16 +213,16 @@ void diccLog<C,S>::BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual) {
 		//voy guardando el padre
 		typename AB<tupla>::Iterador nodoPadre = nodoActual;
 		//voy uno hacia la izquierda y todo hacia la derecha // busco el predecesor
-		bool hayIzq = false;
+		bool hayDer = false;
 		while (nodoAux.itDer()) {
 			nodoPadre = nodoAux;
 			nodoAux.der();
-			hayIzq = true;
+			hayDer = true;
 		}
 		//hago un swap del derecho del aux (el último hacia la derecha) y del que voy a borrar
 		nodoActual.swapVal(nodoAux);
 		//borro el hijo correspondiente del padre
-		if (hayIzq) {
+		if (hayDer) {
 			nodoPadre.borrarPostaDer();
 		} else {
 			nodoPadre.borrarPostaIzq();
@@ -338,7 +338,7 @@ template<typename C, typename S>
 void diccLog<C,S>::printD() {
 	typename AB<tupla>::Iterador itArbol = nodo_ab.crearIt();
 	while (itArbol) {
-		std::cout << itArbol.val().clave << " -> " << itArbol.val().nivel << " -> " << itArbol.val().significado << std::endl;
+		std::cout << itArbol.val().clave << " -> " << itArbol.val().nivel << std::endl;//" -> " << itArbol.val().significado << std::endl;
 		itArbol.der();
 	} 
 }
@@ -347,7 +347,7 @@ template<typename C, typename S>
 void diccLog<C,S>::printI() {
 	typename AB<tupla>::Iterador itArbol = nodo_ab.crearIt();
 	while (itArbol) {
-		std::cout << itArbol.val().clave << " -> " << itArbol.val().nivel << " -> " << itArbol.val().significado << std::endl;
+		std::cout << itArbol.val().clave << " -> " << itArbol.val().nivel << std::endl;//" -> " << itArbol.val().significado << std::endl;
 		itArbol.izq();
 	} 
 }
@@ -355,13 +355,13 @@ void diccLog<C,S>::printI() {
 template<typename C, typename S>
 void diccLog<C,S>::printID() {
 	typename AB<tupla>::Iterador itArbol = nodo_ab.crearIt();
-	std::cout << itArbol.val().clave << " -> " << itArbol.val().nivel << " -> " << itArbol.val().significado << std::endl;
+	std::cout << itArbol.val().clave << " -> " << itArbol.val().nivel << std::endl;//" -> " << itArbol.val().significado << std::endl;
 	if (itArbol.itIzq())  {
 		itArbol.izq();
-		std::cout << itArbol.val().clave << " -> " << itArbol.val().nivel << " -> " << itArbol.val().significado << std::endl;
+		std::cout << itArbol.val().clave << " -> " << itArbol.val().nivel << std::endl;//" -> " << itArbol.val().significado << std::endl;
 		while (itArbol.itDer()) {
 			itArbol.der();
-			std::cout << itArbol.val().clave << " -> " << itArbol.val().nivel << " -> " << itArbol.val().significado << std::endl;
+			std::cout << itArbol.val().clave << " -> " << itArbol.val().nivel << std::endl;//" -> " << itArbol.val().significado << std::endl;
 		}
 	}
 }
@@ -369,13 +369,13 @@ void diccLog<C,S>::printID() {
 template<typename C, typename S>
 void diccLog<C,S>::printDI() {
 	typename AB<tupla>::Iterador itArbol = nodo_ab.crearIt();
-	std::cout << itArbol.val().clave << " -> " << itArbol.val().nivel << " -> " << itArbol.val().significado << std::endl;
+	std::cout << itArbol.val().clave << " -> " << itArbol.val().nivel << std::endl;//" -> " << itArbol.val().significado << std::endl;
 	if (itArbol.itDer()) {
 		itArbol.der();
-		std::cout << itArbol.val().clave << " -> " << itArbol.val().nivel << " -> " << itArbol.val().significado << std::endl;
+		std::cout << itArbol.val().clave << " -> " << itArbol.val().nivel << std::endl;//" -> " << itArbol.val().significado << std::endl;
 		while (itArbol.itIzq()) {
 			itArbol.izq();
-			std::cout << itArbol.val().clave << " -> " << itArbol.val().nivel << " -> " << itArbol.val().significado << std::endl;
+			std::cout << itArbol.val().clave << " -> " << itArbol.val().nivel << std::endl;//" -> " << itArbol.val().significado << std::endl;
 		}
 	}
 }

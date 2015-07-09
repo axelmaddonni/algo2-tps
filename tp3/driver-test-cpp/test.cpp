@@ -167,9 +167,7 @@ void test_crear_paquetes() {
 	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c2), 4);
 	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c3), 0);	
 	
-	std::cout << "llega 1" << std::endl;
 	dcnet.AvanzarSegundo();
-	std::cout << "llega 2" << std::endl;
 	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c1), 1);
 	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c2), 3);
 	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c3), 0);	
@@ -512,8 +510,8 @@ void test_dcnet_ejemplo() {
 
 int main(int argc, char **argv)
 {
-    //RUN_TEST(test_dcnet_ejemplo);
-    //RUN_TEST(test_conectar_computadoras);
+    RUN_TEST(test_dcnet_ejemplo);
+    RUN_TEST(test_conectar_computadoras);
     RUN_TEST(test_crear_paquetes);
     /*RUN_TEST(test_respeta_priodades);
     RUN_TEST(test_recorrido_simple);
