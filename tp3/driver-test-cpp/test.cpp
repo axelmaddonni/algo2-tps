@@ -503,21 +503,25 @@ void test_dcnet_ejemplo() {
 	dcnet.CrearPaquete(c1, c2, 3);
 	dcnet.AvanzarSegundo();	
 
+	std::cout << "casi fin test 1" << std::endl;
 	ASSERT_EQ(dcnet.laQueMasEnvio(), c1);
+	std::cout << "fin test 1" << std::endl;
 		
 }
 
 
 int main(int argc, char **argv)
 {
-    /*RUN_TEST(test_dcnet_ejemplo);
-    RUN_TEST(test_conectar_computadoras);
+    RUN_TEST(test_dcnet_ejemplo);
+    /*RUN_TEST(test_conectar_computadoras);
     RUN_TEST(test_crear_paquetes);
     RUN_TEST(test_respeta_priodades);
     RUN_TEST(test_recorrido_simple);
 	RUN_TEST(test_recorrido_dos_minimos);
 	RUN_TEST(test_recorrido_complejo);
 	RUN_TEST(test_la_que_mas_envio);*/
+
+	std::cout << "fin fin" << std::endl;
 
 	return 0;
 }

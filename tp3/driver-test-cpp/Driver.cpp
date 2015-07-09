@@ -131,7 +131,10 @@ const idPaquete& Driver::IesimoEnEsperaEn(const Computadora& c, const Nat i) con
 
 void Driver::CrearPaquete(const Computadora& origen, const Computadora& destino, Nat prioridad) {
     
-    iniciada = true;
+    if (!iniciada) {
+        d = Dcnet(r);
+        iniciada = true;
+    }
 
     Paquete p(proximoid, prioridad, origen, destino);
     d.CrearPaquete(p);
@@ -141,7 +144,10 @@ void Driver::CrearPaquete(const Computadora& origen, const Computadora& destino,
 		
 void Driver::AvanzarSegundo() {
 
-    iniciada = true;
+    if (!iniciada) {
+        d = Dcnet(r);
+        iniciada = true;
+    }
     
     d.AvanzarSegundo();
 
