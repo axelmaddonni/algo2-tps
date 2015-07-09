@@ -11,7 +11,8 @@ LDFLAGS=
 INCDIR=../../DCNET/dcnet.h
 
 # Agregar acá los archivos .cpp a compilar
-SOURCES=test.cpp Driver.cpp ArbolSintactico.cpp 
+SOURCES=test.cpp
+# Driver.cpp ArbolSintactico.cpp 
 
 # Objetos que serán generados (no tocar)
 OBJECTS=$(SOURCES:.cpp=.o)

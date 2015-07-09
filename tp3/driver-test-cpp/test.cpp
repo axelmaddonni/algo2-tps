@@ -261,7 +261,7 @@ void test_recorrido_simple() {
 
 	dcnet.CrearPaquete(c1,c4,1);
 	Nat paq = dcnet.IesimoEnEsperaEn(c1,0);
-	
+	;
 	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c1), 1);
 	
 	dcnet.AvanzarSegundo();
@@ -510,12 +510,12 @@ void test_dcnet_ejemplo() {
 
 int main(int argc, char **argv)
 {
-    RUN_TEST(test_dcnet_ejemplo);
-    RUN_TEST(test_conectar_computadoras);
-    RUN_TEST(test_crear_paquetes);
-    /*RUN_TEST(test_respeta_priodades);
+    //RUN_TEST(test_dcnet_ejemplo);
+    //RUN_TEST(test_conectar_computadoras);
+    //RUN_TEST(test_crear_paquetes);
+    //RUN_TEST(test_respeta_priodades);
     RUN_TEST(test_recorrido_simple);
-	RUN_TEST(test_recorrido_dos_minimos);
+	/*RUN_TEST(test_recorrido_dos_minimos);
 	RUN_TEST(test_recorrido_complejo);
 	RUN_TEST(test_la_que_mas_envio);*/
 
