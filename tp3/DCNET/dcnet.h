@@ -145,7 +145,6 @@ typename Dicc<hostname, Datos>::const_Iterador itCompu = computadoras.CrearIt();
 			itCompu.Avanzar();
 		}
 	}
- return Paquete();
 }
 
 

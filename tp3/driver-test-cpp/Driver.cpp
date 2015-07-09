@@ -157,7 +157,8 @@ void Driver::AvanzarSegundo() {
 		
 const Computadora& Driver::laQueMasEnvio() const {
     
-    return d.LaQueMasEnvio();
+    const Computadora& referenciahostname(d.LaQueMasEnvio());
+    return referenciahostname;
 }
 
 const Computadora& Driver::origen(const idPaquete& p) const {

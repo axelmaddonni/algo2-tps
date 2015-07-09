@@ -188,7 +188,7 @@ public:
 
         void irAlFondoUltimo()
         {
-            while(!dicc->siguiente.empty())
+            while(!dicc->siguiente.empty() && dicc->es_final == false)
                 dicc = (*(dicc->siguiente.rbegin())).second;
         }
 
