@@ -70,6 +70,8 @@ private:
             {
                 delete siguiente[clave[index]];
                 siguiente.erase(clave[index]);
+            } else {
+                _borrar(clave, index+1);
             }
         }
     }
