@@ -100,7 +100,8 @@ int main(){
 
 	//red2.ImprimirRed(cout);
 
-	Dcnet d2(red2);
+	Dcnet d2;
+	d2.IniciarDcnet(red2);
 
 	Paquete p(1, 5, "c1", "c3");
 	d2.CrearPaquete(p);
@@ -111,13 +112,20 @@ int main(){
 
 	d2.ImprimirDcnet(cout);
 
+	
+
 	d2.AvanzarSegundo();
 	cout << "DESPUES" << endl;
 	d2.ImprimirDcnet(cout);
 	
+	
+
 	d2.AvanzarSegundo();
 	cout << "DESPUES" << endl;
 	d2.ImprimirDcnet(cout);
+
+	
+	/*
 
 	d2.AvanzarSegundo();
 	cout << "DESPUES" << endl;
@@ -133,6 +141,8 @@ int main(){
 
 	red2.ImprimirRed(cout);
 	cout << d2.LaQueMasEnvio() << endl;
+
+	*/
 
 	return 0;
 }

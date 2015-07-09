@@ -8,11 +8,10 @@ CFLAGS=-g -Wall -std=c++11
 LDFLAGS=
 
 # Agrear acá los directorios a incluir en la compilación
-INCDIR=../../DCNET/dcnet.h
+INCDIR=../../tp3
 
 # Agregar acá los archivos .cpp a compilar
-SOURCES=test.cpp
-# Driver.cpp ArbolSintactico.cpp 
+SOURCES=test.cpp Driver.cpp ArbolSintactico.cpp ../DCNET/dcnet.cpp ../Red/Red.cpp
 
 # Objetos que serán generados (no tocar)
 OBJECTS=$(SOURCES:.cpp=.o)
