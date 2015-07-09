@@ -93,6 +93,9 @@ diccLog<C,S>::diccLog() {
 
 template<typename C, typename S>
 bool diccLog<C,S>::Definido(const C cla) const {
+	if (nil) {
+		return 0;
+	}
 	typename AB<tupla>::Iterador nodoActual = nodo_ab.crearIt();
 	int i = 0;
 	while(nodoActual && i<4) {

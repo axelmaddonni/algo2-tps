@@ -58,6 +58,13 @@ class Driver
         const Computadora& origen(const idPaquete& p) const; 
         const Computadora& destino(const idPaquete& p) const; 
         Nat prioridad(const idPaquete& p) const; 
+
+        
+
+        std::ostream& ImprimirDcnet(std::ostream& os) const {
+            d.ImprimirDcnet(os);
+            return os;
+        }
         
     private:
 

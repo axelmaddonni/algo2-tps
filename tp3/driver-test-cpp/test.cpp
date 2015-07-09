@@ -262,17 +262,23 @@ void test_recorrido_simple() {
 	dcnet.CrearPaquete(c1,c4,1);
 	Nat paq = dcnet.IesimoEnEsperaEn(c1,0);
 	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c1), 1);
+
+	dcnet.ImprimirDcnet(std::cout);
 	
+	std::cout << "-------AVANZA SEGUNDO--------" << std::endl;
 	dcnet.AvanzarSegundo();
 	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c2), 1);
 
+	dcnet.ImprimirDcnet(std::cout);
+
+	std::cout << "-------AVANZA SEGUNDO--------" << std::endl;
 	dcnet.AvanzarSegundo();
 	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c3), 1);
 
-	std::cout << "antes" << std::endl;
+	dcnet.ImprimirDcnet(std::cout);
+
 	std::cout << "cantidad de nodos recorridos por " << paq << " -> " << dcnet.CantidadNodosRecorridosPor(paq) << std::endl;
 	ASSERT_EQ(dcnet.CantidadNodosRecorridosPor(paq),3);
-	std::cout << "despues" << std::endl;
 	ASSERT(dcnet.IesimoNodoRecorridoPor(paq,0) == c1);
 	ASSERT(dcnet.IesimoNodoRecorridoPor(paq,1) == c2);
 	ASSERT(dcnet.IesimoNodoRecorridoPor(paq,2) == c3);

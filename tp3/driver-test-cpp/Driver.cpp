@@ -90,7 +90,14 @@ void Driver::Conectar(const Computadora& c1, const Interfaz& i1, const Computado
 	
 	
 Nat Driver::CantidadNodosRecorridosPor(const idPaquete& p) const {
-    
+    auto it = d.CaminoRecorrido(p).CrearIt();
+    std::cout << "---empieza camino" << std::endl;
+    while (it.HaySiguiente()){
+        std::cout << it.Siguiente() << std::endl;
+        it.Avanzar();
+    }
+    std::cout << "---termina camino" << std::endl;
+
     return d.CaminoRecorrido(p).Longitud();
 
 }

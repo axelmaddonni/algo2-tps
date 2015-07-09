@@ -188,10 +188,8 @@ void Dcnet::AvanzarSegundo(){
 
 	typename Dicc<hostname, Datos>::Iterador itCompu = computadoras.CrearIt();
 	i = 0;
-	std::cout << "llega" << std::endl;
 
 	while(itCompu.HaySiguiente()){
-		std::cout << "-> " << itCompu.SiguienteClave() << std::endl;
 		if ( !(itCompu.SiguienteSignificado().cola.vacia()) ){
 			//Borro el de mayor prioridad del heap
 			itPaquete = (itCompu.SiguienteSignificado().cola).desencolar();
@@ -224,7 +222,6 @@ void Dcnet::AvanzarSegundo(){
 		i++;
 	}
 
-	std::cout << "pasa" << std::endl;
 
 	itCompu = computadoras.CrearIt();
 	i = 0;
