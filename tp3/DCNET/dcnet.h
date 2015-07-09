@@ -252,6 +252,7 @@ Dcnet::Dcnet(const Red& r){
 
 	//Completo conMasEnvios:
 	conMasEnvios = computadoras.CrearIt();
+	std::cout << "define conMasEnvios -> " << conMasEnvios.SiguienteClave() << std::endl;
 
 	//Completo caminos:
 	Dicc<hostname, Datos>::Iterador itPC = computadoras.CrearIt();

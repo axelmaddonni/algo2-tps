@@ -500,10 +500,14 @@ void test_dcnet_ejemplo() {
 	Interfaz i2 = dcnet.IesimaInterfazDe(c2, 2);
 	
 	dcnet.Conectar(c1, i1, c2, i2);
+	std::cout << "antes de CrearPaquete" << std::endl;
 	dcnet.CrearPaquete(c1, c2, 3);
-	dcnet.AvanzarSegundo();	
+	//dcnet.AvanzarSegundo();	
 
 	std::cout << "casi fin test 1" << std::endl;
+	std::cout << dcnet.laQueMasEnvio() << std::endl;
+	std::cout << "casi casi fin test 1" << std::endl;
+	
 	ASSERT_EQ(dcnet.laQueMasEnvio(), c1);
 	std::cout << "fin test 1" << std::endl;
 		

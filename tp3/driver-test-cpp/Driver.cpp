@@ -136,9 +136,11 @@ void Driver::CrearPaquete(const Computadora& origen, const Computadora& destino,
         iniciada = true;
     }
 
-    Paquete p(proximoid, prioridad, origen, destino);
-    d.CrearPaquete(p);
-    proximoid++;
+    std::cout << "sale de IniciarDcnet con la que mas envio -> " << d.LaQueMasEnvio() << std::endl;
+
+    //Paquete p(proximoid, prioridad, origen, destino);
+    //d.CrearPaquete(p);
+    //proximoid++;
 
 }
 		
