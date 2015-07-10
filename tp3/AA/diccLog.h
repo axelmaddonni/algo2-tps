@@ -160,14 +160,19 @@ void diccLog<C,S>::DefinirNodo(C cla, S sig, typename AB<tupla>::Iterador nodoAc
 
 
 template<typename C, typename S>
-void diccLog<C,S>::Borrar(C cla) {
-	typename AB<tupla>::Iterador nodoActual = nodo_ab.crearIt();
-	//si es la raiz
-	if (nodoActual.val().clave==cla && !nodoActual.itDer() && !nodoActual.itIzq()) {
-		nil=true;
-	} else {
-		BorrarNodo(cla, nodoActual);
-	}
+void diccLog<C,S>::Borrar(C cla) 
+{
+    typename AB<tupla>::Iterador nodoActual = nodo_ab.crearIt();
+    //si es la raiz
+    if (nodoActual.val().clave==cla && !nodoActual.itDer() && !nodoActual.itIzq()) 
+    {
+        nodo_ab.reset();
+        nil=true;
+    }
+    else 
+    {
+        BorrarNodo(cla, nodoActual);
+    }
 }
 
 template<typename C, typename S>
@@ -241,14 +246,12 @@ void diccLog<C,S>::BorrarNodo(C cla, typename AB<tupla>::Iterador nodoActual) {
 
 template<typename C, typename S>
 diccLog<C,S>::~diccLog() {
-	if (!nil) {
 
 		typename AB<tupla>::Iterador itArbol;
 		itArbol = nodo_ab.crearIt();
 		itArbol.borrar();
 		nil = true;
 		nodo_ab.borrarAB();
-	}
 }
 
 template<typename C, typename S>
