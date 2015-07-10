@@ -263,25 +263,24 @@ void test_recorrido_simple() {
 	Nat paq = dcnet.IesimoEnEsperaEn(c1,0);
 	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c1), 1);
 
-	dcnet.ImprimirDcnet(std::cout);
+	//dcnet.ImprimirDcnet(std::cout);
 	
-	std::cout << "-------AVANZA SEGUNDO--------" << std::endl;
+	//std::cout << "-------AVANZA SEGUNDO--------" << std::endl;
 	dcnet.AvanzarSegundo();
 	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c2), 1);
 
-	dcnet.ImprimirDcnet(std::cout);
+	//dcnet.ImprimirDcnet(std::cout);
 
-	std::cout << "-------AVANZA SEGUNDO--------" << std::endl;
+	//std::cout << "-------AVANZA SEGUNDO--------" << std::endl;
 	dcnet.AvanzarSegundo();
 	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c3), 1);
 
-	dcnet.ImprimirDcnet(std::cout);
+	//dcnet.ImprimirDcnet(std::cout);
 
-	std::cout << "cantidad de nodos recorridos por " << paq << " -> " << dcnet.CantidadNodosRecorridosPor(paq) << std::endl;
-	ASSERT_EQ(dcnet.CantidadNodosRecorridosPor(paq),3);
-	ASSERT(dcnet.IesimoNodoRecorridoPor(paq,0) == c1);
-	ASSERT(dcnet.IesimoNodoRecorridoPor(paq,1) == c2);
-	ASSERT(dcnet.IesimoNodoRecorridoPor(paq,2) == c3);
+	//std::cout << "cantidad de nodos recorridos por " << paq << " -> " << dcnet.CantidadNodosRecorridosPor(paq) << std::endl;
+	ASSERT_EQ(dcnet.CantidadNodosRecorridosPor(paq),2);
+	ASSERT(dcnet.IesimoNodoRecorridoPor(paq,0) == c2);
+	ASSERT(dcnet.IesimoNodoRecorridoPor(paq,1) == c3);
 	
 	
 }
@@ -345,9 +344,8 @@ void test_recorrido_dos_minimos() {
 	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c2)+dcnet.CantidadEnEsperaEn(c3), 1);
 
 	
-	ASSERT_EQ(dcnet.CantidadNodosRecorridosPor(paq),2);
-	ASSERT(dcnet.IesimoNodoRecorridoPor(paq,0) == c1);
-	ASSERT(dcnet.IesimoNodoRecorridoPor(paq,1) == c2 || dcnet.IesimoNodoRecorridoPor(paq,1) == c3 );
+	ASSERT_EQ(dcnet.CantidadNodosRecorridosPor(paq),1);
+	ASSERT(dcnet.IesimoNodoRecorridoPor(paq,0) == c2 || dcnet.IesimoNodoRecorridoPor(paq,1) == c3 );
 
 }
  
@@ -417,9 +415,8 @@ void test_recorrido_complejo() {
 	
 	dcnet.AvanzarSegundo();
 
-	ASSERT_EQ(dcnet.CantidadNodosRecorridosPor(paq),2);
-	ASSERT(dcnet.IesimoNodoRecorridoPor(paq,0) == c1);
-	ASSERT(dcnet.IesimoNodoRecorridoPor(paq,1) == c3);
+	ASSERT_EQ(dcnet.CantidadNodosRecorridosPor(paq),1);
+	ASSERT(dcnet.IesimoNodoRecorridoPor(paq,0) == c3);
 }
 
 void test_la_que_mas_envio() {
@@ -517,15 +514,15 @@ void test_dcnet_ejemplo() {
 
 int main(int argc, char **argv)
 {
-    //RUN_TEST(test_dcnet_ejemplo);
-    //RUN_TEST(test_conectar_computadoras);
-    //RUN_TEST(test_crear_paquetes);
-    //RUN_TEST(test_respeta_priodades);
+    RUN_TEST(test_dcnet_ejemplo);
+    RUN_TEST(test_conectar_computadoras);
+    RUN_TEST(test_crear_paquetes);
+    RUN_TEST(test_respeta_priodades);
     RUN_TEST(test_recorrido_simple);
-	/*RUN_TEST(test_recorrido_dos_minimos);
-	RUN_TEST(test_recorrido_complejo);
-	RUN_TEST(test_la_que_mas_envio);*/
+    RUN_TEST(test_recorrido_dos_minimos);
+    RUN_TEST(test_recorrido_complejo);
+    RUN_TEST(test_la_que_mas_envio);
 
 
-	return 0;
+    return 0;
 }
