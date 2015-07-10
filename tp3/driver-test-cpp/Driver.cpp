@@ -90,22 +90,25 @@ void Driver::Conectar(const Computadora& c1, const Interfaz& i1, const Computado
 	
 	
 Nat Driver::CantidadNodosRecorridosPor(const idPaquete& p) const {
-    auto it = d.CaminoRecorrido(p).CrearIt();
-    std::cout << "---empieza camino" << std::endl;
-    while (it.HaySiguiente()){
-        std::cout << it.Siguiente() << std::endl;
-        it.Avanzar();
-    }
-    std::cout << "---termina camino" << std::endl;
+    // auto it = d.CaminoRecorrido(p).CrearIt();
+    // std::cout << "---empieza camino" << std::endl;
+    // while (it.HaySiguiente()){
+    //     std::cout << it.Siguiente() << std::endl;
+    //     it.Avanzar();
+    // }
+    // std::cout << "---termina camino" << std::endl;
 
-    return d.CaminoRecorrido(p).Longitud();
+    return d.CaminoRecorrido(p).Longitud()+1;
 
 }
 
 const Computadora& Driver::IesimoNodoRecorridoPor(const idPaquete& p, const Nat i) const {
     
+    if(i == 0){
+        return d.damePaquete(p).origen;
+    }
     auto it = d.CaminoRecorrido(p).CrearIt();
-    Nat aux = i;
+    Nat aux = i-1;
     while (it.HaySiguiente() and aux > 0){
         aux--;
         it.Avanzar();
