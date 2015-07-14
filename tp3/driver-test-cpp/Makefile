@@ -2,10 +2,10 @@
 CC=g++
 
 # flags de compilación
-CFLAGS=-g -Wall -std=c++11 
+CFLAGS=-g -Wall -std=c++11 -pg
 
 # flags de linkeo
-LDFLAGS=
+LDFLAGS=-pg
 
 # Agrear acá los directorios a incluir en la compilación
 INCDIR=../../tp3
