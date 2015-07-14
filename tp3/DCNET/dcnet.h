@@ -126,7 +126,7 @@ public:
 
 	bool PaqueteEnTransito(Nat p) const;
 
-	hostname LaQueMasEnvio() const;
+	const hostname& LaQueMasEnvio() const;
 
 	bool operator==(Dcnet& d) const; 
 

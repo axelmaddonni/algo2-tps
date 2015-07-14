@@ -116,13 +116,14 @@ S diccLog<C,S>::Significado(const C cla) const {
 	typename AB<tupla>::Iterador nodoActual = nodo_ab.crearIt();
 	while(nodoActual) {
 		if (nodoActual.val().clave==cla) {
-			return nodoActual.val().significado;
+			break;
 		} else if (nodoActual.val().clave < cla) {
 			nodoActual.der();
 		} else {
 			nodoActual.izq();
 		}
 	}
+	return nodoActual.val().significado;
 }
 
 //--- nuevo Definir (recursivo)

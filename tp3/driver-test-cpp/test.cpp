@@ -1,8 +1,8 @@
 #include "Driver.h"
 #include "mini_test.h"
-#include "../aed2/Lista.h"
-#include "../aed2/Conj.h"
-#include "../aed2/Dicc.h"
+#include "aed2/Lista.h"
+#include "aed2/Conj.h"
+#include "aed2/Dicc.h"
 
 #include <string>
 #include <iostream>
@@ -210,7 +210,7 @@ void test_respeta_priodades() {
 	ASSERT_EQ(dcnet.CantidadEnviadosPor(c1), 1);
 
 	bool respetaPrioridad = true;
-	for (int i =0; i < dcnet.CantidadEnEsperaEn(c1) ; i++) { 
+	for (Nat i =0; i < dcnet.CantidadEnEsperaEn(c1) ; i++) { 
 		Nat pr = dcnet.prioridad(dcnet.IesimoEnEsperaEn(c1, i));
 		if (pr == 1) {
 			respetaPrioridad = false;
@@ -261,23 +261,16 @@ void test_recorrido_simple() {
 
 	dcnet.CrearPaquete(c1,c4,1);
 	Nat paq = dcnet.IesimoEnEsperaEn(c1,0);
-	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c1), 1);
-
-	//dcnet.ImprimirDcnet(std::cout);
 	
-	//std::cout << "-------AVANZA SEGUNDO--------" << std::endl;
+	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c1), 1);
+	
 	dcnet.AvanzarSegundo();
 	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c2), 1);
 
-	//dcnet.ImprimirDcnet(std::cout);
-
-	//std::cout << "-------AVANZA SEGUNDO--------" << std::endl;
 	dcnet.AvanzarSegundo();
 	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c3), 1);
 
-	//dcnet.ImprimirDcnet(std::cout);
-
-	//std::cout << "cantidad de nodos recorridos por " << paq << " -> " << dcnet.CantidadNodosRecorridosPor(paq) << std::endl;
+	
 	ASSERT_EQ(dcnet.CantidadNodosRecorridosPor(paq),3);
 	ASSERT(dcnet.IesimoNodoRecorridoPor(paq,0) == c1);
 	ASSERT(dcnet.IesimoNodoRecorridoPor(paq,1) == c2);
@@ -508,8 +501,8 @@ void test_dcnet_ejemplo() {
 	
 	dcnet.Conectar(c1, i1, c2, i2);
 	dcnet.CrearPaquete(c1, c2, 3);
-	dcnet.AvanzarSegundo();
-	
+	dcnet.AvanzarSegundo();	
+
 	ASSERT_EQ(dcnet.laQueMasEnvio(), c1);
 		
 }
@@ -525,7 +518,6 @@ int main(int argc, char **argv)
 	RUN_TEST(test_recorrido_dos_minimos);
 	RUN_TEST(test_recorrido_complejo);
 	RUN_TEST(test_la_que_mas_envio);
-
 
 	return 0;
 }

@@ -6,11 +6,12 @@ typename Dicc<hostname, Datos>::const_Iterador itCompu = computadoras.CrearIt();
 	
 	while (itCompu.HaySiguiente()){
 		if  ( (itCompu.SiguienteSignificado().paqPorid).Definido(idpaquete) ){
-			return ((itCompu.SiguienteSignificado()).paqPorid).Significado(idpaquete).Siguiente();
+			break;
 		}else{
 			itCompu.Avanzar();
 		}
 	}
+	return ((itCompu.SiguienteSignificado()).paqPorid).Significado(idpaquete).Siguiente();
 }
 
 
@@ -264,7 +265,7 @@ bool Dcnet::PaqueteEnTransito(Nat p) const{
 }
 
 //La que más envió
-hostname Dcnet::LaQueMasEnvio() const{
+const hostname& Dcnet::LaQueMasEnvio() const{
 	return conMasEnvios.SiguienteClave();
 }
 

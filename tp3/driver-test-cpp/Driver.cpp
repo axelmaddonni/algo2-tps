@@ -46,7 +46,8 @@ Nat Driver::CantidadInterfacesDe(const Computadora& c) const {
 
 Interfaz Driver::IesimaInterfazDe(const Computadora& c, const Nat i) const{
     
-    auto it = r.Interfaces(c).CrearIt();
+    Conj<Interfaz> conji = r.Interfaces(c);
+    Conj<Interfaz>::const_Iterador it = conji.CrearIt();
     Nat aux = i;
     while (it.HaySiguiente() and aux > 0){
         aux--;
@@ -164,9 +165,11 @@ void Driver::AvanzarSegundo() {
 }
 		
 const Computadora& Driver::laQueMasEnvio() const {
-    
+    /*
     const Computadora& referenciahostname(d.LaQueMasEnvio());
     return referenciahostname;
+    */
+    return d.LaQueMasEnvio();
 }
 
 const Computadora& Driver::origen(const idPaquete& p) const {
